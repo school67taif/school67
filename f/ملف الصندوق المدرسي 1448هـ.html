@@ -336,7 +336,7 @@ R.school=()=>{const s=S.school;return `<h2>بيانات المدرسة</h2>${pba
  ${fld("مشغّلة المقصف (المتعهدة)","school.operator",s.operator)}
  ${fld("هاتف المشغّلة","school.opPhone",s.opPhone,"05xxxxxxxx",'dir="ltr"')}
  ${fld("عدد البائعات في المقصف","school.sellers",s.sellers,"","inputmode=numeric")}
- </div><p class="hint">هاتف المدرسة: <bdi dir="ltr">0559752844</bdi> · البريد: <bdi dir="ltr">30800@taifdue.gov.sa</bdi></p></div>`};
+ </div><p class="hint">هاتف المدرسة: <bdi dir="ltr">0559752844</bdi> · البريد: <bdi dir="ltr">30800@mkhg.moe.gov.sa</bdi></p></div>`};
 R.committee=()=>`<h2>لجنة وفريق الصندوق المدرسي</h2><p class="hint">اللجنة برئاسة مديرة المدرسة، وفريق الصندوق هو عضوات اللجنة من الثاني فما بعد برئاسة وكيلة المدرسة؛ ويرتبط الفريق باللجنة الإدارية.</p>${pbar(`<button class="btn" id="addMem">＋ إضافة عضو</button>`)}
  <div class="tw"><table><tr><th>م</th><th>الاسم</th><th>العمل الحالي</th><th>المهام في اللجنة</th><th></th></tr>
  ${S.committee.map((m,i)=>i===0?`<tr><td>1</td><td><input readonly value="${LOCK.principal}"></td><td><input readonly value="مديرة المدرسة"></td><td><input readonly value="رئيسة"></td><td><span class="lock">🔒</span></td></tr>`:

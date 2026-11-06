@@ -410,7 +410,7 @@ body.can-edit .ro-note{display:none!important}
    </section>
   </main>
  </div>
- <div class="contact">هاتف المدرسة: <bdi dir="ltr">0559752844</bdi> · البريد: <bdi dir="ltr">30800@taifdue.gov.sa</bdi></div>
+ <div class="contact">هاتف المدرسة: <bdi dir="ltr">0559752844</bdi> · البريد: <bdi dir="ltr">30800@mkhg.moe.gov.sa</bdi></div>
 </div>
 <div class="foot"></div>
 
@@ -892,7 +892,7 @@ async function buildRecord(){
  const cover=`<section class="cover">${lh?`<img class="lh" src="${lh}">`:''}<div class="ct">سجل العمل التعاوني</div><div class="cs">الابتدائية السابعة والستون</div>
  <div class="cbox"><div><span>العام الدراسي</span><b>1448هـ</b></div><div><span>مديرة المدرسة</span><b>ناديه عوض الصخيري</b></div><div><span>الإشراف على السجل</span><b>وكيلة المدرسة: ثرياء القثامي</b></div><div><span>تاريخ الإصدار</span><b>${hijri(new Date())}</b></div></div>
  <div class="kp"><div><b>${pct(all)}٪</b>نسبة التنفيذ</div><div><b>${(S.staff||[]).length}</b>منسوبة مشمولة</div><div><b>${S.meets.length}</b>اجتماعًا</div><div><b>${S.evid.length}</b>شاهدًا</div></div>
- <div class="cfoot">الإدارة العامة للتعليم بمحافظة الطائف · هاتف المدرسة <bdi dir="ltr">0559752844</bdi> · <bdi dir="ltr">30800@taifdue.gov.sa</bdi></div></section>`;
+ <div class="cfoot">الإدارة العامة للتعليم بمحافظة الطائف · هاتف المدرسة <bdi dir="ltr">0559752844</bdi> · <bdi dir="ltr">30800@mkhg.moe.gov.sa</bdi></div></section>`;
  const toc=`<section>${hdr}<div class="tb">الفهرس</div><table class="toc"><tr><th style="width:50px">م</th><th>المحتوى</th></tr>${secs.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.t)}</td></tr>`).join('')}</table></section>`;
  const body=secs.map((x,i)=>`<section>${hdr}<div class="tb"><span class="no">${i+1}</span>${esc(x.t)}</div>${x.body}</section>`).join('');
  return `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>سجل العمل التعاوني - الابتدائية السابعة والستون</title><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Noto+Kufi+Arabic:wght@700&display=swap" rel="stylesheet"><style>
