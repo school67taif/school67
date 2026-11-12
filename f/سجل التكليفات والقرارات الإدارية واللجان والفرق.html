@@ -716,6 +716,24 @@ function addRemote0528(st){
   }
   st.settings.rem0528V=1;
 }
+/* جدول المناوبة — من سجل المناوبة للفصل الدراسي الأول 1448هـ */
+function applyDuty1448(st){
+  if(st.settings.dutyV===1) return;
+  if(!st.reg) st.reg={};
+  const R=st.reg;
+  if(!R.duty || R.duty.every(d=>!String(d.names||'').trim())){
+    const P='عند المقصف المدرسي، الساحة الأمامية، الساحة الخلفية (معلمة في كل نقطة)', T='بداية الدوام الدراسي ونهايته';
+    R.duty=[
+      {day:'الأحد والإثنين',names:'',points:'لا مناوبة حضورية في أيام الدراسة عن بعد',time:'—'},
+      {day:'الثلاثاء',names:'فاطمة العتيبي، نجود الزهراني، هلا العتيبي',points:P,time:T},
+      {day:'الأربعاء (بالتناوب أسبوعياً)',names:'بدرية العتيبي، رفعه العتيبي، عزه الزهراني',points:P,time:T},
+      {day:'الأربعاء (بالتناوب أسبوعياً)',names:'أمل الهيفاني، عيشه الحارثي، ساره العصيمي',points:P,time:T},
+      {day:'الخميس (بالتناوب أسبوعياً)',names:'غزيل العتيبي، نجلاء الصخيري، هند العتيبي',points:P,time:T},
+      {day:'الخميس (بالتناوب أسبوعياً)',names:'أبرار الطلحي، نوره العتيبي، نوف البيالي',points:P,time:T}];
+    R.dutySrc='سجل المناوبة لبداية ونهاية الدوام الدراسي اليومي — الفصل الدراسي الأول 1448هـ. وفي حال غياب إحدى المعلمات المكلفات بالمناوبة في اليوم المحدد، تُنقل المناوبة مباشرة إلى معلمات المناوبة في اليوم التالي، ضماناً لاستمرارية العمل وانتظام المناوبة.';
+  }
+  st.settings.dutyV=1;
+}
 function addFoundingMeeting(st){
   if(st.settings.foundV===1) return;
   const c=st.committees.find(x=>x.title==='اللجنة الإدارية للمدرسة'); if(!c) return;
@@ -886,6 +904,7 @@ function dutySheet(){
     <div class="kl">${kalisha({num:'',date:''},false)}</div>
     <h2 class="desc-h">المناوبة والإشراف اليومي</h2>
     <p class="rg-p">يصدر جدول المناوبة فصليًا بحسب تنظيم المدرسة، ويحدد نقاط الإشراف وأوقاته والبديلة عند الغياب، وتوقّع جميع المكلفات بالعلم.</p>
+    ${R.dutySrc?`<p class="rg-p"><b>المرجع:</b> ${esc(R.dutySrc)}</p>`:''}
     <div class="tbl-wrap"><table class="mem"><thead><tr><th>اليوم</th><th>المناوبات</th><th>نقاط الإشراف</th><th>الوقت</th><th>التوقيع</th></tr></thead><tbody>
       ${R.duty.map((d,i)=>{const names=String(d.names||'').split(/[،,\n]+/).map(x=>x.trim()).filter(Boolean); const sg=names.map(sigOf).filter(Boolean);
         return `<tr><td>${esc(d.day)}</td>${ce('duty.'+i+'.names',d.names)}${ce('duty.'+i+'.points',d.points)}${ce('duty.'+i+'.time',d.time)}<td class="rg-sg">${sg.map(x=>`<img src="${x}" alt="">`).join('')}</td></tr>`;}).join('')}
@@ -1595,7 +1614,7 @@ try{
 try{ applyExtraDesc(S); } catch(e){}
   try{ applySourcedFills(S); }catch(e){}
   try{ applyNextAgendas(S); }catch(e){}
-  try{ if(S.settings.stampV!==2){ S.settings.stamp=STAMP; S.settings.stampV=2; } applyKnownSigs(S); applyTeacherData(S); applyFullNames(S); applyTeacherData(S); S.committees.forEach(c=>{ if(c.kind!=='takleef') fillMeetingContent(c); }); try{ applyRealMeetings(S); }catch(e){ console.error(e); } try{ addBehaviorMeeting(S); }catch(e){} try{ addFoundingMeeting(S); }catch(e){ console.error(e); } try{ addRemote0528(S); }catch(e){ console.error(e); } applyKnownSigs(S); autoSignPast(S); save(); }catch(e){}
+  try{ if(S.settings.stampV!==2){ S.settings.stamp=STAMP; S.settings.stampV=2; } applyKnownSigs(S); applyTeacherData(S); applyFullNames(S); applyTeacherData(S); S.committees.forEach(c=>{ if(c.kind!=='takleef') fillMeetingContent(c); }); try{ applyRealMeetings(S); }catch(e){ console.error(e); } try{ addBehaviorMeeting(S); }catch(e){} try{ addFoundingMeeting(S); }catch(e){ console.error(e); } try{ addRemote0528(S); }catch(e){ console.error(e); } try{ applyDuty1448(S); }catch(e){ console.error(e); } applyKnownSigs(S); autoSignPast(S); save(); }catch(e){}
 try{ applyFix67(S); save(); }catch(e){ console.error(e); }
 
 function applyFix67(st){
