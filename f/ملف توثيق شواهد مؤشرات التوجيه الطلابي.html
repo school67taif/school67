@@ -60,7 +60,7 @@ W.__s67A.panel=panel;
 function init(){if(D.getElementById("s67ab"))return;var st=D.createElement("style");st.id="s67abcss";st.textContent=css;(D.head||de).appendChild(st);
  var b=D.createElement("div");b.id="s67ab";
  var per=SNAP?'<span class="v">لقطة أرشيفية · '+E(lab(C.cur||""))+'</span>':(VIEW?'<span class="v">عرض أرشيف '+E(lab(VIEW))+'</span>':(CYC==="none"?'':'<span class="wide d">|</span><span class="wide">'+E(lab(CUR))+'</span>'));
- b.innerHTML='<span class="i"><span class="wide">رمز النموذج: </span><b>'+E(C.code||"—")+'</b> <span class="d">·</span> <span class="wide">'+E(C.place||"—")+' <span class="d">·</span> </span>مدة الحفظ: <b>'+E(C.ret||"عام دراسي")+'</b> '+per+'</span><button type="button" class="ab">🗄️ الأرشيف</button><button type="button" class="x" title="تصغير" aria-label="تصغير">−</button>';
+ b.innerHTML='<span class="i">'+(C.code&&C.code!=="—"?'<span class="wide">رمز النموذج: </span><b>'+E(C.code)+'</b> <span class="d">·</span> ':'')+'<span class="wide">'+E(C.place||"—")+' <span class="d">·</span> </span>مدة الحفظ: <b>'+E(C.ret||"عام دراسي")+'</b> '+per+'</span><button type="button" class="ab">🗄️ الأرشيف</button><button type="button" class="x" title="تصغير" aria-label="تصغير">−</button>';
  D.body.appendChild(b);de.classList.add("s67ab");
  try{if(sessionStorage.getItem("s67abmin")==="1")de.classList.add("s67abmin")}catch(e){}
  b.querySelector(".ab").onclick=function(){if(de.classList.contains("s67abmin")){de.classList.remove("s67abmin");try{sessionStorage.removeItem("s67abmin")}catch(e){}}panel()};
@@ -1099,7 +1099,7 @@ function scope(s){
   return out;
 }
 function items(root){if(!root.querySelectorAll)return 0;var n=rows(root);
-  [].slice.call(root.querySelectorAll("li,.card,.item,.tile,.prog-card,.evidence-row,.box,.entry,.rec,.row-card,figure,blockquote,p")).forEach(function(x){
+  [].slice.call(root.querySelectorAll("li,.card,.item,.tile,.prog-card,.evidence-row,.box,.entry,.rec,.row-card,figure,blockquote,p,a.it,a[href*='drive.google.com']")).forEach(function(x){
     if(inD(x)||x.closest("nav,.rail,.tools,.toolbar,thead,tbody,.legend"))return;if(x.tagName==="P"&&norm(x.textContent).length<25)return;
     if(x.parentElement&&x.parentElement.closest&&x.parentElement.closest("li,.card,.item,.tile,.prog-card,.box,.entry,.rec,.row-card")&&x.tagName!=="LI")return;n++});
   return n}
@@ -1174,14 +1174,14 @@ function build(){
     var R=items(doc),F=fields(doc),C=checks(doc),ST=status(doc),E=evid();
     var tables=[].slice.call(document.querySelectorAll("table")).filter(function(t){return !inD(t)}).length;
     var parts=[],num=0,den=0;
-    if(F[0]){num+=F[1];den+=F[0]}
+    if(F[0]&&F[1]){num+=F[1];den+=F[0]}
     if(C[0]){num+=C[1];den+=C[0]}
     var sTot=ST[0]+ST[1]+ST[2];if(sTot){num+=ST[0]+ST[1]*0.5;den+=sTot}
     var pct=den?Math.round(num/den*100):null;
     var secs=S.map(function(s,i){
       var sc=scope(s),r=0,f=[0,0],ch=[0,0],st=[0,0,0];
       sc.forEach(function(el){r+=items(el);var a=fields(el);f[0]+=a[0];f[1]+=a[1];var b=checks(el);ch[0]+=b[0];ch[1]+=b[1];var c=status(el);st[0]+=c[0];st[1]+=c[1];st[2]+=c[2]});
-      var d=f[0]+ch[0]+st[0]+st[1]+st[2],nn=f[1]+ch[1]+st[0]+st[1]*0.5;
+      if(!f[1])f[0]=0;var d=f[0]+ch[0]+st[0]+st[1]+st[2],nn=f[1]+ch[1]+st[0]+st[1]*0.5;
       return {t:s.t,r:r,p:d?Math.round(nn/d*100):null};
     });
     var dbAll=0;for(var q in DS)dbAll+=DS[q].n;var useDB=dbAll>0&&dbAll>=Math.min(R,3),dbN=0,dbS=[0,0,0],dbT=0;
@@ -1203,13 +1203,16 @@ function build(){
       [ST[2]+(C[0]?C[0]-C[1]:0),"يحتاج متابعة","b"]
     ];
     var oT=ST[0]+C[1],pT=ST[1],bT=ST[2]+(C[0]-C[1]),all=oT+pT+bT;
+    /*kpi67*/if(k[2]&&k[2][0]==="0%"){k[2][0]="يُرصد أولًا بأول"}if(k[2]&&k[2][0]==="—"){k[2]=[(pct===null?"يُحسب":pct+"%"),"نسبة اكتمال السجل",""]}if(!useDB&&F[0]&&!F[1]){k[2]=[(pct===null?"يُحسب":pct+"%"),"نسبة اكتمال السجل",""]}
+    if(k[0][0]==="—")k[0][0]=1;
+    if(!all){k=k.slice(0,3);if(E)k.push([E,"شواهد ومرفقات موثقة",""])}else{for(var z=3;z<k.length;z++)if(k[z][0]===0)k[z][0]="لا يوجد"}
     var html='<div class="d67h"><h2>لوحة مؤشرات السجل</h2><span class="d67sub">تُحسب تلقائياً من بيانات هذا السجل وتتحدث مع كل إدخال</span><button type="button" class="d67tg" aria-expanded="'+(!box.classList.contains("d67x"))+'">'+(box.classList.contains("d67x")?"إظهار اللوحة":"إخفاء")+'</button></div>'+
     '<div class="d67body"><div class="d67k">'+k.map(function(x){return '<div class="d67c '+x[2]+'"><div class="n">'+x[0]+'</div><div class="l">'+x[1]+'</div></div>'}).join("")+'</div>'+
     '<div class="d67g"><div class="d67p"><h3>مؤشر اكتمال السجل</h3><div class="d67ring">'+ring(pct)+'<div style="min-width:0;flex:1">'+
-      (all?'<div class="d67st" role="img" aria-label="مكتمل '+oT+'، قيد العمل '+pT+'، يحتاج متابعة '+bT+'">'+(oT?'<i style="width:'+oT/all*100+'%;background:#1D7F55"></i>':"")+(pT?'<i style="width:'+pT/all*100+'%;background:#C79A2E"></i>':"")+(bT?'<i style="width:'+bT/all*100+'%;background:#B03F35"></i>':"")+'</div><div class="d67lg"><span style="--c:#1D7F55">مكتمل: <b>'+oT+'</b></span><span style="--c:#C79A2E">قيد العمل: <b>'+pT+'</b></span><span style="--c:#B03F35">يحتاج متابعة: <b>'+bT+'</b></span></div>'
+      (all?'<div class="d67st" role="img" aria-label="مكتمل '+oT+'، قيد العمل '+pT+'، يحتاج متابعة '+bT+'">'+(oT?'<i style="width:'+oT/all*100+'%;background:#1D7F55"></i>':"")+(pT?'<i style="width:'+pT/all*100+'%;background:#C79A2E"></i>':"")+(bT?'<i style="width:'+bT/all*100+'%;background:#B03F35"></i>':"")+'</div><div class="d67lg"><span style="--c:#1D7F55">مكتمل: <b>'+(oT||"لا يوجد")+'</b></span><span style="--c:#C79A2E">قيد العمل: <b>'+(pT||"لا يوجد")+'</b></span><span style="--c:#B03F35">يحتاج متابعة: <b>'+(bT||"لا يوجد")+'</b></span></div>'
        :'<div class="d67e">'+(pct===null?"يُحسب من اكتمال أقسام السجل وحالة بنوده وحقوله المعبّأة.":"")+'</div>')+
       '<div class="d67lg" style="margin-top:8px"><span style="--c:#A8832B">الشواهد والمرفقات: <b>'+E+'</b></span>'+(C[0]?'<span style="--c:#009999">بنود التحقق: <b>'+C[1]+' / '+C[0]+'</b></span>':'')+'</div></div></div></div>'+
-    '<div class="d67p"><h3>الأقسام ('+secs.length+')</h3><div class="d67sl">'+(secs.length?secs.map(function(x){var w=x.p===null?x.r/mxr*100:x.p;return '<div class="d67r"><span class="t" title="'+x.t.replace(/"/g,"&quot;")+'">'+x.t.replace(/</g,"&lt;")+'</span><div class="d67bar"><i class="'+(x.p===null?"lt":"")+'" style="width:'+w+'%"></i></div><span class="v">'+(x.p===null?x.r+(useDB?"":" عنصر"):x.p+"%")+'</span></div>'}).join("")+'':'<div class="d67e">لا توجد أقسام فرعية.</div>')+'</div>'+
+    '<div class="d67p"><h3>الأقسام ('+secs.length+')</h3><div class="d67sl">'+(secs.length?secs.map(function(x){var z0=x.p===0;var w=x.p===null||z0?x.r/mxr*100:x.p;return '<div class="d67r"><span class="t" title="'+x.t.replace(/"/g,"&quot;")+'">'+x.t.replace(/</g,"&lt;")+'</span><div class="d67bar"><i class="'+(x.p===null||z0?"lt":"")+'" style="width:'+w+'%"></i></div><span class="v">'+(x.p===null||z0?(x.r?x.r+(useDB?"":" عنصر"):"يُستكمل"):x.p+"%")+'</span></div>'}).join("")+'':'<div class="d67e">لا توجد أقسام فرعية.</div>')+'</div>'+
     '<div class="d67e" style="margin-top:4px;font-size:12px">الشريط الغامق = نسبة الإنجاز (الحقول المعبّأة والبنود المنجزة)، والفاتح = حجم المحتوى.</div></div></div>'+
     '<div class="d67ft"><span>آخر احتساب: '+new Date().toLocaleString("ar-SA-u-ca-islamic-umalqura-nu-latn",{hour:"2-digit",minute:"2-digit",day:"numeric",month:"long"})+'</span><span>الابتدائية السابعة والستون · 1448هـ</span></div></div>';
     box.innerHTML=html;
@@ -1300,3 +1303,40 @@ function init(){scan();if(!d.getElementById("s67rl")){var r=d.createElement("but
 if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",init);else init();
 })();</script>
 </body></html><script>/*qa67-dash*/(function(){var R="لم يُرصد بعد",D=/^—$/;function fix(){var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n,a=[];while(n=w.nextNode()){if(D.test(n.nodeValue.trim())){var p=n.parentElement;if(p&&!/^(SCRIPT|STYLE|TEXTAREA|OPTION|TITLE)$/.test(p.tagName)&&D.test(p.textContent.trim()))a.push(n)}}a.forEach(function(x){x.nodeValue=R})}var t,mo=new MutationObserver(function(){clearTimeout(t);t=setTimeout(run,80)});function run(){mo.disconnect();try{fix()}catch(e){}mo.observe(document.body,{childList:true,subtree:true,characterData:true})}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run()})();</script>
+<script id="kpi67">(function(){var D=document,de=D.documentElement;
+var CFG={};try{var c=D.getElementById("kpi67-cfg");if(c)CFG=JSON.parse(c.textContent)||{}}catch(e){}
+var KEEP=CFG.keep?new RegExp(CFG.keep.join("|")):null;
+var Z=/^\s*([0٠](?:[.,]0+)?\s*[%٪]?|—|–|NaN\s*[%٪]?|undefined|Infinity)\s*$/;
+var PT="يُرصد أولًا بأول";
+function vis(el){var r=el.getBoundingClientRect();return r.width>0&&r.height>0}
+function lab(el){var p=el.parentElement,t="";for(var i=0;i<3&&p;i++){t=(p.innerText||p.textContent||"").replace(el.textContent,"").trim();if(t.length>1)break;p=p.parentElement}return t}
+function skip(el){return el.closest("[data-kpi67=h],script,style,svg,select,option,textarea,input,#s67ab,#s67ap,#d67,#s67dlg,thead,[contenteditable=true],.kpi67p,[data-kpi67=no]")}
+function run(){
+ var L=D.body?D.body.getElementsByTagName("*"):[];
+ for(var i=0;i<L.length;i++){var el=L[i];
+  if(el.children.length>1)continue;
+  if(el.children.length===1&&!/^(BDI|B|SPAN|STRONG)$/.test(el.children[0].tagName))continue;
+  var t=el.textContent;if(!t||t.length>40)continue;var m2=null;
+  if(!Z.test(t)){m2=/^\s*[0٠]\s*(?:\/|من)\s*(\d+)\s*([^\d]{0,22})$/.exec(t);if(!m2){var m3=/^\s*[0٠]\s+(طالبة|طالبات|حالة|حالات|زيارة|زيارات|كتابًا|كتاب|مشاركة|مشاركات|جلسة|جلسات)\s*$/.exec(t);if(!m3)continue;m2=[t,"",""];m2.pt=1}}
+  if(el.children.length===1&&el.children[0].children.length)continue;
+  if(skip(el))continue;
+  var td=el.closest("td");if(td){var tr=td.closest("tr");if(!(tr&&/المجموع|الإجمالي|إجمالي/.test(tr.textContent)))continue}
+  if(!vis(el))continue;
+  var l=lab(el);if(KEEP&&KEEP.test(l))continue;
+  var fs=parseFloat(getComputedStyle(el).fontSize)||0;
+  var cls=(typeof el.className==="string"?el.className:"")+" "+(el.parentElement&&typeof el.parentElement.className==="string"?el.parentElement.className:"");
+  var counter=fs<18&&/(^|\s)(cnt|count|badge|tag|n|num|pill|chip)(\s|$)/.test(cls)&&(el.closest("nav,aside,button,a,.rail,.side,.tabs,.nav,.menu,summary,.secs,h2,h3")||/(^|\s)(cnt|count|badge|tag)(\s|$)/.test(cls));
+  if(counter){el.style.display="none";el.setAttribute("data-kpi67","h");continue}
+  var bar=null,an=el.parentElement;for(var q=0;q<3&&an&&!bar;q++){bar=an.querySelector('[style*="width:0%"],[style*="width: 0%"]');an=an.parentElement}
+  if(m2){if(skip(el))continue;el.setAttribute("data-kpi67o",t);el.textContent=m2.pt?PT:PT+" · المستهدف "+m2[1]+(m2[2].trim()?" "+m2[2].trim():"");el.classList.add("kpi67p");el.style.fontSize="12.5px";continue}
+  if(fs>=17||(bar&&fs>=12)||/(^|\s)(n|v|val|value|num|big|stat|kpi|k|current|pc)(\s|$)/.test(cls)){
+   el.setAttribute("data-kpi67o",t);el.textContent=PT;el.classList.add("kpi67p");}
+ }}
+var tm=null;function sch(){clearTimeout(tm);tm=setTimeout(run,120)}
+function init(){var s=D.createElement("style");s.textContent=".kpi67p{color:#9A7420!important;font-size:14px!important;font-weight:700!important;line-height:1.5!important;letter-spacing:0!important;white-space:normal!important;-webkit-text-fill-color:#9A7420!important;background:none!important}";(D.head||de).appendChild(s);
+ run();setTimeout(run,1500);setTimeout(run,4000);
+ new MutationObserver(function(ms){for(var i=0;i<ms.length;i++){var t=ms[i].target;if(t&&t.nodeType===1&&t.classList&&t.classList.contains("kpi67p"))continue;sch();return}}).observe(D.body,{subtree:true,childList:true,characterData:true});
+ new MutationObserver(sch).observe(de,{attributes:true,attributeFilter:["class"]});}
+if(D.readyState==="loading")D.addEventListener("DOMContentLoaded",init);else init();
+})();
+</script>
