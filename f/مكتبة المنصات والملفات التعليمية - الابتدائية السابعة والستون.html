@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>مكتبة المنصات والملفات التعليمية - الابتدائية السابعة والستون</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{overflow-x:hidden}
+:root{--teal:#009999;--teal-d:#007575;--teal-s:#DCF1F1;--mar:#660033;--gold:#A8832B;--ink:#1B2A2D;--mut:#5D6D70;--line:#DDE5E5;--s2:#F4F7F7}
+body{margin:0;background:#fff;color:var(--ink);font-family:'IBM Plex Sans Arabic',Tahoma,sans-serif;line-height:1.7}
+.wrap{max-width:1100px;margin:0 auto;padding:0 14px}
+.lh{display:block;width:100%;max-width:1100px;margin:10px auto 0}
+.bar{background:var(--mar);color:#fff;border-radius:12px;outline:2px solid var(--mar);outline-offset:3px;text-align:center;padding:14px 10px;margin:16px 4px 12px;font:700 clamp(20px,4vw,30px) 'Noto Kufi Arabic',Tahoma,sans-serif}
+.sch{display:flex;align-items:center;gap:12px;font:700 20px 'Noto Kufi Arabic',Tahoma,sans-serif;text-align:center;margin:6px 0}
+.sch:before,.sch:after{content:"";flex:1;height:1px;background:var(--line)}
+.meta{text-align:center;color:var(--mut);font-size:15px;margin:4px 0}.meta b{color:var(--ink)}
+.layout{display:flex;gap:18px;margin:18px 0 28px;align-items:flex-start}
+.rail{width:232px;flex:none;position:sticky;top:10px}
+.gl{font-size:12px;color:var(--mut);margin:0 4px 6px}
+.rail button{display:flex;align-items:center;gap:8px;width:100%;text-align:right;border:0;background:transparent;border-radius:12px;padding:9px 12px;margin-bottom:3px;font:500 14px inherit;font-family:inherit;color:var(--ink);cursor:pointer}
+.rail button .n{margin-right:auto;font-size:12px;color:var(--mut)}
+.rail button.on{background:var(--teal);color:#fff}.rail button.on .n{color:#fff}
+.main{flex:1;min-width:0}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tools input{flex:1;min-width:180px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:15px inherit;font-family:inherit}
+.tools button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;font-family:inherit;font-size:14px;cursor:pointer}
+.tools button.on{background:var(--teal-s);border-color:var(--teal);color:var(--teal-d);font-weight:600}
+.kpis{display:flex;gap:10px;margin-bottom:14px}
+.kpi{flex:1;background:var(--s2);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}
+.kpi b{display:block;font:700 22px 'Noto Kufi Arabic',Tahoma;color:var(--teal-d)}.kpi span{font-size:12.5px;color:var(--mut)}
+h2{color:var(--mar);font:700 19px 'Noto Kufi Arabic',Tahoma,sans-serif;margin:18px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{border:1px solid var(--line);border-radius:14px;background:#fff;padding:14px;display:flex;flex-direction:column;gap:8px}
+.card .t{display:flex;gap:10px;align-items:flex-start}
+.ic{flex:none;width:40px;height:40px;border-radius:12px;background:var(--teal-s);display:flex;align-items:center;justify-content:center;font-size:18px}
+.card h3{margin:0;font-size:15px;font-weight:600;line-height:1.6}
+.card p{margin:0;font-size:13px;color:var(--mut)}
+.row{display:flex;gap:8px;margin-top:auto}
+.row button,.row a{flex:1;text-align:center;text-decoration:none;border-radius:12px;padding:9px 6px;font-weight:600;font-size:13.5px;font-family:inherit;border:1px solid var(--line);background:var(--s2);color:var(--ink);cursor:pointer}
+.row .go{background:var(--teal-d);border-color:var(--teal-d);color:#fff}
+.row .go[aria-disabled=true]{background:var(--s2);color:var(--mut);border-color:var(--line);cursor:default}
+.row .fv.on{background:#FFF6DD;border-color:var(--gold);color:var(--gold)}
+.empty{padding:30px;text-align:center;color:var(--mut);border:1px dashed var(--line);border-radius:14px}
+.sigs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:20px 0;text-align:center;align-items:end}
+.sigs .b{font-size:14px}.sigs img{display:block;margin:0 auto 2px;max-height:74px;max-width:100%}
+.sigs .ln{border-top:1px dotted #8aa;margin:0 14px 4px}.sigs b{display:block}.sigs span{color:var(--mut);font-size:13px}
+.strip{height:12px;background:linear-gradient(90deg,#3d7eb9,#2891b1,#13a4a8,#0ba98d,#07a86c)}
+@media(max-width:760px){.layout{flex-direction:column}.rail{width:100%;position:static;display:flex;overflow-x:auto;gap:6px;padding-bottom:4px}.gl{display:none}.rail button{flex:none;width:auto;border:1px solid var(--line);white-space:nowrap}.rail button.on{border-color:var(--teal)}.grid{grid-template-columns:1fr}.sigs{grid-template-columns:1fr}}
+@media print{.rail,.tools{display:none}.sigs{grid-template-columns:1fr 1fr 1fr!important}}
+</style></head><body>
+<div class="wrap">
+<img class="lh" src="img/letterhead.png" alt="الابتدائية السابعة والستون">
+<div class="bar">مكتبة المنصات والملفات التعليمية</div>
+<div class="sch">الابتدائية السابعة والستون</div>
+<div class="meta">مديرة المدرسة: <b>ناديه عوض الصخيري</b> · الإدارة العامة للتعليم بمحافظة الطائف</div>
+<div class="meta">العام الدراسي 1448هـ · <span id="hij"></span></div>
+<div class="layout"><nav class="rail" id="rail"></nav>
+<div class="main">
+<div class="kpis"><div class="kpi"><b>62</b><span>📚 عدد إضافات المكتبة</span></div><div class="kpi"><b id="kc">0</b><span>المعروض الآن</span></div><div class="kpi"><b id="kf">0</b><span>⭐ المفضلة</span></div></div>
+<div class="tools"><input id="q" type="search" placeholder="🔍 ابحثي عن منصة أو ملف تعليمي"><button id="fb">⭐ المفضلة فقط</button></div>
+<div id="list"></div></div></div>
+<div class="sigs" id="sigs"></div>
+</div><div class="strip"></div>
+<script id="s67sigx" src="/school67/sig/%D8%A7%D9%84%D8%AA%D9%88%D8%A7%D9%82%D9%8A%D8%B9.js"></script>
+<script>
+var LIB=[{"c": "الأداء الوظيفي", "i": "📊", "items": [{"t": "شرح أداء المعلمين", "d": ""}, {"t": "شرح أداء المدراء", "d": ""}, {"t": "شرح أداء المدير والوكيل", "d": ""}, {"t": "أدلة الأداء الوظيفي – شرح شواهد بنود المدير والوكيل", "d": ""}, {"t": "أدلة الأداء الوظيفي – شرح شواهد رائدة النشاط", "d": ""}, {"t": "دليل ساعات التطوير المهني ونقاطها", "d": "منصة عرض مختصرة لعدد ساعات النشاطات وضوابطها"}, {"t": "آلية التظلم", "d": "بداية من المدير المباشر إلى ديوان المظالم"}, {"t": "حاسبة التقاعد ومكافأة نهاية الخدمة", "d": ""}, {"t": "عمل متميز في الربط بين الخطة التشغيلية ومعايير التقويم الذاتي", "d": ""}]}, {"c": "الموهوبات والنشاط", "i": "🌟", "items": [{"t": "دليل الخطط الدراسية للموهوبين", "d": ""}, {"t": "باركود منصة عين للمجالات والمناسبات والفترات اللاصفية", "d": ""}, {"t": "خطوات إضافة برامج النشاط الأخرى", "d": ""}, {"t": "دليل النشاط", "d": ""}]}, {"c": "الانضباط والسلوك", "i": "🧭", "items": [{"t": "منصة رقمية للانضباط", "d": ""}, {"t": "منصة رقمية لسجلات وأعمال وكيلة الشؤون التعليمية", "d": ""}, {"t": "منصة رقمية لسجلات وأعمال وكيلة الشؤون الطلابية", "d": ""}, {"t": "منصة رصد السلوك وتعديله رقميًا مع متابعة ولوحة بيانات", "d": ""}, {"t": "المنصة الرقمية لنماذج السلوك والمواظبة قابلة للتعديل والطباعة", "d": ""}]}, {"c": "تقارير البرامج المدرسية", "i": "📝", "items": [{"t": "منصة رقمية لتقارير البرامج بالتوليد الاصطناعي", "d": ""}, {"t": "منصة مجانية رقمية لعمل تقارير المدارس", "d": ""}, {"t": "منصة تقارير البرامج المدرسية", "d": ""}]}, {"c": "جدول المواصفات والمناهج", "i": "📐", "items": [{"t": "جدول المواصفات إنجليزي ابتدائي", "d": ""}, {"t": "جدول المواصفات إنجليزي كل المراحل", "d": ""}]}, {"c": "الخطط والجاهزية", "i": "🗓️", "items": [{"t": "منصة رقمية لمحضر اجتماع الإداريين مع خاصية التوقيع الإلكتروني", "d": ""}, {"t": "منصة رقمية خطة الاستعداد والجاهزية للمدرسة للعام الدراسي 1448هـ", "d": ""}, {"t": "خطة الاستعداد لبداية العام", "d": ""}, {"t": "رحلة خطة التحسين", "d": ""}, {"t": "ورشة بناء الخطة التشغيلية للمديرة", "d": ""}, {"t": "الفرق بين الخطة الأسبوعية والفصلية", "d": ""}, {"t": "مقارنة الإصدار 6/5 دليل الخطط", "d": ""}, {"t": "الفروق بين دليل الخطط الدراسية السادس والخامس", "d": ""}, {"t": "التطوير المهني للمعلمات في الإصدار السادس في الخطط الدراسية", "d": ""}]}, {"c": "ورش وأدلة مهنية", "i": "🎓", "items": [{"t": "ورشة مهارة صياغة الأسئلة التحصيلية", "d": ""}, {"t": "وثيقة المهارات الأساسية للصفوف الأولية", "d": ""}, {"t": "مختصر الرخصة للمدربين", "d": ""}, {"t": "شرح استمارة طلبات التقويم الخارجي وشواهده", "d": ""}, {"t": "ورشة عمل قيم مهنة التعليم وأخلاقياتها", "d": ""}]}, {"c": "حضوري", "i": "✅", "items": [{"t": "شرح لوحة التحكم في حضوري خاص للمدراء", "d": ""}, {"t": "حقيبة حضوري: شروحات وأدلة", "d": ""}, {"t": "منصة رقمية لتقرير حضوري وحصر تقرير حضوري واستيراده من حضوري", "d": ""}]}, {"c": "حقوق المتعلمين وحماية الطفل", "i": "🛡️", "items": [{"t": "منصة رقمية لسجل حقوق المتعلمين", "d": ""}, {"t": "منصة رقمية لملف حماية الطفل", "d": ""}]}, {"c": "خطط نافس", "i": "📈", "items": [{"t": "شرح بطاقة نافس بالصور وتوضيحات مهمة", "d": ""}, {"t": "منصة رقمية لتفريغ وتحليل بطاقة نافس", "d": ""}]}, {"c": "فارس ونور وفرص", "i": "🖥️", "items": [{"t": "خطوات ترتيب الشرائح للمنقولين خارجيًا في نظام نور", "d": ""}, {"t": "كيفية استخراج حصر مستوى غياب على مستوى الطالبة", "d": ""}, {"t": "كيفية الاطلاع على تقرير أنشطة التطوير المهني ونقاطه في فارس", "d": ""}, {"t": "كيفية إضافة ساعات التطوير المهني في فارس", "d": ""}, {"t": "كيفية معرفة أدائك للسنوات الماضية في فارس", "d": ""}, {"t": "كيفية استخراج بيانات الموظفات من نظام نور", "d": ""}, {"t": "كيفية الاطلاع على نموذج تقييمك للسنة الماضية في فارس واستعراضه", "d": ""}, {"t": "طريقة إرسال رسائل نصية للطالبات ولأولياء الأمور", "d": ""}, {"t": "طريقة إرسال إشعار لولي الأمر من خلال نور", "d": ""}, {"t": "طريقة استخراج نسب الغياب", "d": ""}, {"t": "طريقة رصد الدرجات للفترة الثانية بنور الجديد", "d": ""}, {"t": "طريقة استخراج الإشعارات للفترات من نظام نور بعد التحديث الأخير", "d": ""}, {"t": "شرح مفصل لخطوات إغلاق الدرجات في نظام «نور»", "d": ""}, {"t": "خطوات المباشرة لمنقول في فرص", "d": ""}, {"t": "إخلاء طرف ذوي الظروف الخاصة ومباشرتهم", "d": ""}]}, {"c": "قياس الأثر", "i": "🎯", "items": [{"t": "منصة قياس الأثر الذكية لمجتمعات التعلم المهنية", "d": ""}, {"t": "منصة رقمية لسجل قياس الأثر", "d": ""}, {"t": "منصة قياس الأثر الذكية", "d": ""}]}],TOTAL=62,cur='all',q='',onlyFav=false,FAV={};
+try{FAV=JSON.parse(localStorage.getItem('s67libfav')||'{}')||{}}catch(e){FAV={}}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function norm(s){return String(s).replace(/[\u064B-\u0652\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي')}
+function rail(){var h='<div class="gl">التصنيفات</div><button data-c="all" class="'+(cur==='all'?'on':'')+'">📚 الكل<span class="n">'+TOTAL+'</span></button>';
+LIB.forEach(function(g,i){h+='<button data-c="'+i+'" class="'+(cur==String(i)?'on':'')+'">'+g.i+' '+esc(g.c)+'<span class="n">'+g.items.length+'</span></button>'});
+var r=document.getElementById('rail');r.innerHTML=h;r.querySelectorAll('button').forEach(function(b){b.onclick=function(){cur=b.getAttribute('data-c');draw();var on=r.querySelector('.on');if(on&&r.scrollWidth>r.clientWidth){r.scrollLeft=on.offsetLeft-r.clientWidth/2}}})}
+function draw(){rail();var h='',n=0,nq=norm(q);
+LIB.forEach(function(g,gi){if(cur!=='all'&&cur!=String(gi))return;var sec='';
+g.items.forEach(function(it,ii){var id=gi+'-'+ii;if(onlyFav&&!FAV[id])return;if(nq&&norm(it.t+' '+it.d+' '+g.c).indexOf(nq)<0)return;n++;
+sec+='<div class="card"><div class="t"><div class="ic">🔗</div><div><h3>'+esc(it.t)+'</h3>'+(it.d?'<p>'+esc(it.d)+'</p>':'')+'</div></div><div class="row"><button class="fv'+(FAV[id]?' on':'')+'" data-id="'+id+'">⭐ مفضلة</button><span class="go" aria-disabled="true" style="display:flex;align-items:center;justify-content:center;border-radius:12px;padding:9px 6px;font-weight:600;font-size:13px;color:#5D6D70;background:#F4F7F7;border:1px solid #DDE5E5">يُستكمل الرابط</span></div></div>'});
+if(sec)h+='<h2>'+g.i+' '+esc(g.c)+'</h2><div class="grid">'+sec+'</div>'});
+document.getElementById('list').innerHTML=n?h:'<div class="empty">📭 لا توجد عناصر مطابقة حاليًا.</div>';
+document.getElementById('kc').textContent=n;
+document.querySelectorAll('.fv').forEach(function(b){b.onclick=function(){var id=b.getAttribute('data-id');if(FAV[id])delete FAV[id];else FAV[id]=1;try{localStorage.setItem('s67libfav',JSON.stringify(FAV))}catch(e){}draw()}});
+document.getElementById('kf').textContent=Object.keys(FAV).length}
+document.getElementById('q').oninput=function(){q=this.value;draw()};
+document.getElementById('fb').onclick=function(){onlyFav=!onlyFav;this.classList.toggle('on',onlyFav);draw()};
+try{var hd=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn',{day:'numeric',month:'long',year:'numeric'}).format(new Date());document.getElementById('hij').textContent=hd}catch(e){}
+function sigs(){var S=(window.__S67SG||{}),G=S.SG||{},N=S.PN||{};var h='';
+function cell(k,role,nm){return '<div class="b">'+(G[k]?'<img alt="" src="'+G[k]+'">':'<div style="height:60px"></div>')+'<div class="ln"></div><b>'+nm+'</b><span>'+role+'</span></div>'}
+h=cell('a01','وكيلة المدرسة','ثرياء القثامي')+(G.ST?'<div class="b"><img alt="" src="'+G.ST+'" style="max-height:110px"><span>ختم المدرسة</span></div>':'<div></div>')+cell('P','مديرة المدرسة','ناديه عوض الصخيري');
+document.getElementById('sigs').innerHTML=h}
+draw();sigs();
+</script>
+<script id="s67guard">(function(){var H="0f2fa8a8f4c5aed3136af8e410b1f45bf7ac21db2a573eded66974c5d9a288a4",d=document,de=d.documentElement,L="s67lock";
+var st=d.createElement("style");st.textContent="html.s67lock body,html.s67lock body *{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}html.s67lock .s67hide{display:none!important}@media print{html.s67lock body>*{display:none!important}html.s67lock body:after{content:'الطباعة وحفظ PDF متاحان لمديرة المدرسة فقط';display:block;text-align:center;font:700 22px Tahoma,sans-serif;margin-top:35vh;color:#660033}}#s67key{position:fixed;left:8px;bottom:8px;z-index:2147483646;border:1px solid #DDE5E5;background:#fff;border-radius:50%;width:32px;height:32px;font-size:15px;opacity:.6;cursor:pointer;padding:0}html:not(.s67lock) #s67key{display:none}#s67rl{position:fixed;left:8px;bottom:8px;z-index:2147483646;border:1px solid #DDE5E5;background:#fff;border-radius:16px;height:30px;padding:0 10px;font:12px Tahoma,sans-serif;opacity:.7;cursor:pointer}html.s67lock #s67rl{display:none}@media print{#s67rl,#s67key{display:none!important}}#s67dlg{position:fixed;inset:0;background:rgba(27,42,45,.45);z-index:2147483647;display:flex;align-items:center;justify-content:center}#s67dlg>div{background:#fff;border-radius:14px;padding:16px;width:min(320px,90vw);font-family:Tahoma,sans-serif;direction:rtl;text-align:center}#s67dlg input{width:100%;font-size:22px;letter-spacing:6px;text-align:center;direction:ltr;border:1px solid #DDE5E5;border-radius:10px;padding:8px;margin:10px 0;-webkit-user-select:text!important;user-select:text!important}#s67dlg button{border:0;border-radius:10px;padding:8px 16px;margin:2px;cursor:pointer;font:inherit}";
+(d.head||de).appendChild(st);
+var own=false;try{own=sessionStorage.getItem("s67own")==="1";var t=+localStorage.getItem("s67ownT")||0;if(!own&&t&&Date.now()-t<2592000000)own=true}catch(e){}
+function locked(){return de.classList.contains(L)}
+function unlock(){de.classList.remove(L);d.querySelectorAll(".s67hide").forEach(function(b){b.classList.remove("s67hide")});d.querySelectorAll("[data-s67ro]").forEach(function(x){var m=x.getAttribute("data-s67ro");if(m==="1")x.readOnly=false;else if(m==="2")x.disabled=false;else x.setAttribute("contenteditable","true");x.removeAttribute("data-s67ro")})}
+if(!own)de.classList.add(L);
+try{if(window.claude&&claude.use){claude.use("user").then(function(u){return u&&u.isOwner?u.isOwner():false}).then(function(o){if(o)unlock()}).catch(function(){})}}catch(e){}
+["copy","cut","contextmenu","dragstart","selectstart"].forEach(function(t){d.addEventListener(t,function(e){if(locked()&&!(e.target&&e.target.closest&&e.target.closest("#s67dlg")))e.preventDefault()},true)});
+d.addEventListener("click",function(e){if(!locked())return;var a=e.target&&e.target.closest&&e.target.closest("a[href],a[download]");if(a&&(a.hasAttribute("download")||/\.(pdf|xlsx?|docx?|pptx?|zip)(\b|#|\?|$)/i.test(a.getAttribute("href")||"")||/^(blob:|data:)/i.test(a.getAttribute("href")||""))){e.preventDefault();e.stopPropagation()}},true);
+d.addEventListener("keydown",function(e){if(!locked())return;var k=(e.key||"").toLowerCase();if(((e.ctrlKey||e.metaKey)&&"cpsxu".indexOf(k)>-1)||k==="f12"){e.preventDefault()}},true);
+var RXP=/طباع|طبع|PDF|بي دي اف|تنزيل|تحميل|تصدير|Excel|إكسل|اكسل|نسخة احتياطية|نسخ احتياطي|استيراد|استرجاع|استعادة|🖨|📦|💾|🗑|➕/i,RX=/حفظ|حذف|مسح|إضافة|اضافة|أضيفي|إدخال|رفع|توقيع|اعتماد|تعديل|➕|💾|🗑/i,q=0;
+function scan(){q=0;if(!locked())return;d.querySelectorAll("button,a,[role=button],label,input[type=button],input[type=submit]").forEach(function(b){if(b.id==="s67key"||b.classList.contains("s67hide")||(b.closest&&b.closest("#s67dlg")))return;var t=(b.textContent||"")+" "+(b.title||"")+" "+(b.value||"")+" "+(b.getAttribute("aria-label")||"");if(RXP.test(t)||(RX.test(t)&&!(b.closest&&b.closest("nav,[role=tablist],.tabs,.nav,.rail,.side,aside,header nav,[data-tab],[data-s],[data-v]"))))b.classList.add("s67hide")});d.querySelectorAll("input:not([type=search]):not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]),textarea").forEach(function(x){if(x.closest&&x.closest("#s67dlg"))return;if(x.hasAttribute&&x.hasAttribute("data-1p-ignore"))return;if(!x.readOnly){x.readOnly=true;x.setAttribute("data-s67ro","1")}});d.querySelectorAll("select").forEach(function(x){if(x.closest&&x.closest("#s67dlg"))return;if(x.disabled||x.hasAttribute("data-s67v"))return;var n=(x.id||"")+" "+(typeof x.className==="string"?x.className:"");var dat=/save|upd|store|persist|commit/i.test(x.getAttribute("onchange")||"")||!!(x.closest&&x.closest("td,form,dialog,[id*=form i],[id*=add i],[class*=form i],[class*=modal i],.fld,.field"));var vw=/(^|[\s_-])(flt|filter|filt)|Filter|search|^(f?st|fst|pf|sf|who|mon|mosel|wksel|wkPick|dvPick|schedSel|gradeSel|fltGrade|sel-month|sel-year|ttClass|ttTeacher|prSec|kfDomain|kfPeriod|kfStatus|kfType|kpiTrendSel|kpiSecs|pMonth|qType|qSt|dSel|dsel|lCat|multi|rl|role_pick|form_pick|cpick|ap-sem|beh-period)(\s|$)/.test(n)||(!dat&&/^(f[A-Z_-]|q[A-Z]|s-grade)|pick|Sel(\s|$)|sel(\s|$)/.test(x.id||""));if(!vw){x.disabled=true;x.setAttribute("data-s67ro","2")}});d.querySelectorAll("input[type=checkbox],input[type=radio],input[type=file]").forEach(function(x){if(x.closest&&x.closest("#s67dlg"))return;if(!x.disabled){x.disabled=true;x.setAttribute("data-s67ro","2")}});d.querySelectorAll("[contenteditable=true],[contenteditable=\"\"]").forEach(function(x){x.setAttribute("contenteditable","false");x.setAttribute("data-s67ro","3")})}
+function later(){if(!q){q=1;(window.requestAnimationFrame||setTimeout)(scan)}}
+var op=window.print;window.print=function(){if(locked())return;return op&&op.apply(window,arguments)};
+var ow=window.open;window.open=function(){if(locked())return null;return ow&&ow.apply(window,arguments)};
+window.addEventListener("beforeprint",scan);
+try{new MutationObserver(later).observe(de,{childList:true,subtree:true})}catch(e){}
+function ask(){var w=d.createElement("div");w.id="s67dlg";w.innerHTML='<div><b style="color:#660033">دخول مديرة المدرسة</b><div style="font-size:13px;color:#5D6D70">لفتح الطباعة والنسخ وPDF</div><input type="tel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-1p-ignore inputmode="numeric" maxlength="6" placeholder="••••••" style="-webkit-text-security:disc;text-security:disc"><div id="s67err" style="color:#B03F35;font-size:13px;min-height:18px"></div><button style="background:#007575;color:#fff">دخول</button><button style="background:#F4F7F7">إلغاء</button></div>';d.body.appendChild(w);var i=w.querySelector("input"),bs=w.querySelectorAll("button");i.focus();bs[1].onclick=function(){w.remove()};
+function go(){var c=String(i.value).replace(/[٠-٩]/g,function(x){return "٠١٢٣٤٥٦٧٨٩".indexOf(x)}).replace(/\D/g,"");crypto.subtle.digest("SHA-256",new TextEncoder().encode("s67|"+c)).then(function(b){var h=Array.prototype.map.call(new Uint8Array(b),function(x){return("0"+x.toString(16)).slice(-2)}).join("");if(h===H){try{sessionStorage.setItem("s67own","1");localStorage.setItem("s67ownT",String(Date.now()))}catch(e){}unlock();w.remove()}else{w.querySelector("#s67err").textContent="الرمز غير صحيح"}})}
+bs[0].onclick=go;i.onkeydown=function(e){if(e.key==="Enter")go()}}
+function relock(){try{sessionStorage.removeItem("s67own");localStorage.removeItem("s67ownT")}catch(e){}location.reload()}
+function init(){scan();if(!d.getElementById("s67rl")){var r=d.createElement("button");r.id="s67rl";r.type="button";r.textContent="🔒 قفل";r.title="إعادة القفل (للأجهزة المشتركة)";r.onclick=relock;d.body.appendChild(r)}if(!d.getElementById("s67key")){var k=d.createElement("button");k.id="s67key";k.type="button";k.textContent="🔑";k.title="دخول المديرة";k.setAttribute("aria-label","دخول المديرة");k.onclick=ask;d.body.appendChild(k)}}
+if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",init);else init();
+})();</script>
+</body></html>
