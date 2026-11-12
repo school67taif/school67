@@ -1682,7 +1682,7 @@ function scope(s){
   return out;
 }
 function items(root){if(!root.querySelectorAll)return 0;var n=rows(root);
-  [].slice.call(root.querySelectorAll("li,.card,.item,.tile,.prog-card,.evidence-row,.box,.entry,.rec,.row-card,figure,blockquote,p")).forEach(function(x){
+  [].slice.call(root.querySelectorAll("li,.card,.item,.tile,.prog-card,.evidence-row,.box,.entry,.rec,.row-card,figure,blockquote,p,a.it,a[href*='drive.google.com']")).forEach(function(x){
     if(inD(x)||x.closest("nav,.rail,.tools,.toolbar,thead,tbody,.legend"))return;if(x.tagName==="P"&&norm(x.textContent).length<25)return;
     if(x.parentElement&&x.parentElement.closest&&x.parentElement.closest("li,.card,.item,.tile,.prog-card,.box,.entry,.rec,.row-card")&&x.tagName!=="LI")return;n++});
   return n}
@@ -1757,14 +1757,14 @@ function build(){
     var R=items(doc),F=fields(doc),C=checks(doc),ST=status(doc),E=evid();
     var tables=[].slice.call(document.querySelectorAll("table")).filter(function(t){return !inD(t)}).length;
     var parts=[],num=0,den=0;
-    if(F[0]){num+=F[1];den+=F[0]}
+    if(F[0]&&F[1]){num+=F[1];den+=F[0]}
     if(C[0]){num+=C[1];den+=C[0]}
     var sTot=ST[0]+ST[1]+ST[2];if(sTot){num+=ST[0]+ST[1]*0.5;den+=sTot}
     var pct=den?Math.round(num/den*100):null;
     var secs=S.map(function(s,i){
       var sc=scope(s),r=0,f=[0,0],ch=[0,0],st=[0,0,0];
       sc.forEach(function(el){r+=items(el);var a=fields(el);f[0]+=a[0];f[1]+=a[1];var b=checks(el);ch[0]+=b[0];ch[1]+=b[1];var c=status(el);st[0]+=c[0];st[1]+=c[1];st[2]+=c[2]});
-      var d=f[0]+ch[0]+st[0]+st[1]+st[2],nn=f[1]+ch[1]+st[0]+st[1]*0.5;
+      if(!f[1])f[0]=0;var d=f[0]+ch[0]+st[0]+st[1]+st[2],nn=f[1]+ch[1]+st[0]+st[1]*0.5;
       return {t:s.t,r:r,p:d?Math.round(nn/d*100):null};
     });
     var dbAll=0;for(var q in DS)dbAll+=DS[q].n;var useDB=dbAll>0&&dbAll>=Math.min(R,3),dbN=0,dbS=[0,0,0],dbT=0;
@@ -1786,13 +1786,16 @@ function build(){
       [ST[2]+(C[0]?C[0]-C[1]:0),"يحتاج متابعة","b"]
     ];
     var oT=ST[0]+C[1],pT=ST[1],bT=ST[2]+(C[0]-C[1]),all=oT+pT+bT;
+    /*kpi67*/if(k[2]&&k[2][0]==="0%"){k[2][0]="يُرصد أولًا بأول"}if(k[2]&&k[2][0]==="—"){k[2]=[(pct===null?"يُحسب":pct+"%"),"نسبة اكتمال السجل",""]}if(!useDB&&F[0]&&!F[1]){k[2]=[(pct===null?"يُحسب":pct+"%"),"نسبة اكتمال السجل",""]}
+    if(k[0][0]==="—")k[0][0]=1;
+    if(!all){k=k.slice(0,3);if(E)k.push([E,"شواهد ومرفقات موثقة",""])}else{for(var z=3;z<k.length;z++)if(k[z][0]===0)k[z][0]="لا يوجد"}
     var html='<div class="d67h"><h2>لوحة مؤشرات السجل</h2><span class="d67sub">تُحسب تلقائياً من بيانات هذا السجل وتتحدث مع كل إدخال</span><button type="button" class="d67tg" aria-expanded="'+(!box.classList.contains("d67x"))+'">'+(box.classList.contains("d67x")?"إظهار اللوحة":"إخفاء")+'</button></div>'+
     '<div class="d67body"><div class="d67k">'+k.map(function(x){return '<div class="d67c '+x[2]+'"><div class="n">'+x[0]+'</div><div class="l">'+x[1]+'</div></div>'}).join("")+'</div>'+
     '<div class="d67g"><div class="d67p"><h3>مؤشر اكتمال السجل</h3><div class="d67ring">'+ring(pct)+'<div style="min-width:0;flex:1">'+
-      (all?'<div class="d67st" role="img" aria-label="مكتمل '+oT+'، قيد العمل '+pT+'، يحتاج متابعة '+bT+'">'+(oT?'<i style="width:'+oT/all*100+'%;background:#1D7F55"></i>':"")+(pT?'<i style="width:'+pT/all*100+'%;background:#C79A2E"></i>':"")+(bT?'<i style="width:'+bT/all*100+'%;background:#B03F35"></i>':"")+'</div><div class="d67lg"><span style="--c:#1D7F55">مكتمل: <b>'+oT+'</b></span><span style="--c:#C79A2E">قيد العمل: <b>'+pT+'</b></span><span style="--c:#B03F35">يحتاج متابعة: <b>'+bT+'</b></span></div>'
+      (all?'<div class="d67st" role="img" aria-label="مكتمل '+oT+'، قيد العمل '+pT+'، يحتاج متابعة '+bT+'">'+(oT?'<i style="width:'+oT/all*100+'%;background:#1D7F55"></i>':"")+(pT?'<i style="width:'+pT/all*100+'%;background:#C79A2E"></i>':"")+(bT?'<i style="width:'+bT/all*100+'%;background:#B03F35"></i>':"")+'</div><div class="d67lg"><span style="--c:#1D7F55">مكتمل: <b>'+(oT||"لا يوجد")+'</b></span><span style="--c:#C79A2E">قيد العمل: <b>'+(pT||"لا يوجد")+'</b></span><span style="--c:#B03F35">يحتاج متابعة: <b>'+(bT||"لا يوجد")+'</b></span></div>'
        :'<div class="d67e">'+(pct===null?"يُحسب من اكتمال أقسام السجل وحالة بنوده وحقوله المعبّأة.":"")+'</div>')+
       '<div class="d67lg" style="margin-top:8px"><span style="--c:#A8832B">الشواهد والمرفقات: <b>'+E+'</b></span>'+(C[0]?'<span style="--c:#009999">بنود التحقق: <b>'+C[1]+' / '+C[0]+'</b></span>':'')+'</div></div></div></div>'+
-    '<div class="d67p"><h3>الأقسام ('+secs.length+')</h3><div class="d67sl">'+(secs.length?secs.map(function(x){var w=x.p===null?x.r/mxr*100:x.p;return '<div class="d67r"><span class="t" title="'+x.t.replace(/"/g,"&quot;")+'">'+x.t.replace(/</g,"&lt;")+'</span><div class="d67bar"><i class="'+(x.p===null?"lt":"")+'" style="width:'+w+'%"></i></div><span class="v">'+(x.p===null?x.r+(useDB?"":" عنصر"):x.p+"%")+'</span></div>'}).join("")+'':'<div class="d67e">لا توجد أقسام فرعية.</div>')+'</div>'+
+    '<div class="d67p"><h3>الأقسام ('+secs.length+')</h3><div class="d67sl">'+(secs.length?secs.map(function(x){var z0=x.p===0;var w=x.p===null||z0?x.r/mxr*100:x.p;return '<div class="d67r"><span class="t" title="'+x.t.replace(/"/g,"&quot;")+'">'+x.t.replace(/</g,"&lt;")+'</span><div class="d67bar"><i class="'+(x.p===null||z0?"lt":"")+'" style="width:'+w+'%"></i></div><span class="v">'+(x.p===null||z0?(x.r?x.r+(useDB?"":" عنصر"):"يُستكمل"):x.p+"%")+'</span></div>'}).join("")+'':'<div class="d67e">لا توجد أقسام فرعية.</div>')+'</div>'+
     '<div class="d67e" style="margin-top:4px;font-size:12px">الشريط الغامق = نسبة الإنجاز (الحقول المعبّأة والبنود المنجزة)، والفاتح = حجم المحتوى.</div></div></div>'+
     '<div class="d67ft"><span>آخر احتساب: '+new Date().toLocaleString("ar-SA-u-ca-islamic-umalqura-nu-latn",{hour:"2-digit",minute:"2-digit",day:"numeric",month:"long"})+'</span><span>الابتدائية السابعة والستون · 1448هـ</span></div></div>';
     box.innerHTML=html;
