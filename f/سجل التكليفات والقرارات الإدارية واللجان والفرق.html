@@ -734,6 +734,15 @@ function applyDuty1448(st){
   }
   st.settings.dutyV=1;
 }
+/* المدرسة ليس بها مختبر ولا برنامج تربية خاصة، وعاملة الخدمات تابعة لشركة المجال العربي */
+function applyNoLabSped(st){
+  if(st.settings.noLabSpedV===1) return;
+  const drop=['فريق عمل التربية الخاصة','تكليف معلمات التربية الخاصة','تكليف محضرة المختبر','تكليف مساعدة معلمة التربية الخاصة'];
+  st.committees=st.committees.filter(c=>!drop.includes(c.title));
+  const w=st.committees.find(c=>c.title==='تكليف عاملة الخدمات');
+  if(w) w.members.forEach(m=>{ if(!String(m.name||'').trim()||/يُستكمل/.test(m.name)) m.name='عاملة الخدمات — شركة المجال العربي'; });
+  st.settings.noLabSpedV=1;
+}
 function addFoundingMeeting(st){
   if(st.settings.foundV===1) return;
   const c=st.committees.find(x=>x.title==='اللجنة الإدارية للمدرسة'); if(!c) return;
@@ -1614,7 +1623,7 @@ try{
 try{ applyExtraDesc(S); } catch(e){}
   try{ applySourcedFills(S); }catch(e){}
   try{ applyNextAgendas(S); }catch(e){}
-  try{ if(S.settings.stampV!==2){ S.settings.stamp=STAMP; S.settings.stampV=2; } applyKnownSigs(S); applyTeacherData(S); applyFullNames(S); applyTeacherData(S); S.committees.forEach(c=>{ if(c.kind!=='takleef') fillMeetingContent(c); }); try{ applyRealMeetings(S); }catch(e){ console.error(e); } try{ addBehaviorMeeting(S); }catch(e){} try{ addFoundingMeeting(S); }catch(e){ console.error(e); } try{ addRemote0528(S); }catch(e){ console.error(e); } try{ applyDuty1448(S); }catch(e){ console.error(e); } applyKnownSigs(S); autoSignPast(S); save(); }catch(e){}
+  try{ if(S.settings.stampV!==2){ S.settings.stamp=STAMP; S.settings.stampV=2; } applyKnownSigs(S); applyTeacherData(S); applyFullNames(S); applyTeacherData(S); S.committees.forEach(c=>{ if(c.kind!=='takleef') fillMeetingContent(c); }); try{ applyRealMeetings(S); }catch(e){ console.error(e); } try{ addBehaviorMeeting(S); }catch(e){} try{ addFoundingMeeting(S); }catch(e){ console.error(e); } try{ addRemote0528(S); }catch(e){ console.error(e); } try{ applyDuty1448(S); }catch(e){ console.error(e); } try{ applyNoLabSped(S); }catch(e){ console.error(e); } applyKnownSigs(S); autoSignPast(S); save(); }catch(e){}
 try{ applyFix67(S); save(); }catch(e){ console.error(e); }
 
 function applyFix67(st){
