@@ -312,6 +312,7 @@ canvas.sig{width:100%;height:150px;border:1px dashed var(--muted);border-radius:
     <span>مديرة المدرسة: <b id="m-principal">ناديه عوض الصخيري</b></span>
     <span>وكيلة المدرسة: <b id="m-deputy">ثرياء القثامي</b></span>
     <span>الموجهة الطلابية: <b id="m-guide">هند العتيبي</b></span>
+    <span>مسؤولة متابعة الغياب: <b id="m-att">هدى مستور العتيبي</b></span>
   </div>
   <div class="meta" style="margin-top:2px"><span>العام الدراسي <b id="m-year">1448هـ</b></span><span>اليوم: <b id="m-today"></b></span></div>
   <div id="banner" class="notice" hidden></div>
@@ -326,7 +327,9 @@ canvas.sig{width:100%;height:150px;border:1px dashed var(--muted);border-radius:
       <div class="grp">السجلات</div>
       <button data-v="students">الطالبات</button>
       <button data-v="reports">التقارير والتصدير</button>
+      <button data-v="honor">التكريم ورسائل أولياء الأمور</button>
       <div class="grp">المرجع</div>
+      <button data-v="evidence">الشواهد والخطط</button>
       <button data-v="rules">قواعد المواظبة</button>
       <button data-v="settings">الإعدادات</button>
     </nav>
@@ -349,7 +352,7 @@ const STAGES=[
  {d:15,k:"s15",name:"التحويل إلى مكتب التعليم",short:"تحويل للمكتب",act:"تحويل الطالبة من إدارة المدرسة إلى مكتب التعليم لدراسة حالتها من التوجيه الطلابي بالمكتب، مع إرفاق توثيق جميع الإجراءات المتخذة (الرسائل، الإنذارات، مخاطبة ولي الأمر واستدعاؤه، دراسة الحالة)."},
  {d:20,k:"s20",name:"الرفع إلى إدارة التعليم",short:"رفع للإدارة",act:"رفع تقرير لمكتب التعليم عن وضع الطالبة والإجراءات المتخذة بحقها لرفعه إلى إدارة التعليم، ومن ثم مخاطبة الجهات المختصة لتطبيق ما ورد في نظام حماية الطفل."}
 ];
-const DEF_SET={principal:"ناديه عوض الصخيري",deputy:"ثرياء القثامي",guide:"هند العتيبي",year:"1448هـ",start:"2026-08-23"};
+const DEF_SET={principal:"ناديه عوض الصخيري",deputy:"ثرياء القثامي",guide:"هند العتيبي",att:"هدى مستور العتيبي",year:"1448هـ",start:"2026-08-23"};
 
 /* ---------- state ---------- */
 let db=null,user=null,downloads=null,isOwner=false,ready=false,offline=false;
@@ -450,6 +453,7 @@ async function boot(){
     document.getElementById("m-principal").textContent=S.settings.principal||"—";
     document.getElementById("m-deputy").textContent=S.settings.deputy||"—";
     document.getElementById("m-guide").textContent=S.settings.guide||"—";
+    document.getElementById("m-att").textContent=S.settings.att||"هدى مستور العتيبي";
     document.getElementById("m-year").textContent=S.settings.year||"1448هـ";
     mark();
   },()=>mark());
@@ -472,9 +476,9 @@ function render(){
   const keepFocus=document.activeElement&&document.activeElement.id;
   const sel=document.activeElement&&document.activeElement.selectionStart;
   const priv=ready&&!db&&!offline;
-  if(priv&&view!=="rules"){main.innerHTML=vLocked();bindLocked();return}
-  if(!ready&&view!=="rules"){main.innerHTML='<div class="view"><div class="panel empty">جارٍ تحميل السجلات…</div></div>';return}
-  const V={dash:vDash,entry:vEntry,actions:vActions,students:vStudents,student:vStudent,reports:vReports,rules:vRules,settings:vSettings};
+  if(priv&&view!=="rules"&&view!=="evidence"){main.innerHTML=vLocked();bindLocked();return}
+  if(!ready&&view!=="rules"&&view!=="evidence"){main.innerHTML='<div class="view"><div class="panel empty">جارٍ تحميل السجلات…</div></div>';return}
+  const V={dash:vDash,entry:vEntry,actions:vActions,students:vStudents,student:vStudent,reports:vReports,rules:vRules,settings:vSettings,honor:vHonor,evidence:vEvidence};
   main.innerHTML=(V[view]||vDash)(per);
   bind(per);
   if(keepFocus){const el=document.getElementById(keepFocus);if(el){el.focus();try{if(sel!=null)el.setSelectionRange(sel,sel)}catch(e){}}}
@@ -635,6 +639,7 @@ function vReports(per){
   h+='<div class="tblw"><table><thead><tr><th>الصف</th><th class="num">الطالبات</th><th class="num">أيام بدون عذر</th><th class="num">أيام بعذر</th><th class="num">بلغن حد الإنذار</th></tr></thead><tbody>'+Object.keys(by).filter(g=>by[g].n).map(g=>'<tr><td>الصف '+esc(g)+'</td><td class="num">'+by[g].n+'</td><td class="num">'+by[g].u+'</td><td class="num">'+by[g].e+'</td><td class="num">'+(by[g].r?'<span class="pill b">'+by[g].r+'</span>':'0')+'</td></tr>').join("")+(Object.keys(S.students).length?'':'<tr><td colspan="5" class="empty">لا بيانات بعد.</td></tr>')+'</tbody></table></div>';
   h+='<div class="grid2"><div class="panel"><h3>الغياب حسب الشهر الهجري</h3><div class="legend" style="margin:8px 0"><span><i style="background:var(--bad)"></i>بدون عذر</span><span><i style="background:var(--gold)"></i>بعذر</span></div><div class="bars">'+(mk.length?mk.map(m=>{const v=months[m];return '<div class="bar"><span>'+esc(m)+'</span><div class="tr"><div class="u" style="width:'+(v.u/mx*100)+'%"></div><div class="e" style="width:'+(v.e/mx*100)+'%"></div></div><span class="v">'+(v.u+v.e)+'</span></div>'}).join(""):'<div class="empty">لا بيانات بعد.</div>')+'</div></div>';
   h+='<div class="panel"><h3>الأعلى غيابًا</h3>'+(top.length?'<div class="tblw" style="margin-top:10px"><table><thead><tr><th>الطالبة</th><th class="num">بدون عذر</th><th class="num">بعذر</th></tr></thead><tbody>'+top.map(x=>'<tr><td><button class="link" data-st="'+x.st.id+'">'+esc(x.st.name)+'</button></td><td class="num">'+x.n+'</td><td class="num">'+x.e+'</td></tr>').join("")+'</tbody></table></div>':'<div class="empty">لا يوجد غياب مسجّل.</div>')+'</div></div>';
+  h+=weeklyPanel();
   h+='<div class="panel"><h3>ملفات</h3><p class="sub">تُحفظ الملفات على جهازك. ملفات الطباعة تفتح في المتصفح (Edge) واطبعيها من قائمة الطباعة.</p><div class="row" style="margin-top:10px">'+
    '<button class="btn p" id="x-report">تقرير الغياب الشامل للطباعة</button><button class="btn" id="x-csv">جدول الغياب (إكسل CSV)</button><button class="btn" id="x-json">نسخة احتياطية كاملة</button>'+
    (isOwner?'<label class="btn" style="display:inline-flex;align-items:center">استعادة نسخة احتياطية<input type="file" id="x-import" accept=".json,application/json" hidden></label>':'')+'</div></div></div>';
@@ -660,6 +665,103 @@ function vRules(){
   return h;
 }
 
+/* --- weekly attendance --- */
+function isoOf(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function weeks(){
+  const start=S.settings.start||todayISO(),today=todayISO(),n=Object.keys(S.students).length,out=[];
+  const d0=dt(start);d0.setDate(d0.getDate()-d0.getDay());
+  for(let w=new Date(d0),i=1;isoOf(w)<=today&&i<60;w.setDate(w.getDate()+7),i++){
+    let school=0,u=0,e=0;
+    for(let k=0;k<5;k++){const x=new Date(w);x.setDate(w.getDate()+k);const iso=isoOf(x);if(iso<start||iso>today)continue;school++;const r=(S.days[iso]||{}).records||{};for(const id in r){if(!S.students[id])continue;r[id].t==="u"?u++:e++}}
+    if(!school)continue;
+    const cap=n*school;out.push({i,from:isoOf(w),school,u,e,rate:cap?Math.max(0,100-(u+e)/cap*100):null});
+  }
+  return out;
+}
+function weeklyPanel(){
+  const ws=weeks().filter(w=>w.u+w.e>0||w.from>=(S.settings.start||"")).slice(-12);
+  let h='<div class="panel"><h3>نسبة الحضور الأسبوعية</h3><p class="sub">تُحسب من أيام الدراسة (الأحد–الخميس) وعدد الطالبات، بنفس طريقة تقارير نور الأسبوعية. آخر 12 أسبوعًا.</p>';
+  if(!ws.length||!Object.keys(S.students).length)return h+'<div class="empty">لا بيانات بعد.</div></div>';
+  h+='<div class="tblw" style="margin-top:10px"><table><thead><tr><th>الأسبوع</th><th>بدايته</th><th class="num">أيام الدراسة</th><th class="num">بدون عذر</th><th class="num">بعذر</th><th class="num">نسبة الحضور</th></tr></thead><tbody>'+
+   ws.map(w=>'<tr><td>الأسبوع '+w.i+'</td><td>'+esc(hijri(w.from))+'</td><td class="num">'+w.school+'</td><td class="num">'+w.u+'</td><td class="num">'+w.e+'</td><td class="num"><span class="pill '+(w.rate>=95?"g":w.rate>=90?"w":"b")+'">'+w.rate.toFixed(1)+'٪</span></td></tr>').join("")+'</tbody></table></div></div>';
+  return h;
+}
+
+/* --- honor + parent messages --- */
+const MSG={
+ day:{n:"إشعار غياب اليوم",t:(st,x)=>"ولي أمر الطالبة / "+st.name+" المحترم\nالسلام عليكم ورحمة الله وبركاته\nنفيدكم بغياب ابنتكم اليوم "+wday(todayISO())+" "+hijri(todayISO())+" عن المدرسة. نأمل تزويدنا بعذر الغياب خلال ثلاثة أيام، علمًا بأن مجموع غيابها بدون عذر حتى اليوم ("+x.u+") أيام.\nحرصكم على حضورها يصنع تميزها.\nإدارة الابتدائية السابعة والستون — "+"0559752844"},
+ excuse:{n:"طلب تقديم عذر",t:(st,x)=>"ولي أمر الطالبة / "+st.name+" المحترم\nنذكّركم بتقديم عذر غياب ابنتكم (إجازة مرضية أو مشهد مراجعة) حتى يُسجَّل غيابها بعذر ولا يؤثر على درجة المواظبة.\nإدارة الابتدائية السابعة والستون — 0559752844"},
+ stage:{n:"تنبيه بمرحلة الإجراء",t:(st,x)=>{const r=reached(x.u);const nx=STAGES.find(s=>x.u<s.d);return "ولي أمر الطالبة / "+st.name+" المحترم\nبلغ غياب ابنتكم بدون عذر ("+x.u+") أيام"+(r?"، وقد بلغت حد «"+r.name+"» وفق قواعد السلوك والمواظبة":"")+"."+(nx?"\nعند بلوغ ("+nx.d+") أيام يترتب عليه: "+nx.act:"")+"\nنأمل التواصل مع المدرسة ومتابعة انتظامها.\nإدارة الابتدائية السابعة والستون — 0559752844"}},
+ thanks:{n:"شكر على الانتظام",t:(st,x)=>"ولي أمر الطالبة / "+st.name+" المحترم\nيسعدنا إبلاغكم بأن ابنتكم من الطالبات المنتظمات في الحضور"+(x.u+x.e===0?" دون أي غياب":"")+" حتى تاريخه. شكرًا لحرصكم ومتابعتكم.\nإدارة الابتدائية السابعة والستون"}
+};
+function vHonor(per){
+  const all=sortStudents(Object.values(S.students));
+  const perfect=all.filter(st=>per[st.id].u.length+per[st.id].e.length===0);
+  const noU=all.filter(st=>per[st.id].u.length===0&&per[st.id].e.length>0);
+  const sid=ui.mst&&S.students[ui.mst]?ui.mst:(all[0]&&all[0].id);const mk=ui.mk||"day";
+  let h='<div class="view"><div><h2>التكريم ورسائل أولياء الأمور</h2><p class="sub">تعزيز الانضباط بتكريم المنتظمات، ورسائل جاهزة لأولياء الأمور تُنسخ وتُرسل عبر الواتساب أو منصة مدرستي.</p></div>'+exNote();
+  h+='<div class="kpis">'+k(perfect.length,"منتظمات دون أي غياب")+k(noU.length,"غياب بعذر فقط")+k(all.length?Math.round((perfect.length+noU.length)/all.length*100)+"٪":"—","نسبة المنضبطات (بلا غياب بدون عذر)")+'</div>';
+  h+='<div class="panel"><div class="row" style="justify-content:space-between;align-items:center"><h3>المنتظمات في الحضور</h3><button class="btn p sm" id="h-certs"'+(perfect.length?"":" disabled")+'>شهادات شكر للجميع ('+perfect.length+')</button></div>';
+  h+=perfect.length?'<div class="tblw" style="margin-top:10px"><table><thead><tr><th>م</th><th>الطالبة</th><th>الصف</th><th></th></tr></thead><tbody>'+perfect.map((st,i)=>'<tr><td class="num">'+(i+1)+'</td><td>'+esc(st.name)+(st.ex?' <span class="ex">مثال</span>':'')+'</td><td>'+esc(cls(st))+'</td><td><button class="btn sm" data-cert="'+st.id+'">شهادة</button></td></tr>').join("")+'</tbody></table></div>':'<div class="empty">لا توجد طالبات بلا غياب حتى الآن.</div>';
+  h+='</div>';
+  h+='<div class="panel"><h3>رسالة لولي الأمر</h3><div class="row" style="margin-top:10px"><label class="f" style="flex:1;min-width:180px">الطالبة<select id="h-st">'+all.map(st=>'<option value="'+st.id+'"'+(st.id===sid?" selected":"")+'>'+esc(st.name)+' — '+esc(cls(st))+'</option>').join("")+'</select></label>'+
+   '<label class="f">نوع الرسالة<select id="h-mk">'+Object.keys(MSG).map(x=>'<option value="'+x+'"'+(x===mk?" selected":"")+'>'+MSG[x].n+'</option>').join("")+'</select></label></div>';
+  if(sid){const st=S.students[sid];const x={u:per[sid].u.length,e:per[sid].e.length};h+='<textarea id="h-txt" rows="7" style="margin-top:10px" readonly>'+esc(MSG[mk].t(st,x))+'</textarea><div class="row" style="margin-top:8px"><button class="btn p" id="h-copy">نسخ الرسالة</button><span class="muted">جوال ولي الأمر: <bdi dir="ltr">'+esc(st.phone||"—")+'</bdi></span></div>'}
+  else h+='<div class="empty">أضيفي الطالبات أولًا.</div>';
+  h+='</div></div>';
+  return h;
+}
+function bindHonor(per){
+  const $=id=>document.getElementById(id);
+  if($("h-st"))$("h-st").onchange=e=>{ui.mst=e.target.value;render()};
+  if($("h-mk"))$("h-mk").onchange=e=>{ui.mk=e.target.value;render()};
+  if($("h-copy"))$("h-copy").onclick=()=>{const t=$("h-txt");const done=()=>toast("نُسخت الرسالة");try{navigator.clipboard.writeText(t.value).then(done,()=>{t.select();toast("حدّدي النص وانسخيه")})}catch(e){t.select();toast("حدّدي النص وانسخيه")}};
+  main.querySelectorAll("[data-cert]").forEach(b=>b.onclick=()=>dlCerts([S.students[b.dataset.cert]]));
+  if($("h-certs"))$("h-certs").onclick=()=>dlCerts(sortStudents(Object.values(S.students)).filter(st=>per[st.id].u.length+per[st.id].e.length===0));
+}
+async function dlCerts(list){
+  if(!list.length)return;const s=S.settings;
+  const body=list.map((st,i)=>'<div style="border:6px double #009999;border-radius:16px;padding:26px 30px;margin:14px 0;text-align:center'+(i<list.length-1?';page-break-after:always':'')+'">'+
+   '<div class="tb" style="font-size:24px">شهادة شكر وتقدير</div><div class="sc">الابتدائية السابعة والستون</div>'+
+   '<p style="font-size:17px;line-height:2.2;margin:18px 0">تتقدم إدارة الابتدائية السابعة والستون بالشكر والتقدير للطالبة<br><b style="font-family:\'Noto Kufi Arabic\',Tahoma;font-size:24px;color:#660033">'+esc(st.name)+'</b><br>'+esc(cls(st))+'<br>لانتظامها في الحضور وحرصها على المواظبة خلال العام الدراسي '+esc(s.year)+'،<br>متمنين لها دوام التميز والنجاح.</p>'+
+   '<div class="mt">التاريخ: '+esc(hijriN(todayISO()))+'</div>'+sigBlock(null,false)+'</div>').join("");
+  save((list.length>1?"شهادات شكر المنتظمات في الحضور":"شهادة شكر - "+list[0].name)+".html",docShell("شهادات شكر المنتظمات في الحضور",body,await letterhead()));
+}
+
+/* --- evidence library --- */
+const EVD=[
+ {g:"خطط الانضباط والمواظبة",it:[
+  {t:"خطة تحسين الغياب في أيام التعليم عن بُعد — الفصل الأول",y:"1448",f:"ghiyab/g09.pdf"},
+  {t:"خطة الانضباط المدرسي في الاختبارات وبعد الإجازة",y:"1447",d:"1y2DfVdM5A_JjiNBd871LXdszs5I_hk3q"},
+  {t:"خطة الانضباط في رمضان",y:"1447",d:"1nPxLHTw56k3RQ6dBeK_DBktgWg7MCZAV"},
+  {t:"خطة الانضباط في اختبار نافس",y:"1447",d:"1FAHANZb_igal6ovILgZbWmGI3MC7NGui"},
+  {t:"خطة الانضباط — شوال",y:"1447",d:"1jk-mpRR7Nn2KsaPcOUS6OqAnx7Vjl_oO"}]},
+ {g:"تقارير المواظبة ونسب الحضور (نظام نور)",it:[
+  {t:"التقرير العام للمواظبة حسب الإدارة التعليمية — هدى مستور العتيبي",y:"1448",f:"ghiyab/g04.pdf"},
+  {t:"نسبة الحضور والغياب — الأسبوع الأول",y:"1448",f:"ghiyab/g05.pdf"},
+  {t:"نسبة الحضور والغياب — الأسبوع الثاني",y:"1448",f:"ghiyab/g06.pdf"},
+  {t:"نسبة الحضور والغياب — الأسبوع الثالث",y:"1448",f:"ghiyab/g07.pdf"},
+  {t:"ملخص نسبة الحضور والغياب — شهر ربيع الأول",y:"1448",f:"ghiyab/g08.pdf"},
+  {t:"تقرير الغياب قبل اليوم الوطني وبعده (17/3 و11/4) — هدى مستور العتيبي",y:"1448",f:"ghiyab/g03.pdf"},
+  {t:"ملخص نموذج أعذار الغياب الإلكتروني — 207 أعذار بدون أسماء",y:"1447",f:"ghiyab/g02.pdf"}]},
+ {g:"المبادرات والتوعية",it:[
+  {t:"مبادرة «رصد» لمتابعة غياب الطالبات إلكترونيًا — هدى مستور العتيبي",y:"1448",f:"ghiyab/g01.pdf"},
+  {t:"برنامج «انضباطي سر تميزي»",y:"1447",f:"ghiyab/g10.pdf"},
+  {t:"ورشة الأمهات: شرح قواعد السلوك والمواظبة — نظام الدرجات ودور الأسرة",y:"1447",d:"15IAPpql3PF13mIF4zbYgEpyOPqKKH5KJ"}]},
+ {g:"تكريم المنضبطات",it:[
+  {t:"تكريم الطالبات في الانضباط المدرسي — 15 طالبة — لطيفة السواط",y:"1447",d:"1Tw3wtz68RFHCrPcec2_1Vzu2vfdY21di"},
+  {t:"تكريم الفصل المنضبط بالحضور عبر منصة مدرستي — لطيفة السواط",y:"1447",d:"1MFCOGVCIN6ji-F5eU3sJRY7BXpusd4NO"},
+  {t:"تكريم المنتظمات في الحضور",y:"1447",d:"1yIA-rZ5eRtcHgTztNvhzzVxHWQZ20V9g"}]}
+];
+function vEvidence(){
+  let n=0;EVD.forEach(g=>n+=g.it.length);
+  let h='<div class="view"><div><h2>الشواهد والخطط</h2><p class="sub">'+n+' شاهدًا من درايف المدرسة للعامين 1447 و1448هـ (التقويم يعتمد شواهد ثلاث سنوات). ملفات PDF تُفتح هنا مباشرة، وملفات الدرايف تُفتح لمن لديها صلاحية مجلد المدرسة لأنها كبيرة الحجم أو فيها أسماء طالبات.</p></div>';
+  EVD.forEach(g=>{h+='<div class="panel"><h3>'+esc(g.g)+'</h3><div class="tblw" style="margin-top:10px"><table><thead><tr><th>الشاهد</th><th class="num">العام</th><th>المصدر</th><th></th></tr></thead><tbody>'+
+   g.it.map(x=>'<tr><td>'+esc(x.t)+'</td><td class="num">'+x.y+'هـ</td><td>'+(x.f?'<span class="pill t">PDF في المنصة</span>':'<span class="pill n">درايف المدرسة</span>')+'</td><td><a class="btn sm" target="_blank" rel="noopener" href="'+(x.f?x.f:"https://drive.google.com/file/d/"+x.d+"/view")+'">فتح</a></td></tr>').join("")+'</tbody></table></div></div>'});
+  h+='</div>';
+  return h;
+}
+
 /* --- settings --- */
 function vSettings(){
   const s=S.settings;const dis=isOwner?"":" disabled";
@@ -667,7 +769,8 @@ function vSettings(){
   h+='<div class="panel"><div class="row">'+
    '<label class="f" style="flex:1;min-width:180px">مديرة المدرسة<input type="text" id="g-principal" value="'+esc(s.principal)+'"'+dis+'></label>'+
    '<label class="f" style="flex:1;min-width:180px">وكيلة المدرسة<input type="text" id="g-deputy" value="'+esc(s.deputy)+'"'+dis+'></label>'+
-   '<label class="f" style="flex:1;min-width:180px">الموجهة الطلابية<input type="text" id="g-guide" value="'+esc(s.guide)+'" placeholder="اسم الموجهة"'+dis+'></label></div>'+
+   '<label class="f" style="flex:1;min-width:180px">الموجهة الطلابية<input type="text" id="g-guide" value="'+esc(s.guide)+'" placeholder="اسم الموجهة"'+dis+'></label>'+
+   '<label class="f" style="flex:1;min-width:180px">مسؤولة متابعة الغياب<input type="text" id="g-att" value="'+esc(s.att||"هدى مستور العتيبي")+'"'+dis+'></label></div>'+
    '<div class="row" style="margin-top:10px"><label class="f">العام الدراسي<input type="text" id="g-year" value="'+esc(s.year)+'"'+dis+'></label>'+
    '<label class="f">احتساب الغياب ابتداءً من<input type="date" id="g-start" value="'+esc(s.start)+'"'+dis+'></label>'+
    '<span class="muted" style="padding-bottom:8px">'+esc(hijri(s.start||todayISO()))+'</span>'+
@@ -712,8 +815,9 @@ function bind(per){
     $("x-json").onclick=()=>save("نسخة احتياطية - منصة متابعة الغياب - "+todayISO()+".json",JSON.stringify({students:S.students,days:S.days,settings:S.settings,exported:new Date().toISOString()},null,1));
     if($("x-import"))$("x-import").onchange=importJSON;
   }
+  if(view==="honor")bindHonor(per);
   if(view==="settings"&&isOwner){
-    $("g-save").onclick=()=>{S.settings={principal:$("g-principal").value.trim(),deputy:$("g-deputy").value.trim(),guide:$("g-guide").value.trim(),year:$("g-year").value.trim(),start:$("g-start").value};writeSettings()};
+    $("g-save").onclick=()=>{S.settings={principal:$("g-principal").value.trim(),deputy:$("g-deputy").value.trim(),guide:$("g-guide").value.trim(),att:$("g-att").value.trim(),year:$("g-year").value.trim(),start:$("g-start").value};writeSettings()};
     if($("g-clear")){$("g-clear").onclick=()=>{$("g-clear-confirm").hidden=false};$("g-clear-no").onclick=()=>{$("g-clear-confirm").hidden=true};$("g-clear-yes").onclick=clearExamples}
   }
 }
