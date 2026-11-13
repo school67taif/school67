@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الابتدائية السابعة والستون – الطائف · ملفات وروابط</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+  :root {
+    --dark-silver: #2C2C2E;
+    --silver: #48484A;
+    --mid-silver: #6E6E73;
+    --light-silver: #AEAEB2;
+    --pale-silver: #D1D1D6;
+    --rose: #B5748A;
+    --deep-rose: #7C4B5A;
+    --mid-rose: #D4A0B0;
+    --light-rose: #EDCCD8;
+    --pale-rose: #F9EEF3;
+    --gold: #C9981A;
+    --light-gold: #F0D060;
+    --pale-gold: #FDF0B0;
+    --white: #FFFFFF;
+    --warm-white: #FAF8F6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Tajawal', 'Traditional Arabic', Arial, sans-serif;
+    background: var(--warm-white);
+    color: var(--dark-silver);
+    min-height: 100vh;
+    direction: rtl;
+  }
+  /* ===== HEADER ===== */
+  .header {
+    background: var(--dark-silver);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-circle {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--rose);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--white); font-weight: 800;
+  }
+  .header-title { color: var(--white); font-size: 16px; font-weight: 700; line-height: 1.4; }
+  .header-sub { color: var(--light-gold); font-size: 13px; font-weight: 500; }
+  .header-year { color: var(--gold); font-size: 14px; font-weight: 700; }
+
+  /* ===== SEARCH ===== */
+  .search-bar {
+    background: var(--silver);
+    padding: 10px 32px;
+    display: flex;
+    justify-content: center;
+  }
+  .search-input {
+    width: 100%; max-width: 600px;
+    padding: 8px 16px;
+    border: none; border-radius: 20px;
+    font-family: 'Tajawal', Arial, sans-serif;
+    font-size: 14px; direction: rtl;
+    background: var(--warm-white);
+    color: var(--dark-silver);
+    outline: none;
+  }
+  .search-input::placeholder { color: var(--light-silver); }
+
+  /* ===== CONTENT ===== */
+  .container { max-width: 1200px; margin: 0 auto; padding: 28px 24px; }
+
+  /* ===== CATEGORY SECTION ===== */
+  .cat-section { margin-bottom: 36px; }
+  .cat-header {
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 3px solid var(--rose);
+    padding-bottom: 8px; margin-bottom: 18px;
+  }
+  .cat-icon { font-size: 22px; }
+  .cat-title { font-size: 20px; font-weight: 800; color: var(--dark-silver); }
+  .cat-count {
+    background: var(--rose); color: var(--white);
+    font-size: 12px; font-weight: 700;
+    padding: 2px 10px; border-radius: 12px;
+    margin-right: auto;
+  }
+
+  /* ===== CARDS GRID ===== */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    background: var(--white);
+    border-radius: 10px;
+    border: 1px solid var(--pale-silver);
+    padding: 14px 16px;
+    display: flex; align-items: flex-start; gap: 12px;
+    text-decoration: none; color: inherit;
+    transition: box-shadow .18s, transform .18s, border-color .18s;
+    cursor: pointer;
+  }
+  .card:hover {
+    box-shadow: 0 4px 18px rgba(181,116,138,.18);
+    transform: translateY(-2px);
+    border-color: var(--mid-rose);
+  }
+  .card-icon {
+    width: 40px; min-width: 40px; height: 40px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .icon-html { background: var(--pale-rose); }
+  .icon-pdf  { background: var(--pale-gold); }
+  .icon-docx { background: #E8F4FD; }
+  .card-info { flex: 1; min-width: 0; }
+  .card-name {
+    font-size: 13.5px; font-weight: 700;
+    color: var(--dark-silver);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    margin-bottom: 3px;
+  }
+  .card-type {
+    font-size: 11px; color: var(--mid-silver);
+    background: var(--warm-white);
+    padding: 1px 7px; border-radius: 8px;
+    display: inline-block;
+  }
+
+  /* ===== PDF BADGE ===== */
+  .pdf-badge {
+    background: var(--pale-gold);
+    color: var(--gold);
+    font-size: 10px; font-weight: 800;
+    padding: 1px 7px; border-radius: 6px;
+    margin-right: 4px;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--dark-silver);
+    color: var(--light-silver);
+    text-align: center;
+    padding: 18px 24px;
+    font-size: 13px;
+    border-top: 3px solid var(--rose);
+    margin-top: 40px;
+  }
+  .footer strong { color: var(--light-gold); }
+
+  /* hidden for search */
+  .hidden { display: none !important; }
+
+  @media (max-width: 600px) {
+    .header-inner { padding: 10px 16px; }
+    .search-bar { padding: 8px 16px; }
+    .container { padding: 20px 12px; }
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <div class="logo-circle">٦٧</div>
+      <div>
+        <div class="header-title">الابتدائية السابعة والستون – الطائف</div>
+        <div class="header-sub">ملفات ومنصات وسجلات المدرسة</div>
+      </div>
+    </div>
+    <div class="header-year">١٤٤٧ / ١٤٤٨هـ</div>
+  </div>
+</div>
+
+<div class="search-bar">
+  <input class="search-input" type="text" id="searchInput" placeholder="🔍 ابحث عن ملف أو منصة أو سجل…" oninput="filterCards()" />
+</div>
+
+<div class="container" id="mainContainer">
+
+  <!-- قسم: الإدارة والتخطيط -->
+  <div class="cat-section" data-cat="الإدارة والتخطيط">
+    <div class="cat-header">
+      <span class="cat-icon">🏫</span>
+      <span class="cat-title">الإدارة والتخطيط</span>
+      <span class="cat-count">8</span>
+    </div>
+    <div class="cards-grid">
+      <a class="card" href="الخطة التشغيلية ١٤٤٨هـ.html" target="_blank">
+        <div class="card-icon icon-html">📋</div>
+        <div class="card-info">
+          <div class="card-name">الخطة التشغيلية ١٤٤٨هـ</div>
+          <span class="card-type">منصة</span>
+        </div>
+      </a>
+      <a class="card" href="ملف خطة التحسين والتطوير 1448هـ.html" target="_blank">
+        <div class="card-icon icon-html">📈</div>
+        <div class="card-info">
+          <div class="card-name">خطة التحسين والتطوير ١٤٤٨هـ</div>
+          <span class="card-type">ملف</span>
+        </div>
+      </a>
+      <a class="card" href="ورشة التخطيط التشغيلي لتحسين الأداء المدرسي.html" target="_blank">
+        <div class="card-icon icon-html">🎯</div>
+        <div class="card-info">
+          <div class="card-name">ورشة التخطيط التشغيلي</div>
+          <span class="card-type">ورشة</span>
+        </div>
+      </a>
+      <a class="card" href="دليل الوثائق المطلوبة وفق التقويم الذاتي.html" target="_blank">
+        <div class="card-icon icon-html">📂</div>
+        <div class="card-info">
+          <div class="card-name">دليل الوثائق – التقويم الذاتي</div>
+          <span class="card-type">دليل</span>
+        </div>
+      </a>
+      <a class="card" href="متابعة اكتمال ملف التقويم.html" target="_blank">
+        <div class="card-icon icon-html">✅</div>
+        <div class="card-info">
+          <div class="card-name">متابعة اكتمال ملف التقويم</div>
+          <span class="card-type">متابعة</span>
+        </div>
+      </a>
+      <a class="card" href="سجل التكليفات والقرارات الإدارية واللجان والفرق.html" target="_blank">
+        <div class="card-icon icon-html">📜</div>
+        <div class="card-info">
+          <div class="card-name">سجل التكليفات والقرارات واللجان</div>
+          <span class="card-type">سجل</span>
+        </div>
+      </a>
+      <a class="card" href="صلاحيات مديرة المدرسة.html" target="_blank">
+        <div class="card-icon icon-html">🔑</div>
+        <div class="card-info">
+          <div class="card-name">صلاحيات مديرة المدرسة</div>
+          <span class="card-type">وثيقة</span>
+        </div>
+      </a>
+      <a class="card" href="أداة تحليل مجال الإدارة المدرسية.html" target="_blank">
+        <div class="card-icon icon-html">🔍</div>
+        <div class="card-info">
+          <div class="card-name">أداة تحليل الإدارة المدرسية</div>
+          <span class="card-type">أداة تحليل</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- قسم: التقارير -->
+  <div class="cat-section" data-cat="التقارير">
+    <div class="cat-header">
+      <span class="cat-icon">📊</span>
+      <span class="cat-title">التقارير</span>
+      <span class="cat-count">10</span>
+    </div>
+    <div class="cards-grid">
+      <a class="card" href="تقارير_التحديات_ومعالجتها_١٤٤٧.pdf" target="_blank">
+        <div class="card-icon icon-pdf">📑</div>
+        <div class="card-info">
+          <div class="card-name">تقارير التحديات ومعالجتها ١٤٤٧هـ <span class="pdf-badge">PDF</span></div>
+          <span class="card-type">تقرير</span>
+        </div>
+      </a>
+      <a class="card" href="تقرير أداء المدرسة ١٤٤٧هـ.html" target="_blank">
+        <div class="card-icon icon-html">📊</div>
+        <div class="card-info">
+          <div class="card-name">تقرير أداء المدرسة ١٤٤٧هـ</div>
+          <span class="card-type">تقرير</span>
+        </div>
+      </a>
+      <a class="card" href="ملف نتائج التقويم المدرسي ومؤشراته 1448هـ.html" target="_blank">
+        <div class="card-icon icon-html">📉</div>
+        <div class="card-info">
+          <div class="card-name">نتائج التقويم ومؤشراته ١٤٤٨هـ</div>
+          <span class="card-type">ملف</span>
+        </div>
+      </a>
+      <a class="card" href="تقرير بطاقات الشكر للأداء الوظيفي 1448هـ - الابتدائية السابعة والستون.pdf" target="_blank">
+        <div class="card-icon icon-pdf">🎖️</div>
+        <div class="card-info">
+          <div class="card-name">تقرير بطاقات الشكر للأداء الوظيفي <span class="pdf-badge">PDF</span></div>
+          <span class="card-type">تقرير</span>
+        </div>
+      </a>
+      <a class="card" href="تقرير تفعيل شراكة مع جهة معنية بالموهبة أو ذوي الإعاقة 1448هـ.pdf" target="_blank">
+        <div class="card-icon icon-pdf">🤝</div>
+        <div class="card-info">
+          <div class="card-name">تقرير الشراكة (الموهبة / ذوي الإعاقة) <span class="pdf-badge">PDF</span></div>
+          <span class="card-type">تقرير</span>
+        </div>
+      </a>
+      <a class="card" href="تقرير تنفيذ برنامج حفظ الممتلكات - الابتدائية السابعة والستون.html" target="_blank">
+        <div class="card-icon icon-html">🏛️</div>
+        <div class="card-info">
+          <div class="card-name">تقرير برنامج حفظ الممتلكات</div>
+          <span class="card-type">تقرير</span>
+        </div>
+      </a>
+      <a class="card" href="تقرير مبادرة نقرأ نتائجنا 1448هـ.pdf" target="_blank">
+        <div class="card-icon icon-pdf">📖</div>
+        <div class="card-info">
+          <div class="card-name">تقرير مبادرة نقرأ نتائجنا ١٤٤٨هـ <span class="pdf-badge">PDF</span></div>
+          <span class="card-type">تقرير</span>
+        </div>
+      </a>
+      <a class="card" href="تقرير مقارنة المخالفات السلوكية بين فصلين دراسيين 1448هـ.pdf" target="_blank">
+        <div class="card-icon icon-pdf">🧾</div>
+        <div class="card-info">
+          <div class="card-name">تقرير مقارنة المخالفات السلوكية <span class="pdf-badge">PDF</span></div>
+          <span class="card-type">تقرير</span>
+        </div>
+      </a>
+      <a class="card" href="تقرير مقارنة حالات التنمر بالعام الدراسي السابق 1448هـ.pdf" target="_blank">
+        <div class="card-icon icon-pdf">⚠️</div>
+        <div class="card-info">
+          <div class="card-name">تقرير مقارنة حالات التنمر <span class="pdf-badge">PDF</span></div>
+          <span class="card-type">تقرير</span>
+        </div>
+      </a>
+      <a class="card" href="إفادة بشأن سجل الحالات والاحترام المتبادل بين الطالبات 1448هـ.pdf" target="_blank">
+        <div class="card-icon icon-pdf">📄</div>
+        <div class="card-info">
+          <div class="card-name">إفادة سجل الحالات والاحترام المتبادل <span class="pdf-badge">PDF</span></div>
+          <span class="card-type">إفادة</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- قسم: السجلات -->
+  <div class="cat-section" data-cat="السجلات">
+    <div class="cat-header">
+      <span class="cat-icon">📁</span>
+      <span class="cat-title">السجلات</span>
+      <span class="cat-count">18</span>
+    </div>
+    <div class="cards-grid">
+      <a class="card" href="سجل القبول والتسجيل 1448هـ.html" target="_blank">
+        <div class="card-icon icon-html">📝</div>
+        <div class="card-info"><div class="card-name">سجل القبول والتسجيل ١٤٤٨هـ</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل الصادر والوارد.html" target="_blank">
+        <div class="card-icon icon-html">📬</div>
+        <div class="card-info"><div class="card-name">سجل الصادر والوارد</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل المناوبة.html" target="_blank">
+        <div class="card-icon icon-html">🔄</div>
+        <div class="card-info"><div class="card-name">سجل المناوبة</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل التحصيل الدراسي.html" target="_blank">
+        <div class="card-icon icon-html">🎓</div>
+        <div class="card-info"><div class="card-name">سجل التحصيل الدراسي</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل الموهوبات.html" target="_blank">
+        <div class="card-icon icon-html">⭐</div>
+        <div class="card-info"><div class="card-name">سجل الموهوبات</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل النشاط الطلابي.html" target="_blank">
+        <div class="card-icon icon-html">🎨</div>
+        <div class="card-info"><div class="card-name">سجل النشاط الطلابي</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل التحفيز والتكريم.html" target="_blank">
+        <div class="card-icon icon-html">🏆</div>
+        <div class="card-info"><div class="card-name">سجل التحفيز والتكريم</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل العمل التطوعي.html" target="_blank">
+        <div class="card-icon icon-html">💚</div>
+        <div class="card-info"><div class="card-name">سجل العمل التطوعي</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل الشراكة المجتمعية · الابتدائية 67.html" target="_blank">
+        <div class="card-icon icon-html">🤝</div>
+        <div class="card-info"><div class="card-name">سجل الشراكة المجتمعية</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل الشكاوى والمقترحات.html" target="_blank">
+        <div class="card-icon icon-html">💬</div>
+        <div class="card-info"><div class="card-name">سجل الشكاوى والمقترحات</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل السلوك المتميز والإيجابي.html" target="_blank">
+        <div class="card-icon icon-html">🌟</div>
+        <div class="card-info"><div class="card-name">سجل السلوك المتميز والإيجابي</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل الحوار الطلابي.html" target="_blank">
+        <div class="card-icon icon-html">🗣️</div>
+        <div class="card-info"><div class="card-name">سجل الحوار الطلابي</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل المجلس الطلابي.html" target="_blank">
+        <div class="card-icon icon-html">🏛️</div>
+        <div class="card-info"><div class="card-name">سجل المجلس الطلابي</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل البرامج والأنشطة الإثرائية.html" target="_blank">
+        <div class="card-icon icon-html">🎯</div>
+        <div class="card-info"><div class="card-name">سجل البرامج والأنشطة الإثرائية</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل المبادرات النوعية.html" target="_blank">
+        <div class="card-icon icon-html">💡</div>
+        <div class="card-info"><div class="card-name">سجل المبادرات النوعية</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل السلوك الوظيفي.html" target="_blank">
+        <div class="card-icon icon-html">📋</div>
+        <div class="card-info"><div class="card-name">سجل السلوك الوظيفي</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل النمو المهني 1448هـ.html" target="_blank">
+        <div class="card-icon icon-html">📚</div>
+        <div class="card-info"><div class="card-name">سجل النمو المهني ١٤٤٨هـ</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل لجنة التميز.html" target="_blank">
+        <div class="card-icon icon-html">🥇</div>
+        <div class="card-info"><div class="card-name">سجل لجنة التميز</div><span class="card-type">سجل</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- قسم: المنصات -->
+  <div class="cat-section" data-cat="المنصات">
+    <div class="cat-header">
+      <span class="cat-icon">🌐</span>
+      <span class="cat-title">المنصات</span>
+      <span class="cat-count">15</span>
+    </div>
+    <div class="cards-grid">
+      <a class="card" href="منصة متابعة الغياب بعذر وبدون عذر.html" target="_blank">
+        <div class="card-icon icon-html">📅</div>
+        <div class="card-info"><div class="card-name">منصة متابعة الغياب</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة الزيارة الفنية.html" target="_blank">
+        <div class="card-icon icon-html">🔍</div>
+        <div class="card-info"><div class="card-name">منصة الزيارة الفنية</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة الانضباط وقواعد السلوك والمواظبة.html" target="_blank">
+        <div class="card-icon icon-html">⚖️</div>
+        <div class="card-info"><div class="card-name">منصة الانضباط والسلوك</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة بطاقات الشكر والتقدير.html" target="_blank">
+        <div class="card-icon icon-html">🏅</div>
+        <div class="card-info"><div class="card-name">منصة بطاقات الشكر والتقدير</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة رضا أولياء الأمور · الابتدائية 67.html" target="_blank">
+        <div class="card-icon icon-html">👪</div>
+        <div class="card-info"><div class="card-name">منصة رضا أولياء الأمور</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة نافس الرقمية.html" target="_blank">
+        <div class="card-icon icon-html">📊</div>
+        <div class="card-info"><div class="card-name">منصة نافس الرقمية</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة مستهدفات نافس.html" target="_blank">
+        <div class="card-icon icon-html">🎯</div>
+        <div class="card-info"><div class="card-name">منصة مستهدفات نافس</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة سد الفجوة في الرياضيات.html" target="_blank">
+        <div class="card-icon icon-html">➕</div>
+        <div class="card-info"><div class="card-name">منصة سد الفجوة – الرياضيات</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة البحوث التشخيصية والإجرائية.html" target="_blank">
+        <div class="card-icon icon-html">🔬</div>
+        <div class="card-info"><div class="card-name">منصة البحوث التشخيصية والإجرائية</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة خطة الاستدامة المدرسية.html" target="_blank">
+        <div class="card-icon icon-html">♻️</div>
+        <div class="card-info"><div class="card-name">منصة خطة الاستدامة</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة ملف الوعي الفكري.html" target="_blank">
+        <div class="card-icon icon-html">🧠</div>
+        <div class="card-info"><div class="card-name">منصة ملف الوعي الفكري</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة تحدي القراءة العربي.html" target="_blank">
+        <div class="card-icon icon-html">📖</div>
+        <div class="card-info"><div class="card-name">منصة تحدي القراءة العربي</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة إجراءات منسوبات المدرسة 1448هـ.html" target="_blank">
+        <div class="card-icon icon-html">👩‍💼</div>
+        <div class="card-info"><div class="card-name">منصة إجراءات المنسوبات ١٤٤٨هـ</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة من حيّنا يبدأ المستقبل.html" target="_blank">
+        <div class="card-icon icon-html">🌟</div>
+        <div class="card-info"><div class="card-name">منصة من حيّنا يبدأ المستقبل</div><span class="card-type">منصة</span></div>
+      </a>
+      <a class="card" href="منصة منصة مستهدفات نافس.html" target="_blank">
+        <div class="card-icon icon-html">📌</div>
+        <div class="card-info"><div class="card-name">لوحة مؤشرات الانضباط</div><span class="card-type">لوحة</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- قسم: الملفات الشاملة -->
+  <div class="cat-section" data-cat="الملفات الشاملة">
+    <div class="cat-header">
+      <span class="cat-icon">📦</span>
+      <span class="cat-title">الملفات الشاملة</span>
+      <span class="cat-count">12</span>
+    </div>
+    <div class="cards-grid">
+      <a class="card" href="ملف الأمن والسلامة والصيانة والنظافة · الابتدائية 67.html" target="_blank">
+        <div class="card-icon icon-html">🛡️</div>
+        <div class="card-info"><div class="card-name">ملف الأمن والسلامة والصيانة</div><span class="card-type">ملف</span></div>
+      </a>
+      <a class="card" href="ملف التواصل مع أولياء الأمور · الابتدائية 67.html" target="_blank">
+        <div class="card-icon icon-html">📱</div>
+        <div class="card-info"><div class="card-name">ملف التواصل مع أولياء الأمور</div><span class="card-type">ملف</span></div>
+      </a>
+      <a class="card" href="ملف التعليم عن بعد 1448هـ.html" target="_blank">
+        <div class="card-icon icon-html">💻</div>
+        <div class="card-info"><div class="card-name">ملف التعليم عن بعد ١٤٤٨هـ</div><span class="card-type">ملف</span></div>
+      </a>
+      <a class="card" href="ملف الشؤون المالية · الابتدائية 67.html" target="_blank">
+        <div class="card-icon icon-html">💰</div>
+        <div class="card-info"><div class="card-name">ملف الشؤون المالية</div><span class="card-type">ملف</span></div>
+      </a>
+      <a class="card" href="ملف الصندوق المدرسي 1448هـ.html" target="_blank">
+        <div class="card-icon icon-html">🏦</div>
+        <div class="card-info"><div class="card-name">ملف الصندوق المدرسي ١٤٤٨هـ</div><span class="card-type">ملف</span></div>
+      </a>
+      <a class="card" href="ملف الموجهة الصحية الشامل.html" target="_blank">
+        <div class="card-icon icon-html">🏥</div>
+        <div class="card-info"><div class="card-name">ملف الموجهة الصحية الشامل</div><span class="card-type">ملف</span></div>
+      </a>
+      <a class="card" href="ملف توثيق شواهد مؤشرات التوجيه الطلابي.html" target="_blank">
+        <div class="card-icon icon-html">🗂️</div>
+        <div class="card-info"><div class="card-name">ملف شواهد التوجيه الطلابي</div><span class="card-type">ملف</span></div>
+      </a>
+      <a class="card" href="ملف نظام نور.html" target="_blank">
+        <div class="card-icon icon-html">💡</div>
+        <div class="card-info"><div class="card-name">ملف نظام نور</div><span class="card-type">ملف</span></div>
+      </a>
+      <a class="card" href="ملف النشرات الداخلية.html" target="_blank">
+        <div class="card-icon icon-html">📰</div>
+        <div class="card-info"><div class="card-name">ملف النشرات الداخلية</div><span class="card-type">ملف</span></div>
+      </a>
+      <a class="card" href="ملف الاستعداد والتهيئة · الابتدائية 67.html" target="_blank">
+        <div class="card-icon icon-html">🏁</div>
+        <div class="card-info"><div class="card-name">ملف الاستعداد والتهيئة</div><span class="card-type">ملف</span></div>
+      </a>
+      <a class="card" href="برامج ذوي الإعاقة.html" target="_blank">
+        <div class="card-icon icon-html">♿</div>
+        <div class="card-info"><div class="card-name">برامج ذوي الإعاقة</div><span class="card-type">برنامج</span></div>
+      </a>
+      <a class="card" href="سجل إدارة المخاطر والأزمات - الابتدائية السابعة والستون.html" target="_blank">
+        <div class="card-icon icon-html">🚨</div>
+        <div class="card-info"><div class="card-name">سجل إدارة المخاطر والأزمات</div><span class="card-type">سجل</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- قسم: النمو المهني والتطوير -->
+  <div class="cat-section" data-cat="النمو المهني">
+    <div class="cat-header">
+      <span class="cat-icon">📚</span>
+      <span class="cat-title">النمو المهني والتطوير</span>
+      <span class="cat-count">8</span>
+    </div>
+    <div class="cards-grid">
+      <a class="card" href="استمارة التأمل الذاتي للمعلمة في مجال التطوير المستمر.html" target="_blank">
+        <div class="card-icon icon-html">🪞</div>
+        <div class="card-info"><div class="card-name">استمارة التأمل الذاتي للمعلمة</div><span class="card-type">استمارة</span></div>
+      </a>
+      <a class="card" href="توقيع المعلمة على نتيجة الزيارة.html" target="_blank">
+        <div class="card-icon icon-html">✍️</div>
+        <div class="card-info"><div class="card-name">توقيع المعلمة على نتيجة الزيارة</div><span class="card-type">استمارة</span></div>
+      </a>
+      <a class="card" href="اجتماع الأداء الوظيفي مع المعلمات.html" target="_blank">
+        <div class="card-icon icon-html">👩‍🏫</div>
+        <div class="card-info"><div class="card-name">اجتماع الأداء الوظيفي</div><span class="card-type">اجتماع</span></div>
+      </a>
+      <a class="card" href="جدول الانتظار للمعلمات.html" target="_blank">
+        <div class="card-icon icon-html">📆</div>
+        <div class="card-info"><div class="card-name">جدول الانتظار للمعلمات</div><span class="card-type">جدول</span></div>
+      </a>
+      <a class="card" href="كشوف التوقيع الإلكتروني للمنسوبات.html" target="_blank">
+        <div class="card-icon icon-html">📋</div>
+        <div class="card-info"><div class="card-name">كشوف التوقيع الإلكتروني</div><span class="card-type">كشف</span></div>
+      </a>
+      <a class="card" href="سجل العمل التعاوني.html" target="_blank">
+        <div class="card-icon icon-html">🤲</div>
+        <div class="card-info"><div class="card-name">سجل العمل التعاوني</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="سجل سفيرة الثقافة المؤسسية.html" target="_blank">
+        <div class="card-icon icon-html">🌐</div>
+        <div class="card-info"><div class="card-name">سجل سفيرة الثقافة المؤسسية</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="المهام الأدائية وسلالم التقدير (الروبرك) 1448هـ.pdf" target="_blank">
+        <div class="card-icon icon-pdf">📐</div>
+        <div class="card-info"><div class="card-name">المهام الأدائية والروبرك ١٤٤٨هـ <span class="pdf-badge">PDF</span></div><span class="card-type">وثيقة</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- قسم: الانضباط والسلوك -->
+  <div class="cat-section" data-cat="الانضباط">
+    <div class="cat-header">
+      <span class="cat-icon">⚖️</span>
+      <span class="cat-title">الانضباط والسلوك</span>
+      <span class="cat-count">5</span>
+    </div>
+    <div class="cards-grid">
+      <a class="card" href="لوحة مؤشرات الانضباط.html" target="_blank">
+        <div class="card-icon icon-html">📊</div>
+        <div class="card-info"><div class="card-name">لوحة مؤشرات الانضباط</div><span class="card-type">لوحة</span></div>
+      </a>
+      <a class="card" href="مشروع ارتقاء للانضباط المدرسي.html" target="_blank">
+        <div class="card-icon icon-html">🚀</div>
+        <div class="card-info"><div class="card-name">مشروع ارتقاء للانضباط</div><span class="card-type">مشروع</span></div>
+      </a>
+      <a class="card" href="مشروع قِمَم للانضباط المدرسي 1448هـ.html" target="_blank">
+        <div class="card-icon icon-html">🏔️</div>
+        <div class="card-info"><div class="card-name">مشروع قِمَم للانضباط ١٤٤٨هـ</div><span class="card-type">مشروع</span></div>
+      </a>
+      <a class="card" href="سجل حقوق المتعلمين وحمايتهم.html" target="_blank">
+        <div class="card-icon icon-html">🛡️</div>
+        <div class="card-info"><div class="card-name">سجل حقوق المتعلمين وحمايتهم</div><span class="card-type">سجل</span></div>
+      </a>
+      <a class="card" href="متابعة الدوام.html" target="_blank">
+        <div class="card-icon icon-html">⏰</div>
+        <div class="card-info"><div class="card-name">متابعة الدوام</div><span class="card-type">متابعة</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- قسم: نافس والتحصيل -->
+  <div class="cat-section" data-cat="نافس">
+    <div class="cat-header">
+      <span class="cat-icon">🏆</span>
+      <span class="cat-title">نافس والتحصيل الدراسي</span>
+      <span class="cat-count">5</span>
+    </div>
+    <div class="cards-grid">
+      <a class="card" href="خطة تحسين النتائج المبنية على بيانات الاختبارات الوطنية (نافس) 1447هـ.html" target="_blank">
+        <div class="card-icon icon-html">📈</div>
+        <div class="card-info"><div class="card-name">خطة تحسين نتائج نافس ١٤٤٧هـ</div><span class="card-type">خطة</span></div>
+      </a>
+      <a class="card" href="بطاقة سهم نافس — المبادرة.html" target="_blank">
+        <div class="card-icon icon-html">🎯</div>
+        <div class="card-info"><div class="card-name">بطاقة سهم نافس – المبادرة</div><span class="card-type">بطاقة</span></div>
+      </a>
+      <a class="card" href="الفهم القرائي وتحدي القراءة.html" target="_blank">
+        <div class="card-icon icon-html">📖</div>
+        <div class="card-info"><div class="card-name">الفهم القرائي وتحدي القراءة</div><span class="card-type">مبادرة</span></div>
+      </a>
+      <a class="card" href="مصفوفات نواتج التعلم - الوحدة الأولى 1448هـ.pdf" target="_blank">
+        <div class="card-icon icon-pdf">📊</div>
+        <div class="card-info"><div class="card-name">مصفوفات نواتج التعلم ١٤٤٨هـ <span class="pdf-badge">PDF</span></div><span class="card-type">مصفوفة</span></div>
+      </a>
+      <a class="card" href="أوراق عمل مهارات التفكير العليا 1448هـ.pdf" target="_blank">
+        <div class="card-icon icon-pdf">🧩</div>
+        <div class="card-info"><div class="card-name">أوراق عمل مهارات التفكير العليا <span class="pdf-badge">PDF</span></div><span class="card-type">أوراق عمل</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- قسم: الصحة والسلامة والبيئة -->
+  <div class="cat-section" data-cat="الصحة والسلامة">
+    <div class="cat-header">
+      <span class="cat-icon">🏥</span>
+      <span class="cat-title">الصحة والسلامة والبيئة</span>
+      <span class="cat-count">3</span>
+    </div>
+    <div class="cards-grid">
+      <a class="card" href="حقيبة تنفيذ برامج الوعي الفكري.html" target="_blank">
+        <div class="card-icon icon-html">🧠</div>
+        <div class="card-info"><div class="card-name">حقيبة برامج الوعي الفكري</div><span class="card-type">حقيبة</span></div>
+      </a>
+      <a class="card" href="إعلان لقاء HPV.html" target="_blank">
+        <div class="card-icon icon-html">💉</div>
+        <div class="card-info"><div class="card-name">إعلان لقاء HPV</div><span class="card-type">إعلان</span></div>
+      </a>
+      <a class="card" href="الدليل الإجرائي لإدارة المخاطر بمدارس التعليم العام.pdf" target="_blank">
+        <div class="card-icon icon-pdf">📋</div>
+        <div class="card-info"><div class="card-name">الدليل الإجرائي لإدارة المخاطر <span class="pdf-badge">PDF</span></div><span class="card-type">دليل</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- قسم: متفرقات مهمة -->
+  <div class="cat-section" data-cat="متفرقات">
+    <div class="cat-header">
+      <span class="cat-icon">🗂️</span>
+      <span class="cat-title">استمارات وأنشطة متنوعة</span>
+      <span class="cat-count">5</span>
+    </div>
+    <div class="cards-grid">
+      <a class="card" href="استمارة متابعة الطابور الصباحي.html" target="_blank">
+        <div class="card-icon icon-html">🏫</div>
+        <div class="card-info"><div class="card-name">استمارة متابعة الطابور الصباحي</div><span class="card-type">استمارة</span></div>
+      </a>
+      <a class="card" href="رحلة افتراضية في بلادي.html" target="_blank">
+        <div class="card-icon icon-html">🗺️</div>
+        <div class="card-info"><div class="card-name">رحلة افتراضية في بلادي</div><span class="card-type">نشاط</span></div>
+      </a>
+      <a class="card" href="دروس المهارات الاجتماعية والعاطفية - أتعرف على مشاعري 1448هـ.pdf" target="_blank">
+        <div class="card-icon icon-pdf">❤️</div>
+        <div class="card-info"><div class="card-name">دروس المهارات الاجتماعية والعاطفية <span class="pdf-badge">PDF</span></div><span class="card-type">درس</span></div>
+      </a>
+      <a class="card" href="التغذية الراجعة الوصفية لأعمال الطالبات 1448هـ.pdf" target="_blank">
+        <div class="card-icon icon-pdf">📝</div>
+        <div class="card-info"><div class="card-name">التغذية الراجعة الوصفية ١٤٤٨هـ <span class="pdf-badge">PDF</span></div><span class="card-type">تقييم</span></div>
+      </a>
+      <a class="card" href="اجتماع تنظيم الخطة الدراسية للتعليم عن بعد.html" target="_blank">
+        <div class="card-icon icon-html">💻</div>
+        <div class="card-info"><div class="card-name">اجتماع الخطة الدراسية للتعليم عن بعد</div><span class="card-type">اجتماع</span></div>
+      </a>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <strong>الابتدائية السابعة والستون – الطائف</strong><br>
+  ناديه عوض الصخيري | مديرة المدرسة | العام الدراسي ١٤٤٧ / ١٤٤٨هـ
+</div>
+
+<script>
+function filterCards() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  document.querySelectorAll('.card').forEach(card => {
+    const text = card.querySelector('.card-name').textContent.toLowerCase();
+    card.classList.toggle('hidden', q.length > 0 && !text.includes(q));
+  });
+  // hide empty sections
+  document.querySelectorAll('.cat-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.card:not(.hidden)').length;
+    sec.classList.toggle('hidden', q.length > 0 && visible === 0);
+  });
+}
+</script>
+</body>
+</html>
