@@ -146,7 +146,13 @@ ul.grid2{display:block!important;columns:2;column-gap:34px}ul.grid2 li{break-ins
 .closing .ref{text-align:center}
 .closing .sigs{width:100%}
 </style>
-</head>
+<script id="s67digits">(function(){var d=document;function isCode(e){return e&&e.tagName==="INPUT"&&(e.type==="tel"||e.type==="password"||e.hasAttribute("data-1p-ignore")||/^(code|c|pin|pass|s67c)$/i.test(e.id||"")||e.getAttribute("inputmode")==="numeric")}
+function norm(v){return String(v||"").replace(/[\u0660-\u0669]/g,function(x){return x.charCodeAt(0)-1632}).replace(/[\u06F0-\u06F9]/g,function(x){return x.charCodeAt(0)-1776}).replace(/\D/g,"").slice(0,6)}
+function prep(e){if(!isCode(e)||e.__s67d)return;e.__s67d=1;e.removeAttribute("maxlength");e.setAttribute("autocomplete","off");e.addEventListener("input",function(){var n=norm(e.value);if(n!==e.value)e.value=n},true)}
+function scan(){[].slice.call(d.querySelectorAll("input")).forEach(prep)}
+d.addEventListener("focusin",function(e){prep(e.target)},true);
+d.addEventListener("submit",function(){scan();[].slice.call(d.querySelectorAll("input")).forEach(function(e){if(e.__s67d)e.value=norm(e.value)})},true);
+if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else scan();setTimeout(scan,1000)})();</script></head>
 <body>
 <div class="bar"><button type="button" id="mn" class="pri">☰ الشرائح</button><span class="ttl">المشكلات السلوكية وإجراءاتها للمرحلة الابتدائية</span><button type="button" id="pv" aria-label="السابقة">▶</button><span class="cnt" id="cnt"></span><button type="button" id="nx" aria-label="التالية">◀</button><button type="button" id="pr" title="طباعة / PDF">🖨</button><button type="button" id="fs" title="ملء الشاشة">⛶</button></div>
 <nav class="menu" id="menu" aria-label="قائمة الشرائح"></nav>

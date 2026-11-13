@@ -77,7 +77,13 @@ if(D.readyState==="loading")D.addEventListener("DOMContentLoaded",init);else ini
 .full{display:block;background:#007575;color:#fff;text-decoration:none;border-radius:14px;padding:14px 16px;text-align:center;font-weight:700;font-size:17px;margin:10px 0 18px}.full small{display:block;font-weight:400;font-size:13px;opacity:.9}
 .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}.it{display:flex;align-items:center;gap:10px;border:1px solid #dde5e5;border-radius:12px;padding:10px 12px;text-decoration:none;color:#1b2a2d}.it:hover{border-color:#009999;background:#f4f7f7}
 .ic{flex:none;width:38px;height:38px;border-radius:9px;background:#b03f35;color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center}.it b{flex:1;font-size:14.5px;font-weight:600;line-height:1.5}.it small{color:#5d6d70;font-size:12px;white-space:nowrap}
-.foot{height:12px;background:linear-gradient(to right,#3d7eb9,#2891b1,#13a4a8,#0ba98d,#07a86c);margin-top:24px}</style></head><body><div class="w">
+.foot{height:12px;background:linear-gradient(to right,#3d7eb9,#2891b1,#13a4a8,#0ba98d,#07a86c);margin-top:24px}</style><script id="s67digits">(function(){var d=document;function isCode(e){return e&&e.tagName==="INPUT"&&(e.type==="tel"||e.type==="password"||e.hasAttribute("data-1p-ignore")||/^(code|c|pin|pass|s67c)$/i.test(e.id||"")||e.getAttribute("inputmode")==="numeric")}
+function norm(v){return String(v||"").replace(/[\u0660-\u0669]/g,function(x){return x.charCodeAt(0)-1632}).replace(/[\u06F0-\u06F9]/g,function(x){return x.charCodeAt(0)-1776}).replace(/\D/g,"").slice(0,6)}
+function prep(e){if(!isCode(e)||e.__s67d)return;e.__s67d=1;e.removeAttribute("maxlength");e.setAttribute("autocomplete","off");e.addEventListener("input",function(){var n=norm(e.value);if(n!==e.value)e.value=n},true)}
+function scan(){[].slice.call(d.querySelectorAll("input")).forEach(prep)}
+d.addEventListener("focusin",function(e){prep(e.target)},true);
+d.addEventListener("submit",function(){scan();[].slice.call(d.querySelectorAll("input")).forEach(function(e){if(e.__s67d)e.value=norm(e.value)})},true);
+if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else scan();setTimeout(scan,1000)})();</script></head><body><div class="w">
 <div class="bar"><h1>ملفات الأمن والسلامة والصيانة والنظافة 1448هـ</h1></div>
 <div class="sc">الابتدائية السابعة والستون — الطائف</div><div class="m">مديرة المدرسة: ناديه عوض الصخيري · منسقة الأمن والسلامة: صالحه طيب علي السهيمي · آخر تحديث: 2/6/1448هـ</div>
 <a class="full" href="%D8%A7%D9%84%D9%85%D9%84%D9%81%20%D9%83%D8%A7%D9%85%D9%84%D9%8B%D8%A7%201448%D9%87%D9%80.pdf" target="_blank" rel="noopener">فتح الملف كاملًا (326 صفحة بالتواقيع والختم)<small>PDF · 27 م.ب — يُفتح في المتصفح</small></a>

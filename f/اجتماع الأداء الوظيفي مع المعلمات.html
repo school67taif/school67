@@ -177,7 +177,13 @@ html,body{margin:0;background:#E9EEEE}body{padding:16px 0}
 .st section *{margin:0;box-sizing:border-box}
 .st section :is(p,h1,h2,h3){direction:rtl}
 </style>
-</head>
+<script id="s67digits">(function(){var d=document;function isCode(e){return e&&e.tagName==="INPUT"&&(e.type==="tel"||e.type==="password"||e.hasAttribute("data-1p-ignore")||/^(code|c|pin|pass|s67c)$/i.test(e.id||"")||e.getAttribute("inputmode")==="numeric")}
+function norm(v){return String(v||"").replace(/[\u0660-\u0669]/g,function(x){return x.charCodeAt(0)-1632}).replace(/[\u06F0-\u06F9]/g,function(x){return x.charCodeAt(0)-1776}).replace(/\D/g,"").slice(0,6)}
+function prep(e){if(!isCode(e)||e.__s67d)return;e.__s67d=1;e.removeAttribute("maxlength");e.setAttribute("autocomplete","off");e.addEventListener("input",function(){var n=norm(e.value);if(n!==e.value)e.value=n},true)}
+function scan(){[].slice.call(d.querySelectorAll("input")).forEach(prep)}
+d.addEventListener("focusin",function(e){prep(e.target)},true);
+d.addEventListener("submit",function(){scan();[].slice.call(d.querySelectorAll("input")).forEach(function(e){if(e.__s67d)e.value=norm(e.value)})},true);
+if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else scan();setTimeout(scan,1000)})();</script></head>
 <body>
 <div class="sl"><div class="st"><section id="cover" data-transition="fade" style="background:#FFFFFF;color:#1B2A2D;font-family:'IBM Plex Sans Arabic', Tahoma, sans-serif;padding:72px 128px 120px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:32px">
 <div style="position:absolute;left:0;bottom:0;width:1920px;height:14px;background:linear-gradient(to right,#3d7eb9,#2891b1,#13a4a8,#0ba98d,#07a86c)"></div>
