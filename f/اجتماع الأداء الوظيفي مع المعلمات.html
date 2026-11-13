@@ -575,7 +575,7 @@ bs[0].onclick=go;i.onkeydown=function(e){if(e.key==="Enter")go()}}
 function relock(){try{sessionStorage.removeItem("s67own");localStorage.removeItem("s67ownT")}catch(e){}location.reload()}
 function init(){scan();if(!d.getElementById("s67rl")){var r=d.createElement("button");r.id="s67rl";r.type="button";r.textContent="🔒 قفل";r.title="إعادة القفل (للأجهزة المشتركة)";r.onclick=relock;d.body.appendChild(r)}if(!d.getElementById("s67key")){var k=d.createElement("button");k.id="s67key";k.type="button";k.textContent="🔑";k.title="دخول المديرة";k.setAttribute("aria-label","دخول المديرة");k.onclick=ask;d.body.appendChild(k)}}
 if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",init);else init();
-})();</script></body>
+})();</script><a id="s67back" href="/school67/" onclick="if(history.length>1){history.back();return false}" style="position:fixed;right:10px;bottom:10px;z-index:2147483640;background:#007575;color:#fff;border-radius:16px;padding:5px 14px;font:700 12px Tahoma,sans-serif;text-decoration:none;box-shadow:0 0 0 2px #fff">رجوع ›</a><style id="s67backs">@media print{#s67back{display:none!important}}</style></body>
 </html>
 <script id="kpi67">(function(){var D=document,de=D.documentElement;
 var CFG={};try{var c=D.getElementById("kpi67-cfg");if(c)CFG=JSON.parse(c.textContent)||{}}catch(e){}
