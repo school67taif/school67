@@ -2481,7 +2481,7 @@ function render(){
   xs.forEach(function(x){var u=url(x.p);
    html+='<div class="card"><a class="nm" href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(x.n)+'</a>'+
    '<a class="qr" href="'+esc(u)+'" target="_blank" rel="noopener" title="فتح '+esc(x.n)+'"><span>'+qrSvg(u)+'</span></a>'+
-   '<div class="tags">'+(x.t==="pdf"?'<span class="tag pdf">PDF</span>':'<span class="tag">صفحة</span>')+(now-x.u<7*86400?'<span class="tag new">جديد/محدّث</span>':'')+'<span class="tag">'+esc(hshort(x.u*1000))+'</span></div>'+
+   '<div class="tags">'+(x.t==="pdf"?'<span class="tag pdf">PDF</span>':'<span class="tag">صفحة</span>')+'<span class="tag" title="آخر تحديث">🕓 '+esc(hshort(x.u*1000))+'</span></div>'+
    '<div class="acts"><a class="btn sm" href="'+esc(edge(u))+'">🌐 Edge</a><button class="btn sm l" data-cp="'+esc(u)+'">📋 نسخ</button>'+
    (x.pdf?'<a class="btn sm l" href="'+esc(url(x.pdf))+'" target="_blank" rel="noopener">📄 PDF</a>':"")+
    (x.x||[]).map(function(e){return '<a class="btn sm l" href="'+esc(url(e.p))+'" target="_blank" rel="noopener" title="'+esc(e.n)+'">📎 الشواهد</a>'}).join("")+
