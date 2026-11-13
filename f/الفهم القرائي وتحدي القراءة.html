@@ -2366,11 +2366,11 @@ var q=0;function sch(){if(q)return;q=1;setTimeout(function(){q=0;run()},400)}
 function st(){run();try{new MutationObserver(function(ms){for(var i=0;i<ms.length;i++){var x=ms[i].addedNodes;for(var j=0;j<x.length;j++){if(x[j].nodeType===1&&!(x[j].classList&&x[j].classList.contains("lk67"))){sch();return}}}}).observe(document.body,{childList:true,subtree:true})}catch(e){}}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",st);else st();})();</script>
 
-<button type="button" id="bk67" aria-label="رجوع" hidden>→ رجوع</button>
+<button type="button" id="bk67" aria-label="رجوع" hidden>&#8207;→ رجوع</button>
 <style>#bk67{position:fixed;right:14px;bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:60;font:inherit;font-weight:700;font-size:15px;color:#fff;background:#7A1F2B;border:0;border-radius:999px;padding:10px 18px;box-shadow:0 4px 14px rgba(0,0,0,.18);cursor:pointer}#bk67:active{transform:scale(.97)}@media print{#bk67{display:none!important}}</style>
 <script>
 function bk67(){var b=document.getElementById("bk67");if(!b)return;var site=/github\.io$/.test(location.hostname);
- var cs=window.__s67cur||"home";if(cs==="home"){if(site){b.hidden=false;b.textContent="→ موقع المدرسة";}else b.hidden=true;}else{b.hidden=false;b.textContent="→ رجوع";}}
+ var cs=window.__s67cur||"home";if(cs==="home"){if(site){b.hidden=false;b.textContent="\u200F→ موقع المدرسة";}else b.hidden=true;}else{b.hidden=false;b.textContent="\u200F→ رجوع";}}
 document.getElementById("bk67").addEventListener("click",function(){
  if((window.__s67cur||"home")==="home"){location.href=location.pathname.replace(/\/f\/[^\/]*$/,"/");return}
  if(history.state&&history.state.s67sec&&history.length>1){history.back()}else if(window.s67show){window.s67show("home")}
