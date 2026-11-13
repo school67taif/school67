@@ -20,6 +20,8 @@ jobs:
           git fetch origin main gh-pages
           git checkout -B s origin/main
           git merge --no-edit origin/gh-pages || { git merge --abort; git merge -X theirs --no-edit origin/gh-pages; }
+          python3 .github/scripts/watermark.py || true
+          git add -A '*.html' || true
           python3 .github/scripts/build_links.py || true
           python3 .github/scripts/autofix.py || true
           git add f/links.json || true
