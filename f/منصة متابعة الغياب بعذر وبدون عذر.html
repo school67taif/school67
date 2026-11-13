@@ -504,7 +504,7 @@ function vDash(per){
     (ids.length?(k(ids.length,"عدد الطالبات")+k(Object.keys(rec).length||nDays?ids.length-tu-te:'<span class="pendv">يُرصد أولًا بأول</span>',"الحاضرات اليوم")+
     k(tu,"غياب بدون عذر اليوم",tu?"bad":"")+k(te,"غياب بعذر اليوم",te?"warn":"")+
     k(rate==null?'<span class="pendv">يُرصد أولًا بأول</span>':rate.toFixed(1)+"٪","نسبة الحضور العامة")+k(pend.length,"بانتظار إجراء",pend.length?"bad":"")):
-    (k(327,"عدد الطالبات المقيدات 1448هـ")+k("94.9٪","نسبة الحضور — ربيع الآخر 1448هـ (تقرير مسؤولة الغياب)")+k("94.6٪","نسبة الحضور — جمادى الأولى حتى 11/5 (تقارير نور)")+k('<span class="pendv">يُرصد أولًا بأول</span>',"غياب اليوم بعذر وبدون عذر (أسماء الطالبات لدى الإدارة فقط)")))+'</div>';
+    (k(321,"عدد الطالبات المقيدات 1448هـ")+k("94.9٪","نسبة الحضور — ربيع الآخر 1448هـ (تقرير مسؤولة الغياب)")+k("94.6٪","نسبة الحضور — جمادى الأولى حتى 11/5 (تقارير نور)")+k('<span class="pendv">يُرصد أولًا بأول</span>',"غياب اليوم بعذر وبدون عذر (أسماء الطالبات لدى الإدارة فقط)")))+'</div>';
   h+='<div class="panel"><h3>الطالبات حسب مرحلة الإجراء</h3><p class="sub">عدد الطالبات اللاتي بلغن كل حد من أيام الغياب بدون عذر.</p><div class="ladder" style="margin-top:10px">'+
     STAGES.map((s,i)=>'<div class="step'+(counts[i]?" reach":"")+'"><div class="d">'+s.d+' أيام</div><div><b>'+esc(s.name)+'</b></div><div class="kpi" style="border:0;padding:0">'+(ids.length?'<span class="n" style="font-size:22px">'+counts[i]+'</span> <span class="l">طالبة</span>':'<span class="pendv">يُرصد أولًا بأول</span>')+'</div></div>').join("")+'</div></div>';
   h+='<div class="panel"><div class="row" style="justify-content:space-between;align-items:center"><h3>إجراءات تنتظر التنفيذ</h3><button class="btn sm" data-go="actions">عرض الكل</button></div>';
