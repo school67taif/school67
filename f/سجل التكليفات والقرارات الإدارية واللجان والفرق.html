@@ -772,6 +772,16 @@ function syncPlanDates(st){
   });
   st.settings.planSyncV=1;
 }
+/* إقفال توصيات الاجتماعات المنعقدة حتى 1448/06/02هـ (أفادت المديرة باكتمالها) */
+function closeRecsUpTo0602(st){
+  if(st.settings.recsDone0602V===1) return;
+  const lim=hDays([1448,6,2]);
+  st.committees.filter(c=>c.kind!=='takleef').forEach(c=>(c.meetings||[]).forEach(m=>{
+    const h=parseHijri(m.date); if(!h || hDays(h)>lim) return;
+    (m.recs||[]).forEach(r=>{ if(String(r.text||'').trim() && r.status!=='منفذة'){ r.status='منفذة'; r.reason=''; } });
+  }));
+  st.settings.recsDone0602V=1;
+}
 function addFoundingMeeting(st){
   if(st.settings.foundV===1) return;
   const c=st.committees.find(x=>x.title==='اللجنة الإدارية للمدرسة'); if(!c) return;
@@ -1652,7 +1662,7 @@ try{
 try{ applyExtraDesc(S); } catch(e){}
   try{ applySourcedFills(S); }catch(e){}
   try{ applyNextAgendas(S); }catch(e){}
-  try{ if(S.settings.stampV!==2){ S.settings.stamp=STAMP; S.settings.stampV=2; } applyKnownSigs(S); applyTeacherData(S); applyFullNames(S); applyTeacherData(S); S.committees.forEach(c=>{ if(c.kind!=='takleef') fillMeetingContent(c); }); try{ applyRealMeetings(S); }catch(e){ console.error(e); } try{ addBehaviorMeeting(S); }catch(e){} try{ addFoundingMeeting(S); }catch(e){ console.error(e); } try{ addRemote0528(S); }catch(e){ console.error(e); } try{ applyDuty1448(S); }catch(e){ console.error(e); } try{ applyNoLabSped(S); }catch(e){ console.error(e); } try{ applyGuardName(S); }catch(e){ console.error(e); } try{ syncPlanDates(S); }catch(e){ console.error(e); } applyKnownSigs(S); autoSignPast(S); save(); }catch(e){}
+  try{ if(S.settings.stampV!==2){ S.settings.stamp=STAMP; S.settings.stampV=2; } applyKnownSigs(S); applyTeacherData(S); applyFullNames(S); applyTeacherData(S); S.committees.forEach(c=>{ if(c.kind!=='takleef') fillMeetingContent(c); }); try{ applyRealMeetings(S); }catch(e){ console.error(e); } try{ addBehaviorMeeting(S); }catch(e){} try{ addFoundingMeeting(S); }catch(e){ console.error(e); } try{ addRemote0528(S); }catch(e){ console.error(e); } try{ applyDuty1448(S); }catch(e){ console.error(e); } try{ applyNoLabSped(S); }catch(e){ console.error(e); } try{ applyGuardName(S); }catch(e){ console.error(e); } try{ syncPlanDates(S); }catch(e){ console.error(e); } try{ closeRecsUpTo0602(S); }catch(e){ console.error(e); } applyKnownSigs(S); autoSignPast(S); save(); }catch(e){}
 try{ applyFix67(S); save(); }catch(e){ console.error(e); }
 
 function applyFix67(st){
