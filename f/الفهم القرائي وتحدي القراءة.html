@@ -348,7 +348,7 @@ tr.mark td{background:var(--teal-s)!important}
   <div class="meta">
     <span>مديرة المدرسة: <b>ناديه عوض الصخيري</b></span>
     <span>وكيلة المدرسة: <b>ثرياء القثامي</b></span>
-    <span>منسقة الفهم القرائي: <b id="fcName">يُستكمل من: مديرة المدرسة</b></span>
+    <span>منسقة الفهم القرائي: <b id="fcName">عيشه الحارثي</b></span>
     <span>مشرفة تحدي القراءة: <b id="supName">نوف البيالي</b></span>
   </div>
   <div class="meta"><span>العام الدراسي <b>1448هـ</b></span><span>التاريخ: <b id="hijri">—</b></span></div><div class="p67bar"><span>آخر تحديث للملف: <b>1 جمادى الآخرة 1448هـ</b></span><button type="button" onclick="window.print()">طباعة الصفحة</button></div>
@@ -1678,7 +1678,7 @@ function renderProgress(){
 function renderSettings(){
   $("#supName").textContent=settings.supervisor||"نوف البيالي";
   $("#setSup").value=settings.supervisor||"";$("#setJudges").value=settings.judges||"";$("#setFc").value=settings.fcCoord||"";
-  $("#teamList").innerHTML=`<p>المشرفة: <b>${esc(settings.supervisor||"نوف البيالي")}</b></p><p>لجنة التحكيم: <b>${esc(settings.judges||"يُستكمل من: مشرفة تحدي القراءة نوف البيالي")}</b></p><p style="margin:0">منسقة الفهم القرائي: <b>${esc(settings.fcCoord||"يُستكمل من: مديرة المدرسة")}</b></p>`;
+  $("#teamList").innerHTML=`<p>المشرفة: <b>${esc(settings.supervisor||"نوف البيالي")}</b></p><p>لجنة التحكيم: <b>${esc(settings.judges||"ناديه عوض الصخيري (رئيسة) · ثرياء القثامي · نوف البيالي · عيشه الحارثي")}</b></p><p style="margin:0">منسقة الفهم القرائي: <b>${esc(settings.fcCoord||"عيشه الحارثي")}</b></p>`;
 }
 function pdots(n){return `<span class="pdots">${[0,1,2,3,4].map(i=>`<i style="background:${i<n?PCOL[i]:"var(--line)"}"></i>`).join("")}</span>`}
 function total(s){return ["s1","s2","s3","s4"].reduce((a,k)=>a+(Number(s[k])||0),0)}
@@ -1973,7 +1973,7 @@ function renderFCKpis(){
   $("#fk3").textContent=avgp===null?"—":avgp+"%";
   $("#fk4").textContent=avgc===null?"—":(avgc>0?"+":"")+avgc;
   $("#fcCoordCell").innerHTML=settings.fcCoord?`<b>${esc(settings.fcCoord)}</b>`:'<span class="note">تُكتب من «فريق العمل» في تحدي القراءة</span>';
-  $("#fcName").textContent=settings.fcCoord||"يُستكمل من: مديرة المدرسة";
+  $("#fcName").textContent=settings.fcCoord||"عيشه الحارثي";
 }
 function renderFC(){renderFCChecks();renderVisits();renderGrowth();renderFCKpis()}
 
@@ -2230,7 +2230,7 @@ function rows(root){
 function fields(root){
   var t=0,f=0;[].slice.call(root.querySelectorAll?root.querySelectorAll("input,select,textarea"):[]).forEach(function(el){
     if(inD(el)||!vis(el)||el.disabled)return;var ty=(el.type||"").toLowerCase();
-    if(ty==="checkbox"||ty==="radio")return;
+    if(ty==="checkbox"||ty==="radio")return;if(el.closest("form,.fields,[hidden]")||/filter/i.test(el.id||""))return;
     if(el.closest(".tools,.toolbar,.filters,.search,.filter,nav,.rail"))return;
     t++;var v=el.tagName==="SELECT"?(el.value&&el.selectedIndex>0?el.value:(el.value&&el.options.length&&el.options[0].value?el.value:"")):el.value;
     if(norm(v))f++});
@@ -2292,13 +2292,13 @@ function build(){
     var tables=[].slice.call(document.querySelectorAll("table")).filter(function(t){return !inD(t)}).length;
     var parts=[],num=0,den=0;
     if(F[0]&&F[1]){num+=F[1];den+=F[0]}
-    if(C[0]){num+=C[1];den+=C[0]}
+    
     var sTot=ST[0]+ST[1]+ST[2];if(sTot){num+=ST[0]+ST[1]*0.5;den+=sTot}
     var pct=den?Math.round(num/den*100):null;
     var secs=S.map(function(s,i){
       var sc=scope(s),r=0,f=[0,0],ch=[0,0],st=[0,0,0];
-      sc.forEach(function(el){r+=items(el);var a=fields(el);f[0]+=a[0];f[1]+=a[1];var b=checks(el);ch[0]+=b[0];ch[1]+=b[1];var c=status(el);st[0]+=c[0];st[1]+=c[1];st[2]+=c[2]});
-      if(!f[1])f[0]=0;var d=f[0]+ch[0]+st[0]+st[1]+st[2],nn=f[1]+ch[1]+st[0]+st[1]*0.5;
+      sc.forEach(function(el){r+=(items(el)||(el.querySelectorAll?el.querySelectorAll("a[href],img,.panel,.card,.c,button").length:0));var a=fields(el);f[0]+=a[0];f[1]+=a[1];var b=checks(el);ch[0]+=b[0];ch[1]+=b[1];var c=status(el);st[0]+=c[0];st[1]+=c[1];st[2]+=c[2]});
+      if(!f[1])f[0]=0;var d=f[0]+st[0]+st[1]+st[2],nn=f[1]+st[0]+st[1]*0.5;
       return {t:s.t,r:r,p:d?Math.round(nn/d*100):null};
     });
     var dbAll=0;for(var q in DS)dbAll+=DS[q].n;var useDB=dbAll>0&&dbAll>=Math.min(R,3),dbN=0,dbS=[0,0,0],dbT=0;
@@ -2316,10 +2316,10 @@ function build(){
       [R,useDB?"إجمالي الإدخالات":"عناصر المحتوى"+(tables?" ("+tables+" جدول)":""),""],
       useDB?[dbT?fmtD(dbT):"لا يوجد بعد","آخر إدخال","dt"]:(F[0]?[Math.round(F[1]/F[0]*100)+"%","الحقول المعبّأة ("+F[1]+" من "+F[0]+")",""]:[(pct===null?0:pct)+"%","نسبة اكتمال السجل",""]),
       [ST[0]+(C[0]?C[1]:0),"مكتمل / منجز","ok"],
-      [ST[1]+(C[0]?0:0),"قيد العمل","w"],
-      [ST[2]+(C[0]?C[0]-C[1]:0),"يحتاج متابعة","b"]
+      [ST[1]+(C[0]?C[0]-C[1]:0),"بنود الخطة الجارية","w"],
+      [ST[2],"يحتاج متابعة","b"]
     ];
-    var oT=ST[0]+C[1],pT=ST[1],bT=ST[2]+(C[0]-C[1]),all=oT+pT+bT;
+    var oT=ST[0]+C[1],pT=ST[1]+(C[0]-C[1]),bT=ST[2],all=oT+pT+bT;
     /*kpi67*/if(k[2]&&k[2][0]==="0%"){k[2][0]="يُرصد أولًا بأول"}if(k[2]&&k[2][0]==="—"){k[2]=[(pct===null?"يُحسب":pct+"%"),"نسبة اكتمال السجل",""]}if(!useDB&&F[0]&&!F[1]){k[2]=[(pct===null?"يُحسب":pct+"%"),"نسبة اكتمال السجل",""]}
     if(k[0][0]==="—")k[0][0]=1;
     if(!all){k=k.slice(0,3);if(E)k.push([E,"شواهد ومرفقات موثقة",""])}else{for(var z=3;z<k.length;z++)if(k[z][0]===0)k[z][0]="لا يوجد"}
