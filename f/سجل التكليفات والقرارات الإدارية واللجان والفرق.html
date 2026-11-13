@@ -631,6 +631,8 @@ table.mtab td{text-align:center} table.mtab{min-width:760px}
 @media (max-width:640px){ .cover .vm{grid-template-columns:1fr} }
 
 .m-scan{margin-top:16px}.m-scan img{display:block;width:100%;max-width:640px;margin:6px auto 0;border:1px solid var(--line);border-radius:6px}@media print{.m-scan{break-before:page}.m-scan img{max-height:250mm;width:auto}}
+table.mf-t{min-width:760px;font-size:.86rem}table.mf-t td{padding:5px 6px;vertical-align:middle}.mf-note{font-size:.88rem;background:#f6fbfb;border-inline-start:3px solid var(--teal);padding:6px 10px;margin-top:10px}.mf-code{margin-top:-8px}
+@media print{table.mf-t{min-width:0;font-size:8.5pt}table.mf-t td{padding:3px 4px}.mf .chip{border:0;padding:0;background:none}body[data-mf]>*:not(#app),body[data-mf] #app>*:not(.sheet){display:none!important}.mf .foot2{margin-top:4px}.mf .appr .stamp-img{width:84px;margin-top:-22px}.mf .rep-sig{height:1.8em}.mf .kl{margin-bottom:4px}.mf h2.desc-h{margin:6px auto;padding:6px 14px}.mf .mf-note{margin-top:6px}}
 /* v33 صفحات تنظيم السجل */
 .rg-p{line-height:1.9;margin:6px 0 10px;text-align:justify}
 .rg-ul{margin:4px 0 10px;padding-inline-start:22px;line-height:1.9}
@@ -887,10 +889,10 @@ function renderMeets(){
   }).join('');
   const mv=view.mv||'table';
   const all=L.flatMap(c=>(c.meetings||[]).map(m=>({c,m}))).sort((x,y)=>(hDays(parseHijri(x.m.date))||9e9)-(hDays(parseHijri(y.m.date))||9e9));
-  const tableHTML=`<div class="tbl-wrap"><table class="mem mtab"><thead><tr><th>م</th><th>اللجنة / الفريق</th><th>الاجتماع</th><th>التاريخ</th><th>الحالة</th><th>عدد التوصيات</th><th>التوقيعات</th><th>إجراء</th></tr></thead><tbody>${all.map(({c,m},i)=>{const h=parseHijri(m.date); const past=h&&hDays(h)<=nd; const pr=m.att.filter(a=>a.st==='حاضرة'); const sg=pr.filter(a=>a.sig).length;
-    return `<tr><td class="i">${i+1}</td><td style="text-align:right">${esc(c.title)}</td><td>${esc(m.kind||'الشهري')} (${esc(m.no)})</td><td>${esc(m.date||'لم يُرصد بعد')}</td><td><span class="chip ${past?'ok':'soon'}">${past?'منفّذ':'مجدول'}</span></td><td>${m.recs.filter(r=>r.text&&r.text.trim()).length}</td><td>${past?`${sg}/${pr.length}`:'لم يُعقد بعد'}</td><td><button class="btn sm" data-om="${c.id}:${m.id}">فتح</button></td></tr>`;}).join('')}</tbody></table></div>`;
+  const tableHTML=`<div class="tbl-wrap"><table class="mem mtab"><thead><tr><th>م</th><th>الرمز</th><th>اللجنة / الفريق</th><th>الاجتماع</th><th>التاريخ</th><th>الحالة</th><th>عدد التوصيات</th><th>التوقيعات</th><th>إجراء</th></tr></thead><tbody>${all.map(({c,m},i)=>{const h=parseHijri(m.date); const past=h&&hDays(h)<=nd; const pr=m.att.filter(a=>a.st==='حاضرة'); const sg=pr.filter(a=>a.sig).length;
+    return `<tr><td class="i">${i+1}</td><td><b>${meetCode(c,m)}</b></td><td style="text-align:right">${esc(c.title)}</td><td>${esc(m.kind||'الشهري')} (${esc(m.no)})</td><td>${esc(m.date||'لم يُرصد بعد')}</td><td><span class="chip ${past?'ok':'soon'}">${past?'منفّذ':'مجدول'}</span></td><td>${m.recs.filter(r=>r.text&&r.text.trim()).length}</td><td>${past?`${sg}/${pr.length}`:'لم يُعقد بعد'}</td><td><button class="btn sm" data-om="${c.id}:${m.id}">فتح</button></td></tr>`;}).join('')}</tbody></table></div>`;
   app.innerHTML=`<div class="tools"><div class="g"><button class="btn" data-act="back">→ عودة إلى الرئيسية</button></div>
-      <div class="g"><button class="btn primary" data-act="pm">طباعة كل المحاضر</button></div></div>
+      <div class="g"><button class="btn" data-act="mfile">ملف الاجتماعات ومتابعة القرارات</button><button class="btn primary" data-act="pm">طباعة كل المحاضر</button></div></div>
     <div class="meets-hero"><span class="mh-ic big">${MEET_ICON}</span><div><h2>اجتماعات اللجان والفرق المدرسية ${esc(S.settings.year)}</h2>
       <div class="kp"><span><b>${L.length}</b> لجان وفرق</span><span><b>${done}</b> منفّذ</span><span><b>${plan}</b> مجدول</span></div></div></div>
     <div class="pdf-home">
@@ -904,6 +906,7 @@ function renderMeets(){
   const u=minPdfUrl(); const op=app.querySelector('#minOpen2'), dl=app.querySelector('#minDl2'); op.href=u; dl.href=u; dl.setAttribute('download',MIN_PDF_NAME);
   app.querySelector('[data-act="back"]').onclick=()=>{view={page:'home'};render();scrollTo(0,0);};
   app.querySelector('[data-act="pm"]').onclick=()=>printAll('meet');
+  app.querySelector('[data-act="mfile"]').onclick=()=>{view={page:'mfile',mf:'plan'};render();scrollTo(0,0);};
   app.querySelectorAll('[data-om]').forEach(b=>b.onclick=()=>{const [cid,mid]=b.dataset.om.split(':'); view={page:'c',id:cid,tab:'meet',mid}; render(); scrollTo(0,0);});
   app.querySelectorAll('[data-oc]').forEach(b=>b.onclick=()=>{view={page:'c',id:b.dataset.oc,tab:'meet'}; render(); scrollTo(0,0);});
 }
@@ -1334,6 +1337,7 @@ function meetingSheet(c, m){
   return `<article class="sheet minute">
     <div class="kl">${kalisha(c,false)}</div>
     <h2 class="desc-h">محضر اجتماع ${esc(c.title)}</h2>
+    <div class="card-sub mf-code">رمز المحضر: <b>${meetCode(c,m)}</b> — حالة المحضر: <b>${mfPast(m)&&m.agenda.length?'معتمد':'مسودة (اجتماع مجدول)'}</b></div>
     <div class="mt-title">الاجتماع: <select data-mk="kind">${MEET_KINDS.map(x=>`<option ${x===m.kind?'selected':''}>${x}</option>`).join('')}</select>
        رقم ( <input class="inl" data-mk="no" value="${esc(m.no)}" size="3" style="min-width:0;width:auto;text-align:center"> )
        <span class="no-print">— الفصل الدراسي <select data-mk="sem"><option value="1" ${+m.sem===1?'selected':''}>الأول</option><option value="2" ${+m.sem===2?'selected':''}>الثاني</option></select></span></div>
@@ -1397,6 +1401,91 @@ function meetingsList(c){
   </div>`;
 }
 
+
+/* ===== ملف الاجتماعات ومتابعة القرارات: الخطة السنوية، السجل الرئيس، سجل القرارات، الدعوة وجدول الأعمال ===== */
+const MF_AB=[[/الإدارية/,'إد'],[/التوجيه/,'تو'],[/التحصيل/,'تح'],[/التميز/,'تم'],[/الأمن والسلامة/,'أس'],[/الصندوق/,'صن']];
+function mfAb(c){ const x=MF_AB.find(a=>a[0].test(c.title)); return x?x[1]:'لج'; }
+const mfAr=x=>String(x).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+function meetCode(c,m){ return mfAr(`${mfAb(c)}-${String(m.no||'').padStart(2,'0')}`); }
+function recCode(c,m,i){ return `${meetCode(c,m)}-ق${mfAr(i+1)}`; }
+function mfList(){ return S.committees.filter(c=>c.kind!=='takleef' && !/التربية الخاصة/.test(c.title)); }
+function mfPast(m){ const h=parseHijri(m.date), n=hijriNow(); return !!(h&&n&&hDays(h)<=hDays(n)); }
+function mfTopic(m){ return String(m.topic || (m.agenda||[]).find(t=>!/متابعة تنفيذ توصيات|افتتاح|الترحيب/.test(t)) || (m.agenda||[])[0] || '').replace(/[.。]$/,''); }
+function mfGoal(c){ const sec=(c.card&&c.card.sections||[]).find(x=>/هدف|أهداف/.test(x.h||'')); const k=sem2Key(c);
+  return (sec&&sec.items&&sec.items[0]) || (k&&SEM2_PLAN[k]&&SEM2_PLAN[k].goal) || ''; }
+function mfShort(g){ g=String(g||'').replace(/[.。]\s*$/,''); const p=g.split('،'); let o=p[0]; for(let i=1;i<p.length && (o+'،'+p[i]).length<=95;i++) o+='،'+p[i]; return o+'.'; }
+function mfHead(t,sub){ return `<div class="kl">${kalisha({num:'',date:''},false)}</div><h2 class="desc-h">${t}</h2>${sub?`<div class="card-sub">${sub}</div>`:''}`; }
+function mfSign(){ return `<div class="foot2"><div></div><div class="appr"><div class="h">يعتمد مديرة المدرسة</div><div>${esc(S.settings.principal)}</div><img class="rep-sig" src="${SIG_NADIA}" alt="">${stampImg()}</div></div>`; }
+function mfPlanSheet(){
+  const rows=mfList().map((c,i)=>{ const ms=c.meetings||[]; const d=ms.filter(m=>mfPast(m)&&m.agenda.length).length;
+    const rap=c.members.find(x=>/مقرر/.test(x.role)); const P=(c.plan&&c.plan.dates)||[[],[]];
+    const ds=r=>(r||[]).map(x=>{const h=parseHijri(x);return h?`${h[1]}/${h[2]}`:'';}).filter(Boolean).join('، ');
+    return `<tr><td class="i">${i+1}</td><td class="nm" style="text-align:right">${esc(c.title)}</td><td>${(P[0]||[]).length} لكل فصل<br><span class="muted">وطارئ عند الحاجة</span></td>
+      <td style="text-align:right;line-height:1.6">${esc(mfShort(mfGoal(c)))}</td><td>${esc(rap?rap.name.split(' ').filter((w,j,a)=>j===0||j===a.length-1).join(' '):'—')}</td>
+      <td>${ds(P[0])}</td><td>${ds(P[1])}</td><td><span class="chip ${d?'ok':'soon'}">${d} من ${ms.length}</span></td></tr>`; }).join('');
+  return `<article class="sheet mf">${mfHead('الخطة السنوية لاجتماعات التشكيلات المدرسية',`للعام الدراسي ${esc(S.settings.year)}`)}
+    <div class="tbl-wrap"><table class="mem mf-t"><thead><tr><th>م</th><th>التشكيل</th><th>الدورية</th><th>الغرض الرئيس</th><th>المقررة</th><th>مواعيد الفصل الأول</th><th>مواعيد الفصل الثاني</th><th>المنفذ</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="rg-p mf-note"><b>ضابط:</b> تُحدد المواعيد بما لا يربك اليوم الدراسي ولا يعطل الحصص، وتُراجع الدورية عند الحاجة، ويُعقد الاجتماع الطارئ بدعوة من رئيسة التشكيل.</p>${mfSign()}</article>`;
+}
+function mfLogSheet(){
+  const all=mfList().flatMap(c=>(c.meetings||[]).map(m=>({c,m}))).sort((x,y)=>(hDays(parseHijri(x.m.date))||9e9)-(hDays(parseHijri(y.m.date))||9e9));
+  const rows=all.map(({c,m},i)=>{ const p=mfPast(m); const n=m.recs.filter(r=>r.text&&r.text.trim()).length;
+    return `<tr><td class="i">${i+1}</td><td><b>${meetCode(c,m)}</b></td><td style="text-align:right">${esc(c.title)}</td><td>${esc(m.no)}</td><td>${esc(m.kind||'الشهري')}${m.place==='عن بعد'?' — عن بعد':''}</td><td>${esc(m.date)}</td><td style="text-align:right;line-height:1.6">${esc(mfTopic(m))}</td><td>${n}</td><td><span class="chip ${p?'ok':'soon'}">${p?'معتمد':'مجدول'}</span></td></tr>`; }).join('');
+  return `<article class="sheet mf">${mfHead('السجل الرئيس للاجتماعات',`للعام الدراسي ${esc(S.settings.year)} — ${all.filter(x=>mfPast(x.m)).length} اجتماعاً منفذاً و${all.filter(x=>!mfPast(x.m)).length} مجدولاً`)}
+    <div class="tbl-wrap"><table class="mem mf-t"><thead><tr><th>م</th><th>رمز المحضر</th><th>التشكيل</th><th>رقم الاجتماع</th><th>نوع الاجتماع</th><th>التاريخ</th><th>الموضوع الرئيس</th><th>عدد القرارات</th><th>الحالة</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="rg-p mf-note"><b>التوثيق:</b> يُعطى كل اجتماع رمزاً ثابتاً (رمز التشكيل - رقم الاجتماع) يربطه بمحضره وقراراته وحضوره ومرفقاته.</p>${mfSign()}</article>`;
+}
+function mfRecsSheet(){
+  const all=mfList().flatMap(c=>(c.meetings||[]).filter(mfPast).flatMap(m=>m.recs.map((r,i)=>({c,m,r,i})).filter(x=>x.r.text&&x.r.text.trim())));
+  const rows=all.map((x,k)=>`<tr><td class="i">${k+1}</td><td><b>${recCode(x.c,x.m,x.i)}</b></td><td>${meetCode(x.c,x.m)}<br><span class="muted">${esc(x.m.date)}</span></td><td style="text-align:right;line-height:1.6">${esc(x.r.text)}</td><td>${esc(x.r.owner)}</td><td>${esc(x.r.duration)}</td><td>${esc(x.r.follow||'—')}</td><td><span class="chip ${x.r.status==='منفذة'?'ok':'soon'}">${esc(x.r.status)}</span></td></tr>`).join('');
+  const done=all.filter(x=>x.r.status==='منفذة').length;
+  return `<article class="sheet mf">${mfHead('سجل التوصيات والقرارات',`الاجتماعات المنفذة — ${all.length} قراراً، المنفذ منها ${done} (${all.length?Math.round(done*100/all.length):0}%)`)}
+    <div class="tbl-wrap"><table class="mem mf-t"><thead><tr><th>م</th><th>رمز القرار</th><th>المحضر</th><th>نص القرار المعتمد</th><th>المسؤولة</th><th>الموعد</th><th>المتابعة</th><th>الحالة</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="rg-p mf-note"><b>التمييز:</b> التوصية مقترح يُرفع للاعتماد أو الإجراء، والقرار مخرج معتمد داخل صلاحية التشكيل، وما يتجاوز الصلاحية يُحال للجهة المختصة.</p>${mfSign()}</article>`;
+}
+function mfNext(){ const n=hijriNow(); const nd=n?hDays(n):0; return mfList().flatMap(c=>(c.meetings||[]).map(m=>({c,m}))).filter(x=>{const h=parseHijri(x.m.date);return h&&hDays(h)>=nd;}).sort((x,y)=>hDays(parseHijri(x.m.date))-hDays(parseHijri(y.m.date))); }
+function mfInviteSheet(c,m){
+  const chair=c.members.find(x=>/رئيس/.test(x.role))||c.members[0]||{name:''}; const rap=c.members.find(x=>/مقرر/.test(x.role))||{name:''};
+  const i=c.meetings.indexOf(m); const prev=c.meetings.slice(0,i).reverse().find(x=>x.recs.some(r=>r.text&&r.text.trim()));
+  const T=isTeam(c)?'الفريق':'اللجنة';
+  const past=mfPast(m)&&m.agenda.length; const cf=x=>{ if(!past) return 'بانتظار التأكيد'; const a=m.att.find(y=>samePerson(y.name,x.name)); return a?(a.st==='حاضرة'?'حضرت':a.st):'حضرت'; };
+  const inv=c.members.filter(x=>x.name.trim()).map((x,k)=>`<tr><td class="i">${k+1}</td><td style="text-align:right">${esc(x.name)}</td><td>${esc(x.job)}</td><td>${esc(x.role)}</td><td>${cf(x)}</td></tr>`).join('');
+  const ag=(m.agenda.length?m.agenda:['']).map((t,k)=>`<tr><td class="i">${k+1}</td><td style="text-align:right">${esc(t)}</td><td>${k===0?esc(rap.name.split(' ')[0]?'مقررة '+T:''):'رئيسة '+T}</td><td>${/متابعة/.test(t)?'اطلاع ومتابعة':'مناقشة وتوصية'}</td></tr>`).join('');
+  const fol=prev?prev.recs.map((r,k)=>({r,k})).filter(x=>x.r.text&&x.r.text.trim()).map(({r,k})=>`<tr><td><b>${recCode(c,prev,k)}</b></td><td style="text-align:right">${esc(r.text)}</td><td>${esc(r.owner)}</td><td>${esc(r.status)}</td></tr>`).join(''):'';
+  return `<article class="sheet mf">${mfHead(`الدعوة وجدول الأعمال — ${esc(c.title)}`,`رمز الاجتماع: ${meetCode(c,m)}`)}
+    <div class="tbl-wrap"><table class="desc-tb"><tbody>
+      <tr><th>التشكيل ورقم قراره</th><td>${esc(c.title)}${c.num?` — قرار رقم ${esc(c.num)}`:''}</td></tr>
+      <tr><th>نوع الاجتماع ورقمه</th><td>${esc(m.kind||'الشهري')} — رقم (${esc(m.no)})</td></tr>
+      <tr><th>اليوم والتاريخ</th><td>${esc(m.day||'')} ${esc(m.date)}</td></tr>
+      <tr><th>الوقت والمكان</th><td>${m.start?esc(m.start)+(m.end?' – '+esc(m.end):''):'يُحدد في التعميم'} — ${esc(m.place||'إدارة المدرسة')}</td></tr>
+      <tr><th>الغرض من الاجتماع</th><td>${esc(mfTopic(m))}</td></tr>
+      <tr><th>الوثائق المطلوب الاطلاع عليها</th><td>${prev?`محضر الاجتماع السابق (${meetCode(c,prev)}) وتقرير متابعة توصياته`:'قرار التشكيل ومهام '+T}، وخطة عمل ${T}.</td></tr>
+      <tr><th>تأكيد الحضور أو الاعتذار</th><td>قبل موعد الاجتماع بيوم عمل واحد على الأقل، لدى مقررة ${T}${rap.name?`: ${esc(rap.name)}`:''}.</td></tr>
+    </tbody></table></div>
+    <div class="desc-sub">المدعوات وتأكيد الحضور:</div>
+    <div class="tbl-wrap"><table class="mem mf-t"><thead><tr><th>م</th><th>الاسم</th><th>الصفة</th><th>العضوية</th><th>الحضور / الاعتذار</th></tr></thead><tbody>${inv}</tbody></table></div>
+    <div class="desc-sub">جدول أعمال الاجتماع:</div>
+    <div class="tbl-wrap"><table class="mem mf-t"><thead><tr><th>م</th><th>الموضوع</th><th>مقدِّمة الموضوع</th><th>المخرج المتوقع</th></tr></thead><tbody>${ag}</tbody></table></div>
+    ${fol?`<div class="desc-sub">متابعة قرارات الاجتماع السابق (${meetCode(c,prev)} — ${esc(prev.date)}):</div>
+    <div class="tbl-wrap"><table class="mem mf-t"><thead><tr><th>رمز القرار</th><th>القرار</th><th>المسؤولة</th><th>الحالة</th></tr></thead><tbody>${fol}</tbody></table></div>`:''}
+    <div class="foot2"><div><div class="h">رئيسة ${T}</div><div>${esc(chair.name)}</div></div><div class="appr"><div class="h">يعتمد مديرة المدرسة</div><div>${esc(S.settings.principal)}</div><img class="rep-sig" src="${SIG_NADIA}" alt="">${stampImg()}</div></div></article>`;
+}
+function renderMFile(){
+  const app=document.getElementById('app'); const t=view.mf||'plan'; const nx=mfNext();
+  let body='';
+  if(t==='plan') body=mfPlanSheet(); else if(t==='log') body=mfLogSheet(); else if(t==='recs') body=mfRecsSheet();
+  else { const key=view.inv || (nx[0]?nx[0].c.id+':'+nx[0].m.id:''); const [cid,mid]=key.split(':'); const c=S.committees.find(x=>x.id===cid); const m=c&&c.meetings.find(x=>x.id===mid);
+    body=`<div class="f no-print" style="margin-bottom:12px"><label for="invSel">الاجتماع</label><select id="invSel">${mfList().flatMap(c=>c.meetings.map(m=>`<option value="${c.id}:${m.id}" ${c.id+':'+m.id===key?'selected':''}>${esc(c.title)} — ${meetCode(c,m)} — ${esc(m.date)}</option>`)).join('')}</select></div>`+(m?mfInviteSheet(c,m):'<p class="hint">ما فيه اجتماعات مجدولة.</p>'); }
+  app.innerHTML=`<div class="tools"><div class="g"><button class="btn" data-act="back">→ الاجتماعات</button></div><div class="g"><button class="btn primary" data-act="print">طباعة / حفظ PDF</button><button class="btn" data-act="all">طباعة الملف كامل</button></div></div>
+    <div class="meets-hero"><span class="mh-ic big">${MEET_ICON}</span><div><h2>ملف الاجتماعات ومتابعة القرارات ${esc(S.settings.year)}</h2><div class="kp"><span>رموز ثابتة تربط كل اجتماع بمحضره وقراراته</span></div></div></div>
+    <div class="seg no-print" style="margin-bottom:12px">${[['plan','الخطة السنوية'],['log','السجل الرئيس'],['recs','سجل القرارات'],['inv','الدعوة وجدول الأعمال']].map(([k,l])=>`<button data-mf="${k}" class="${k===t?'on':''}">${l}</button>`).join('')}</div>${body}`;
+  app.querySelector('[data-act="back"]').onclick=()=>{view={page:'meets'};render();scrollTo(0,0);};
+  app.querySelector('[data-act="print"]').onclick=()=>window.print();
+  app.querySelector('[data-act="all"]').onclick=()=>{ const nx2=mfNext().slice(0,6); app.querySelectorAll('.sheet,.f.no-print').forEach(e=>e.remove());
+    app.insertAdjacentHTML('beforeend', mfPlanSheet()+mfLogSheet()+mfRecsSheet()+nx2.filter((x,i,a)=>a.findIndex(y=>y.c.id===x.c.id)===i).map(x=>mfInviteSheet(x.c,x.m)).join('')); window.print(); };
+  app.querySelectorAll('[data-mf]').forEach(b=>b.onclick=()=>{view.mf=b.dataset.mf;render();});
+  const sel=app.querySelector('#invSel'); if(sel) sel.onchange=()=>{view.inv=sel.value;render();};
+}
 /* --- صفحة متابعة التوصيات --- */
 function recsReport(filter, editable){
   const rows=allRecs().filter(x=>filter==='الكل' || (filter==='مفتوحة' ? x.r.status!=='منفذة' : x.r.status===filter));
@@ -1712,11 +1801,13 @@ const missingNames = c => c.members.filter(m=>!m.name.trim() || /^يُستكمل
 function render(){
   document.getElementById('barSub').textContent = `${S.settings.school} — العام الدراسي ${S.settings.year} — الفصل الدراسي ${S.settings.semester||'الأول'}`;
   document.getElementById('pageStyle').textContent = `@page{size:A4 ${S.settings.orient==='l'?'landscape':'portrait'};margin:12mm}`;
+  document.body.toggleAttribute('data-mf', view.page==='mfile');
   if(view.page==='home') renderHome();
   else if(view.page==='print') renderPrintAll(view.filter);
   else if(view.page==='recs') renderRecs();
   else if(view.page==='staff') renderStaff();
   else if(view.page==='meets') renderMeets();
+  else if(view.page==='mfile') renderMFile();
   else if(view.page==='reg') renderReg();
   else renderCommittee();
 }
