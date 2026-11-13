@@ -438,7 +438,13 @@ $("libout").onclick=function(){try{localStorage.removeItem("s67libown");sessionS
 (async function(){try{var pc=sessionStorage.getItem("s67libc");sessionStorage.removeItem("s67libc");if(pc){var pm=await check(pc);if(pm){if(pm==="owner"){localStorage.setItem("s67libown",JSON.stringify({c:pc,t:Date.now()+30*864e5}));sessionStorage.setItem("s67own","1");localStorage.setItem("s67ownT",String(Date.now()));if(document.documentElement.classList.contains("s67lock")){location.reload();return}}enter(pm);return}}}catch(e){}try{var o=JSON.parse(localStorage.getItem("s67libown")||"null");if(o&&o.c&&o.t>Date.now()&&(await check(o.c))==="owner"){enter("owner");return}}catch(e){}try{$("libcode").focus()}catch(e){}})();
 })();
 </script>
-</body>
+<script id="s67nosave">(function(){var d=document,R=/نسخ|حفظ|تصدير|طباعة|اطبع|تنزيل|تحميل|PDF|Excel|Word|إكسل|وورد|📋|💾|🖨|⬇/i,K=/رجوع|فتح السجل|الأرشيف|البروشور|دخول|خروج/;
+function locked(){return d.documentElement.classList.contains("s67lock")}
+function sweep(){if(!locked())return;[].slice.call(d.querySelectorAll("button,a,[role=button],input[type=button],input[type=submit]")).forEach(function(e){if(e.__s67ns||e.closest("#s67dlg,#s67bk"))return;var t=(e.textContent||e.value||"")+" "+(e.title||"")+" "+(e.getAttribute("aria-label")||"");if(e.hasAttribute&&e.hasAttribute("download")||(R.test(t)&&!K.test(t))){e.__s67ns=1;e.style.setProperty("display","none","important")}})}
+d.addEventListener("keydown",function(e){if(!locked())return;var k=(e.key||"").toLowerCase();if((e.ctrlKey||e.metaKey)&&(k==="s"||k==="p"||k==="c"||k==="u")){e.preventDefault();e.stopPropagation()}},true);
+d.addEventListener("copy",function(e){if(locked()){e.preventDefault()}},true);
+function init(){sweep();try{new MutationObserver(function(){clearTimeout(init.t);init.t=setTimeout(sweep,150)}).observe(d.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:["class"]})}catch(e){}}
+if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",init);else init()})();</script></body>
 </html>
 <script id="kpi67">(function(){var D=document,de=D.documentElement;
 var CFG={};try{var c=D.getElementById("kpi67-cfg");if(c)CFG=JSON.parse(c.textContent)||{}}catch(e){}

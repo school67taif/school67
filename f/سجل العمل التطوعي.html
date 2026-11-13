@@ -399,7 +399,13 @@ bs[0].onclick=go;i.onkeydown=function(e){if(e.key==="Enter")go()}}
 function relock(){try{sessionStorage.removeItem("s67own");localStorage.removeItem("s67ownT")}catch(e){}location.reload()}
 function init(){scan();if(!d.getElementById("s67wm")){var w=d.createElement("div");w.id="s67wm";w.setAttribute("aria-hidden","true");var hh="";for(var y=-1;y<14;y++)for(var x=-1;x<7;x++)hh+='<div style="top:'+(y*140)+'px;left:'+(x*300+(y%2)*150)+'px">ناديه عوض الصخيري<br>الابتدائية السابعة والستون</div>';w.innerHTML=hh;d.body.appendChild(w)}if(!d.getElementById("s67rl")){var r=d.createElement("button");r.id="s67rl";r.type="button";r.textContent="🔒 قفل";r.title="إعادة القفل (للأجهزة المشتركة)";r.onclick=relock;d.body.appendChild(r)}if(!d.getElementById("s67key")){var k=d.createElement("button");k.id="s67key";k.type="button";k.textContent="🔑";k.title="دخول المديرة";k.setAttribute("aria-label","دخول المديرة");k.onclick=ask;d.body.appendChild(k)}}
 if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",init);else init();
-})();</script></body>
+})();</script><script id="s67nosave">(function(){var d=document,R=/نسخ|حفظ|تصدير|طباعة|اطبع|تنزيل|تحميل|PDF|Excel|Word|إكسل|وورد|📋|💾|🖨|⬇/i,K=/رجوع|فتح السجل|الأرشيف|البروشور|دخول|خروج/;
+function locked(){return d.documentElement.classList.contains("s67lock")}
+function sweep(){if(!locked())return;[].slice.call(d.querySelectorAll("button,a,[role=button],input[type=button],input[type=submit]")).forEach(function(e){if(e.__s67ns||e.closest("#s67dlg,#s67bk"))return;var t=(e.textContent||e.value||"")+" "+(e.title||"")+" "+(e.getAttribute("aria-label")||"");if(e.hasAttribute&&e.hasAttribute("download")||(R.test(t)&&!K.test(t))){e.__s67ns=1;e.style.setProperty("display","none","important")}})}
+d.addEventListener("keydown",function(e){if(!locked())return;var k=(e.key||"").toLowerCase();if((e.ctrlKey||e.metaKey)&&(k==="s"||k==="p"||k==="c"||k==="u")){e.preventDefault();e.stopPropagation()}},true);
+d.addEventListener("copy",function(e){if(locked()){e.preventDefault()}},true);
+function init(){sweep();try{new MutationObserver(function(){clearTimeout(init.t);init.t=setTimeout(sweep,150)}).observe(d.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:["class"]})}catch(e){}}
+if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",init);else init()})();</script></body>
 </html>
 <script id="kpi67">(function(){var D=document,de=D.documentElement;
 var CFG={};try{var c=D.getElementById("kpi67-cfg");if(c)CFG=JSON.parse(c.textContent)||{}}catch(e){}

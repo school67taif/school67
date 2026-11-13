@@ -373,7 +373,7 @@ $("#loginForm").addEventListener("submit",async e=>{
   if(ok==="visitor"){ const VB=S.vb; delete S.vb; $("#code").value=""; if(await vUsed()){ vDenied(VB); return; } await vMarkUsed(); vEnter(VB); return; }
   if(!ok){ $("#loginErr").textContent="الرمز غير صحيح. رمز الدخول هو أول 6 أرقام من السجل المدني المسجّل لكِ لدى مديرة المدرسة"; return; }
   $("#code").value="";
-  try{sessionStorage.removeItem("s67c");if(S.mode==="owner")localStorage.setItem("s67own",JSON.stringify({c:code,t:Date.now()+30*864e5}));else localStorage.removeItem("s67own")}catch(e){}
+  try{sessionStorage.removeItem("s67c");if(S.mode==="owner")localStorage.setItem("s67own",JSON.stringify({c:code,t:Date.now()+30*864e5}));else {localStorage.removeItem("s67own");localStorage.removeItem("s67ownT");sessionStorage.removeItem("s67own")}}catch(e){}
   enter();
 });
 async function tryCode(code){
