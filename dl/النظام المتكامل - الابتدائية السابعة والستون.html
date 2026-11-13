@@ -693,5 +693,5 @@ function setNoCopy(on){
 }
 $("#discardBtn").onclick=async()=>{ setDirty(false); await relogin(); toast("تم التراجع"); };
 </script>
-</body>
+<script id="s67fresh">(function(){try{var u=location.href.split("#")[0];if(!/^https?:/.test(u)||sessionStorage.getItem("s67f:"+u))return;sessionStorage.setItem("s67f:"+u,"1");Promise.all([fetch(u,{method:"HEAD",cache:"force-cache"}),fetch(u,{method:"HEAD",cache:"reload"})]).then(function(r){var a=r[0].headers.get("etag")||r[0].headers.get("last-modified"),b=r[1].headers.get("etag")||r[1].headers.get("last-modified");if(a&&b&&a!==b)location.reload()}).catch(function(){})}catch(e){}})();</script></body>
 </html>
