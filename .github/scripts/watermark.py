@@ -44,3 +44,17 @@ if GUARD and "s67wm" in GUARD:
         s = (s[:k] + GUARD + s[k:]) if k >= 0 else s + GUARD
         open(f, "w", encoding="utf8").write(s); added += 1
 print("guard added", added)
+
+# تحديث تلقائي: إذا كان المتصفح يعرض نسخة قديمة من الصفحة يجلب الجديدة ويعيد التحميل مرة واحدة
+FRESH = '<script id="s67fresh">(function(){try{var u=location.href.split("#")[0];if(!/^https?:/.test(u)||sessionStorage.getItem("s67f:"+u))return;sessionStorage.setItem("s67f:"+u,"1");Promise.all([fetch(u,{method:"HEAD",cache:"force-cache"}),fetch(u,{method:"HEAD",cache:"reload"})]).then(function(r){var a=r[0].headers.get("etag")||r[0].headers.get("last-modified"),b=r[1].headers.get("etag")||r[1].headers.get("last-modified");if(a&&b&&a!==b)location.reload()}).catch(function(){})}catch(e){}})();</script>'
+nf = 0
+for f in glob.glob("**/*.html", recursive=True):
+    if f.startswith(".github"):
+        continue
+    s = open(f, encoding="utf8", errors="ignore").read()
+    if "s67fresh" in s or "s67guard" not in s:
+        continue
+    i = s.find('<script id="s67guard">')
+    s = s[:i] + FRESH + s[i:]
+    open(f, "w", encoding="utf8").write(s); nf += 1
+print("fresh added", nf)
