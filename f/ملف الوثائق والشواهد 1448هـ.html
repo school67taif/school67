@@ -435,7 +435,7 @@ $("libform").addEventListener("submit",async function(e){e.preventDefault();var 
  if(!m){$("liberr").textContent="الرمز غير صحيح. رمز الدخول هو أول 6 أرقام من السجل المدني المسجّل لكِ لدى مديرة المدرسة";return}
  $("libcode").value="";if(m==="owner"){try{localStorage.setItem("s67libown",JSON.stringify({c:c,t:Date.now()+30*864e5}));sessionStorage.setItem("s67own","1");localStorage.setItem("s67ownT",String(Date.now()))}catch(e){}if(document.documentElement.classList.contains("s67lock")){location.reload();return}}else{try{localStorage.removeItem("s67libown")}catch(e){}}enter(m)});
 $("libout").onclick=function(){try{localStorage.removeItem("s67libown");sessionStorage.removeItem("s67own");localStorage.removeItem("s67ownT")}catch(e){}location.reload()};
-(async function(){try{var o=JSON.parse(localStorage.getItem("s67libown")||"null");if(o&&o.c&&o.t>Date.now()&&(await check(o.c))==="owner"){enter("owner");return}}catch(e){}try{$("libcode").focus()}catch(e){}})();
+(async function(){try{var pc=sessionStorage.getItem("s67libc");sessionStorage.removeItem("s67libc");if(pc){var pm=await check(pc);if(pm){if(pm==="owner"){localStorage.setItem("s67libown",JSON.stringify({c:pc,t:Date.now()+30*864e5}));sessionStorage.setItem("s67own","1");localStorage.setItem("s67ownT",String(Date.now()));if(document.documentElement.classList.contains("s67lock")){location.reload();return}}enter(pm);return}}}catch(e){}try{var o=JSON.parse(localStorage.getItem("s67libown")||"null");if(o&&o.c&&o.t>Date.now()&&(await check(o.c))==="owner"){enter("owner");return}}catch(e){}try{$("libcode").focus()}catch(e){}})();
 })();
 </script>
 </body>

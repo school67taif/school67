@@ -192,7 +192,7 @@ body.nocopy #wm{display:block}
  <section id="app">
   <div class="userbar">
    <div class="who"><div class="avatar" id="av"></div><div><b id="uName"></b><small id="uRole"></small></div></div>
-   <div style="display:flex;gap:8px;align-items:center"><div class="fz" title="حجم الخط"><button id="fzm" aria-label="تصغير الخط">A−</button><button id="fzp" aria-label="تكبير الخط">A+</button></div><button class="btn ghost sm" id="vbell" style="display:none;position:relative" title="طلبات دخول الزوار">🔔<span id="vbadge" style="display:none;position:absolute;top:-6px;left:-6px;background:#B03F35;color:#fff;border-radius:999px;font-size:11px;min-width:18px;height:18px;line-height:18px;padding:0 4px">0</span></button><a class="btn ghost sm" id="linksBtn" href="https://school67taif.github.io/school67/rw/" target="_blank" rel="noopener" style="display:none;text-decoration:none">🔗 الملفات والروابط</a><button class="btn ghost sm" id="logout">🚪 خروج</button><button id="logoutFab" type="button" aria-label="تسجيل الخروج" title="تسجيل الخروج">🚪<span>خروج</span></button></div>
+   <div style="display:flex;gap:8px;align-items:center"><div class="fz" title="حجم الخط"><button id="fzm" aria-label="تصغير الخط">A−</button><button id="fzp" aria-label="تكبير الخط">A+</button></div><button class="btn ghost sm" id="vbell" style="display:none;position:relative" title="طلبات دخول الزوار">🔔<span id="vbadge" style="display:none;position:absolute;top:-6px;left:-6px;background:#B03F35;color:#fff;border-radius:999px;font-size:11px;min-width:18px;height:18px;line-height:18px;padding:0 4px">0</span></button><a class="btn ghost sm" id="libBtn" href="f/%D9%85%D9%84%D9%81%20%D8%A7%D9%84%D9%88%D8%AB%D8%A7%D8%A6%D9%82%20%D9%88%D8%A7%D9%84%D8%B4%D9%88%D8%A7%D9%87%D8%AF%201448%D9%87%D9%80.html" style="text-decoration:none">📚 ملف الوثائق والشواهد</a><a class="btn ghost sm" id="linksBtn" href="https://school67taif.github.io/school67/rw/" target="_blank" rel="noopener" style="display:none;text-decoration:none">🔗 الملفات والروابط</a><button class="btn ghost sm" id="logout">🚪 خروج</button><button id="logoutFab" type="button" aria-label="تسجيل الخروج" title="تسجيل الخروج">🚪<span>خروج</span></button></div>
   </div>
   <div class="layout">
    <nav class="rail" id="rail" aria-label="أقسام النظام"></nav>
@@ -693,5 +693,6 @@ function setNoCopy(on){
 }
 $("#discardBtn").onclick=async()=>{ setDirty(false); await relogin(); toast("تم التراجع"); };
 </script>
+<script>document.getElementById("libBtn").addEventListener("click",function(){try{if(S&&S.code)sessionStorage.setItem("s67libc",S.code)}catch(e){}});</script>
 </body>
 </html>
