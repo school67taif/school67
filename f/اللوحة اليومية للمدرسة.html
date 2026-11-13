@@ -60,6 +60,13 @@ tbody tr:nth-child(even) td{background:var(--s2)}
 .lk .eg{border:1px solid var(--line);background:#fff;border-radius:8px;padding:2px 8px;font-size:12px;cursor:pointer;color:var(--ink);text-decoration:none;white-space:nowrap}
 .timebar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:clamp(13px,1.3vw,18px);color:var(--mut)}
 .timebar b{color:var(--teal2)}
+.dcard{border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden;background:#fff}
+.dcard.today{border:2px solid var(--teal)}
+.dhead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--s2);padding:8px 12px}
+.dhead b{font-family:var(--kufi);color:var(--mar)}
+.dcard table td{font-size:13.5px}.dcard select{padding:4px 6px;font-size:13px}.dcard input{padding:4px 8px;font-size:13px}
+.st-ok{color:#1D7F55;font-weight:700}.st-pt{color:#9A7420;font-weight:700}.st-no{color:#B03F35;font-weight:700}.st-na{color:#5D6D70}
+.prog{display:inline-block;width:90px;height:8px;background:#E6ECEC;border-radius:6px;overflow:hidden;vertical-align:middle}.prog i{display:block;height:100%;background:#1D7F55}
 .nm.a{border-color:#E9C9C4;background:var(--badS)}.nm.l{border-color:#EAD9AE;background:var(--warnS)}.nm.e{border-color:#B9DEDE;background:var(--tealS)}
 .nm i{font-style:normal;color:var(--mut);font-size:12px;min-width:20px}
 .ready li{margin:3px 0}.ok{color:var(--good)}.no{color:var(--warn)}
@@ -155,6 +162,7 @@ html.s67lock .own{display:none!important}
   <nav class="rail" id="rail">
    <div class="grp">اللوحة</div>
    <button data-v="home" class="on">🏠 الرئيسية</button>
+   <button data-v="flw">📅 المتابعة اليومية</button>
    <button data-v="att">✅ حضور الشُّعب</button>
    <button data-v="sec">👩‍🎓 الشُّعب والأسماء</button>
    <button data-v="rep">📈 تقارير الغياب</button>
@@ -191,6 +199,7 @@ html.s67lock .own{display:none!important}
      <div class="panel"><h3>مناوبة اليوم</h3><div id="homeDuty"></div></div>
      <div class="panel"><h3>الحضور خلال الأسبوع</h3><div id="weekAtt"></div></div>
     </div>
+    <div class="panel"><h3>متابعة تنفيذ مهام اليوم</h3><div id="homeFlw"></div></div>
     <div class="panel"><h3>رؤية المدرسة ورسالتها</h3><div class="vm" id="vmBox"></div></div>
     <div class="panel"><h3>روابط سجلات المدرسة المرتبطة</h3><div class="links" id="links"></div></div>
    </section>
@@ -211,6 +220,23 @@ html.s67lock .own{display:none!important}
     <div class="panel" style="margin-top:14px"><h3>مؤشرات الحضور المعتمدة</h3><p class="muted" style="font-size:13px;margin:0 0 8px">من تقارير نسب الحضور الأسبوعية التي تعدّها مسؤولة الغياب، وتقارير منصة مدرستي.</p><div id="histBox"></div></div>
     <div class="panel" style="margin-top:14px"><h3>نسبة الحضور حسب الشعبة</h3><div class="tw"><table><thead><tr><th>الشعبة</th><th>أيام مسجّلة</th><th>غياب بدون عذر</th><th>غياب بعذر</th><th>تأخر</th><th>استئذان</th><th>نسبة الحضور</th></tr></thead><tbody id="rSec"></tbody></table></div></div>
     <div class="panel"><h3>الطالبات المتكرر غيابهن</h3><div class="tw"><table><thead><tr><th>م</th><th>اسم الطالبة</th><th>الشعبة</th><th>بدون عذر</th><th>بعذر</th><th>تأخر</th><th>استئذان</th></tr></thead><tbody id="rStu"></tbody></table></div><p class="muted" style="font-size:13px;margin:8px 0 0">تُحال الطالبة المتكرر غيابها بدون عذر إلى الموجهة الطلابية وفق قواعد السلوك والمواظبة.</p></div>
+   </section>
+
+   <!-- المتابعة اليومية -->
+   <section class="view" id="v-flw">
+    <h2>المتابعة اليومية</h2>
+    <div class="panel">
+     <div class="row">
+      <div class="fld" style="max-width:230px"><label class="f">الشهر</label><select id="fMonth"></select></div>
+      <div class="fld" style="max-width:200px"><label class="f">عرض</label><select id="fShow"><option value="all">كل الأيام الدراسية</option><option value="pend">أيام فيها مهام غير موثقة</option></select></div>
+      <button class="btn" id="fToday">📍 اليوم</button>
+      <button class="btn" id="fPrintDay">🖨️ طباعة متابعة اليوم</button>
+      <button class="btn" id="fPrintMonth">🖨️ طباعة متابعة الشهر</button>
+     </div>
+     <div class="grid4" id="fKpi" style="margin-top:12px"></div>
+     <p class="muted" style="font-size:13px;margin:8px 0 0">لكل يوم دراسي بطاقة بمهامه، وفي كل مهمة المسؤولة عن التنفيذ والمسؤولة عن متابعة التنفيذ. «منفذة تلقائياً» تعني أن في اللوحة شاهداً عليها، مثل تقرير حضور معتمد أو حضور مرصود. والباقي توثّقينه بنفسك. المهام والمسؤولات تعدّلينها من الإعدادات.</p>
+    </div>
+    <div id="fList"></div>
    </section>
 
    <!-- حضور الشعب -->
@@ -338,6 +364,12 @@ html.s67lock .own{display:none!important}
       <div><label class="f">العام الدراسي</label><input type="text" id="sYear"></div>
       <div><label class="f">عنوان الشاشة</label><input type="text" id="sTitle"></div>
      </div>
+    </div>
+    <div class="panel">
+     <h3>المهام اليومية والمسؤوليات</h3>
+     <div class="tw"><table><thead><tr><th>المهمة</th><th>المسؤولة عن التنفيذ</th><th>المسؤولة عن المتابعة</th><th>الأيام</th><th class="own">إجراء</th></tr></thead><tbody id="tkBody"></tbody></table></div>
+     <button class="btn sm own" id="tkAdd" style="margin-top:8px">➕ إضافة مهمة</button>
+     <p class="muted" style="font-size:13px;margin:6px 0 0">في مهمة المناوبة، اكتبي «حسب سجل المناوبة» في خانة التنفيذ، وتنكتب أسماء مناوبات كل يوم من السجل.</p>
     </div>
     <div class="panel">
      <h3>إعدادات العرض</h3>
@@ -477,6 +509,7 @@ $("topAbs").innerHTML=L.length?L.map(function(x){var p=Math.round(x.a/x.n*100);r
 $("timeBar").innerHTML=timeLine(dObj());
 $("homeDuty").innerHTML=dutyHtml(dt);
 var W=weekDays(dObj());$("weekAtt").innerHTML=W.map(function(d){var t2=totalsOn(d);var p=t2.n&&t2.rec?Math.round(t2.p/t2.n*100):(HIST.day&&HIST.day[d]!=null?HIST.day[d]:null);return'<div style="margin:5px 0"><div class="row" style="justify-content:space-between"><b'+(d===DAY?' style="color:#007575"':'')+'>'+DAYN[fromIso(d).getDay()]+' <span class="muted" style="font-weight:400">'+hijShort(fromIso(d))+'</span></b><span class="muted">'+(p==null?(dayType(d)&&dayType(d)!=="onsite"?DTL[dayType(d)]:"لم يُسجّل"):p+"%")+'</span></div><div class="bar"><i style="width:'+(p||0)+'%;background:#1D7F55"></i></div></div>'}).join("");
+var hd=fromIso(DAY).getDay();if(hd>4||(DAYTYPE[DAY]&&(DAYTYPE[DAY]==="holiday"||DAYTYPE[DAY]==="suspended"))){$("homeFlw").innerHTML='<div class="empty">ليس يوماً دراسياً</div>'}else{var pp=dayProg(DAY);$("homeFlw").innerHTML='<div class="row" style="justify-content:space-between;margin-bottom:6px"><span>المنجز <b>'+pp.d+'</b> من <b>'+pp.n+'</b> مهام</span><span class="prog" style="width:160px"><i style="width:'+(pp.n?pp.d/pp.n*100:0)+'%"></i></span></div><ul style="margin:0;padding-inline-start:18px">'+tasksFor(DAY).map(function(tk){var s=stOf(DAY,tk);return'<li><span class="'+FSC[s.st]+'">'+(s.st==="auto"?"✔":s.st==="ok"?"✔":s.st==="pt"?"◐":s.st==="no"?"✕":"○")+"</span> "+esc(tk.n)+' <span class="muted" style="font-size:12.5px">— تنفيذ: '+esc(execOf(DAY,tk))+" · متابعة: "+esc(tk.f)+"</span></li>"}).join("")+"</ul>"}
 $("vmBox").innerHTML='<div><b>الرؤية</b><br>'+VISION+'</div><div><b>الرسالة</b><br>'+MISSION+'</div><div style="grid-column:1/-1"><b>القيم</b>: '+VALUES+'</div>';
 $("links").innerHTML=LINKS.map(function(l){var u="./"+encodeURIComponent(l[1]);return'<div class="lk"><a href="'+u+'" target="_blank" rel="noopener">'+l[0]+'</a><a class="eg" href="'+edgeUrl(u)+'">🌐 Edge</a></div>'}).join("")}
 
@@ -577,6 +610,58 @@ $("bkFile").addEventListener("change",function(){var f=this.files[0];this.value=
 $("clrDay").addEventListener("click",function(){if(guard()||!confirm("تفريغ حضور وانتظار وغياب يوم "+DAY+"؟"))return;delete S.att[DAY];delete S.wait[DAY];delete S.sabs[DAY];delete S.pin[DAY];save();renderAll();toast("تم التفريغ")});
 $("clrAll").addEventListener("click",function(){if(guard()||!confirm("سيتم حذف جميع البيانات نهائياً. هل أنتِ متأكدة؟")||!confirm("تأكيد أخير: حذف كل شيء؟"))return;S=def();save();renderAll();toast("حُذفت البيانات")});
 
+/* daily follow-up */
+var DUTYX="حسب سجل المناوبة";
+function defTasks(){var dep="وكيلة المدرسة: "+(S.settings.deputy||"ثرياء القثامي"),pr="مديرة المدرسة: "+PRINCIPAL;return[
+{id:"att",n:"رصد حضور الطالبات وغيابهن وتأخرهن",x:"مسؤولة الغياب: "+ABSRESP,f:dep,w:"all"},
+{id:"duty",n:"المناوبة اليومية (قبل الدوام والفسحة والانصراف)",x:DUTYX,f:dep,w:"onsite"},
+{id:"wait",n:"توزيع حصص الانتظار على المعلمات",x:dep,f:pr,w:"onsite"},
+{id:"staff",n:"رصد حضور المنسوبات وغيابهن واستئذانهن",x:dep,f:pr,w:"all"},
+{id:"repeat",n:"متابعة الطالبات المتكرر غيابهن والتواصل مع الأسر",x:"الموجهة الطلابية: هند العتيبي",f:"مسؤولة الغياب: "+ABSRESP,w:"all"},
+{id:"mad",n:"متابعة تفعيل منصة مدرستي وحضور الطالبات عن بعد",x:dep,f:pr,w:"remote"},
+{id:"screen",n:"تحديث شاشة العرض (قيمة الأسبوع، الكلمة، الإعلانات)",x:dep,f:pr,w:"onsite"},
+{id:"report",n:"اعتماد تقرير اليوم وحفظه",x:dep,f:pr,w:"all"}]}
+if(!S.tasks)S.tasks=defTasks();if(!S.follow)S.follow={};
+var WL={all:"كل الأيام",onsite:"الحضوري فقط",remote:"عن بعد فقط"};
+var FST={"":"— لم يُوثق","ok":"منفذة","pt":"منفذة جزئياً","no":"لم تُنفذ"},FSC={"":"st-na","ok":"st-ok","pt":"st-pt","no":"st-no","auto":"st-ok"};
+function schoolDays(){var r=[],d=new Date(2026,7,23),e=new Date(2027,0,7);while(d<=e){var w=d.getDay();if(w<=4){var k=iso(d),t=DAYTYPE[k]||"onsite";if(t!=="holiday"&&t!=="suspended")r.push(k)}d.setDate(d.getDate()+1)}return r}
+function hMonth(k){try{return new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-latn",{month:"long",year:"numeric"}).format(fromIso(k))}catch(e){return k.slice(0,7)}}
+function tasksFor(k){var t=DAYTYPE[k]||"onsite";return S.tasks.filter(function(x){return x.w==="all"||x.w===t})}
+function autoEv(k,tk){if(tk.id==="att"){if(recOn(k))return"مرصود في اللوحة";if(HIST.day&&HIST.day[k]!=null)return"نسبة الحضور "+HIST.day[k]+"% (تقرير معتمد)"}
+if(tk.id==="staff"&&S.sabs[k]&&S.sabs[k].length)return"مرصود: "+S.sabs[k].length+" حالة";
+if(tk.id==="wait"&&S.wait[k]&&S.wait[k].length)return"موزعة: "+S.wait[k].length+" حصة";
+if(tk.id==="mad"&&HIST.mad){for(var i=0;i<HIST.mad.length;i++){var m=HIST.mad[i];if(k>=m.from&&k<=m.to)return"نسبة التفعيل "+m.p+"% (تقرير "+m.w+")"}}return""}
+function stOf(k,tk){var f=(S.follow[k]||{})[tk.id]||{};if(f.st)return{st:f.st,note:f.note||"",ev:autoEv(k,tk)};var ev=autoEv(k,tk);return{st:ev?"auto":"",note:f.note||"",ev:ev}}
+function execOf(k,tk){if(tk.x===DUTYX){var r=ROSTER[k];return r&&r.length?r.map(function(y){return y[0]}).join("، "):"لا توجد مناوبة مجدولة"}return tk.x}
+function dayProg(k){var T=tasksFor(k),d=0;T.forEach(function(tk){var s=stOf(k,tk).st;if(s==="ok"||s==="auto")d++;else if(s==="pt")d+=.5});return{n:T.length,d:d}}
+var fMonthSel=null;
+function rFlw(){var days=schoolDays(),months=[];days.forEach(function(k){var m=hMonth(k);if(months.indexOf(m)<0)months.push(m)});
+if(!fMonthSel)fMonthSel=hMonth(DAY);if(months.indexOf(fMonthSel)<0)fMonthSel=months[months.length-1];
+$("fMonth").innerHTML=months.map(function(m){return"<option"+(m===fMonthSel?" selected":"")+">"+m+"</option>"}).join("");
+var md=days.filter(function(k){return hMonth(k)===fMonthSel});var pend=$("fShow").value==="pend";
+var tot=0,done=0,past=0,pendD=0;md.forEach(function(k){var p=dayProg(k);if(k<=today){tot+=p.n;done+=p.d;past++;if(p.d<p.n)pendD++}});
+$("fKpi").innerHTML='<div class="kpi"><b>'+md.length+'</b><span>يوم دراسي في الشهر</span></div><div class="kpi g"><b>'+(tot?Math.round(done/tot*100)+"%":"—")+'</b><span>نسبة توثيق المهام حتى اليوم</span></div><div class="kpi w"><b>'+pendD+'</b><span>أيام فيها مهام غير موثقة</span></div><div class="kpi"><b>'+past+'</b><span>يوم مضى من الشهر</span></div>';
+$("fList").innerHTML=md.filter(function(k){if(!pend)return true;var p=dayProg(k);return k<=today&&p.d<p.n}).map(function(k){return dayCard(k,0)}).join("")||'<div class="empty">لا توجد أيام</div>';
+var c=document.querySelector('.dcard[data-k="'+DAY+'"]');if(c&&$("v-flw").classList.contains("on")&&!rFlw.done){rFlw.done=1;setTimeout(function(){window.scrollTo({top:c.getBoundingClientRect().top+window.scrollY-80})},50)}}
+function dayCard(k,pr){var d=fromIso(k),t=DAYTYPE[k]||"onsite",p=dayProg(k);
+var h='<div class="dcard'+(k===today&&!pr?" today":"")+'" data-k="'+k+'"><div class="dhead"><div><b>'+DAYN[d.getDay()]+" "+esc(hijShort(d))+'</b> <span class="muted">· '+greg(d)+(week(d)?" · الأسبوع "+week(d):"")+'</span> <span class="chip '+(t==="onsite"?"c-p":"c-l")+'">'+(DTL[t]||"حضوري")+'</span>'+(k===today?' <span class="chip c-e">اليوم</span>':"")+'</div><div class="muted" style="font-size:13px">المنجز '+p.d+" من "+p.n+' <span class="prog"><i style="width:'+(p.n?p.d/p.n*100:0)+'%"></i></span></div></div>';
+h+='<div class="tw"><table><thead><tr><th>المهمة</th><th>المسؤولة عن التنفيذ</th><th>المسؤولة عن المتابعة</th><th style="width:150px">الحالة</th><th>ملاحظة / الشاهد</th></tr></thead><tbody>';
+tasksFor(k).forEach(function(tk){var s=stOf(k,tk);var stTxt=s.st==="auto"?"منفذة تلقائياً":FST[s.st];
+h+='<tr><td style="text-align:right">'+esc(tk.n)+"</td><td>"+esc(execOf(k,tk))+"</td><td>"+esc(tk.f)+"</td><td>"+(pr?'<span class="'+FSC[s.st]+'">'+stTxt+"</span>":'<select data-fk="'+k+'" data-ft="'+tk.id+'" class="'+FSC[s.st]+'">'+'<option value="">'+(s.ev?"منفذة تلقائياً":"— لم يُوثق")+"</option>"+["ok","pt","no"].map(function(o){return'<option value="'+o+'"'+(s.st===o?" selected":"")+">"+FST[o]+"</option>"}).join("")+"</select>")+"</td><td>"+(pr?esc([s.ev,s.note].filter(Boolean).join(" — ")):(s.ev?'<div class="muted" style="font-size:12px">'+esc(s.ev)+"</div>":"")+'<input type="text" data-fn="'+k+'" data-ft="'+tk.id+'" value="'+esc(s.note)+'" placeholder="ملاحظة">')+"</td></tr>"});
+return h+"</tbody></table></div></div>"}
+$("fMonth").addEventListener("change",function(){fMonthSel=this.value;rFlw()});
+$("fShow").addEventListener("change",rFlw);
+$("fToday").addEventListener("click",function(){DAY=today;$("dayPick").value=DAY;fMonthSel=hMonth(DAY);rFlw.done=0;renderAll()});
+$("fList").addEventListener("change",function(e){var x=e.target;if(x.dataset.fk==null||guard())return;var k=x.dataset.fk;S.follow[k]=S.follow[k]||{};var o=S.follow[k][x.dataset.ft]=S.follow[k][x.dataset.ft]||{};o.st=x.value;save();rFlw();rHome()});
+$("fList").addEventListener("input",function(e){var x=e.target;if(x.dataset.fn==null||RO())return;var k=x.dataset.fn;S.follow[k]=S.follow[k]||{};var o=S.follow[k][x.dataset.ft]=S.follow[k][x.dataset.ft]||{};o.note=x.value;save()});
+$("fPrintDay").addEventListener("click",function(){if(guard())return;var d=fromIso(DAY);if(d.getDay()>4){toast("اختاري يوماً دراسياً");return}printDoc("المتابعة اليومية لتنفيذ المهام",dayCard(DAY,1))});
+$("fPrintMonth").addEventListener("click",function(){if(guard())return;var md=schoolDays().filter(function(k){return hMonth(k)===fMonthSel});printDoc("المتابعة اليومية لتنفيذ المهام — "+fMonthSel,md.map(function(k){return dayCard(k,1)}).join(""))});
+function rTk(){$("tkBody").innerHTML=S.tasks.map(function(t,i){return'<tr><td><input type="text" data-ti="'+i+'" data-k="n" value="'+esc(t.n)+'"></td><td><input type="text" list="stl" data-ti="'+i+'" data-k="x" value="'+esc(t.x)+'"></td><td><input type="text" list="stl" data-ti="'+i+'" data-k="f" value="'+esc(t.f)+'"></td><td><select data-ti="'+i+'" data-k="w">'+["all","onsite","remote"].map(function(w){return'<option value="'+w+'"'+(t.w===w?" selected":"")+">"+WL[w]+"</option>"}).join("")+'</select></td><td class="own"><button class="btn sm d" data-tkr="'+i+'">✕</button></td></tr>'}).join("")}
+$("tkBody").addEventListener("input",function(e){var x=e.target;if(x.dataset.ti==null||RO())return;S.tasks[x.dataset.ti][x.dataset.k]=x.value;save()});
+$("tkBody").addEventListener("change",function(e){var x=e.target;if(x.dataset.ti==null||RO())return;S.tasks[x.dataset.ti][x.dataset.k]=x.value;save()});
+$("tkBody").addEventListener("click",function(e){var b=e.target.closest("button[data-tkr]");if(!b||guard())return;if(!confirm("حذف المهمة؟"))return;S.tasks.splice(+b.dataset.tkr,1);save();rTk()});
+$("tkAdd").addEventListener("click",function(){if(guard())return;S.tasks.push({id:uid(),n:"",x:"",f:"",w:"all"});save();rTk()});
+
 /* modal */
 function modal(h){$("mdlIn").innerHTML=h;$("mdl").style.display="flex"}
 function closeM(){$("mdl").style.display="none";$("mdlIn").innerHTML=""}
@@ -623,6 +708,7 @@ function hdr(t){return(S.settings.head?'<img class="lh" src="'+document.querySel
 function fullRecord(){var d=dObj(),dep=S.settings.deputy||"ثرياء القثامي";var h="";
 h+='<div style="text-align:center"><img class="lh" src="'+document.querySelector(".lh").src+'"><div style="height:60px"></div><div class="titlebar" style="font-size:30px;padding:18px">سجل اللوحة اليومية للمدرسة</div><div style="font:800 22px var(--kufi);margin:24px 0 8px">'+SCHOOL+'</div><div style="font-size:15px">'+ADMIN+'</div><div style="height:40px"></div><table style="width:70%;margin:0 auto"><tbody><tr><td><b>مديرة المدرسة</b></td><td>'+PRINCIPAL+'</td></tr><tr><td><b>وكيلة المدرسة</b></td><td>'+esc(dep)+'</td></tr><tr><td><b>العام الدراسي</b></td><td>'+esc(S.settings.year)+'</td></tr><tr><td><b>تاريخ الإصدار</b></td><td>'+hij(d)+'</td></tr></tbody></table><div style="height:40px"></div><div class="pstrip"></div></div>';
 h+=PB+hdr("الرؤية والرسالة والأهداف")+'<h3>رؤية المدرسة</h3><p>'+VISION+'</p><h3>رسالة المدرسة</h3><p>'+MISSION+'</p><h3>القيم</h3><p>'+VALUES+'</p><h3>أهداف السجل</h3><ol>'+GOALS.map(function(g){return"<li>"+g+"</li>"}).join("")+'</ol><h3>آلية العمل اليومية</h3><ol><li>تسجيل حضور الطالبات في كل شعبة مع بداية الدوام ('+fmtT(S.settings.tStart)+').</li><li>اعتماد مناوبة اليوم من سجل المناوبة، وتوزيع حصص الانتظار للمعلمات الغائبات.</li><li>رصد غياب المنسوبات وحالاتهن.</li><li>تحديث قيمة الأسبوع والمتميزات وكلمة الإدارة وعبارة اليوم.</li><li>تشغيل شاشة العرض في المدرسة طوال اليوم الدراسي.</li><li>طباعة تقرير اليوم واعتماده، ومراجعة تقرير الغياب أسبوعياً.</li></ol><h3>المسؤوليات</h3><table><thead><tr><th>المسؤولة</th><th>المهمة</th></tr></thead><tbody><tr><td>مديرة المدرسة: '+PRINCIPAL+'</td><td>الإشراف العام واعتماد التقارير وكلمة الإدارة</td></tr><tr><td>وكيلة المدرسة: '+esc(dep)+'</td><td>متابعة الحضور والمناوبة وحصص الانتظار وغياب المنسوبات</td></tr><tr><td>مسؤولة الغياب: '+ABSRESP+'</td><td>رصد غياب الطالبات يومياً وإعداد تقارير نسب الحضور الأسبوعية والشهرية</td></tr><tr><td>الموجهة الطلابية: هند العتيبي</td><td>متابعة الطالبات المتكرر غيابهن والتواصل مع أولياء الأمور</td></tr><tr><td>معلمات الحصة الأولى</td><td>رصد حضور الشعبة وتسليمه للوكيلة</td></tr></tbody></table>';
+var wk=weekDays(dObj()).filter(function(k){return schoolDays().indexOf(k)>-1});if(wk.length)h+=PB+hdr("المتابعة اليومية لتنفيذ المهام — الأسبوع "+(week(dObj())||""))+wk.map(function(k){return dayCard(k,1)}).join("")+sigBlock();
 h+=PB+hdr("تقرير اليوم")+'<p style="text-align:center">'+hij(d)+" · "+greg(d)+(week(d)?" · الأسبوع "+week(d):"")+"</p>"+dayReport()+sigBlock();
 var R=rRep();h+=PB+hdr("مؤشرات الحضور المعتمدة")+histHtml(1)+PB+hdr("تقرير الغياب")+repHtml(R)+sigBlock();
 var up=Object.keys(ROSTER).filter(function(k){return k>=DAY}).sort().slice(0,15);
@@ -662,7 +748,7 @@ $("shPrev").addEventListener("click",function(){go(cur-1)});
 $("shFull").addEventListener("click",function(){var e=document.documentElement;try{if(document.fullscreenElement)document.exitFullscreen();else(e.requestFullscreen||e.webkitRequestFullscreen).call(e)}catch(x){}});
 document.addEventListener("keydown",function(e){if(!$("show").classList.contains("on"))return;if(e.key==="ArrowLeft")go(cur+1);else if(e.key==="ArrowRight")go(cur-1);else if(e.key==="Escape")closeShow()});
 
-function renderAll(){rRep();rHome();rAtt();rSec();rDuty();rWait();rSabs();rVal();rWord();rSet()}
+function renderAll(){rRep();rHome();rFlw();rTk();rAtt();rSec();rDuty();rWait();rSabs();rVal();rWord();rSet()}
 renderAll();
 setInterval(function(){$("timeBar").innerHTML=timeLine(dObj())},60000);
 })();
@@ -692,8 +778,5 @@ function relock(){try{sessionStorage.removeItem("s67own");localStorage.removeIte
 function init(){scan();if(!d.getElementById("s67rl")){var r=d.createElement("button");r.id="s67rl";r.type="button";r.textContent="🔒 قفل";r.title="إعادة القفل (للأجهزة المشتركة)";r.onclick=relock;d.body.appendChild(r)}if(!d.getElementById("s67key")){var k=d.createElement("button");k.id="s67key";k.type="button";k.textContent="🔑";k.title="دخول المديرة";k.setAttribute("aria-label","دخول المديرة");k.onclick=ask;d.body.appendChild(k)}}
 if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",init);else init();
 })();</script>
-<script id="s67back">(function(){var d=document;function go(){var r=d.referrer||"";try{if(history.length>1&&r&&new URL(r).origin===location.origin){history.back();return}}catch(e){}var p=location.pathname,i=p.indexOf("/school67/");location.href=(i>=0?p.slice(0,i+10):"/")+"n/"}
-function has(){return [].slice.call(d.querySelectorAll("button,a,[role=button]")).some(function(e){return e.id!=="s67bk"&&/رجوع/.test(e.textContent||"")&&getComputedStyle(e).position==="fixed"&&e.offsetWidth>0})}
-function init(){if(d.getElementById("s67bk")||has())return;var s=d.createElement("style");s.textContent="#s67bk{position:fixed;right:12px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:inline-flex;align-items:center;gap:4px;padding:7px 14px;border-radius:999px;border:0;background:#007575;color:#fff;font:700 14px 'IBM Plex Sans Arabic',Tahoma,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.2);cursor:pointer;direction:rtl}#s67bk:active{background:#009999}@media print{#s67bk{display:none!important}}";d.head.appendChild(s);var b=d.createElement("button");b.id="s67bk";b.type="button";b.setAttribute("aria-label","رجوع");b.textContent="رجوع ›";b.onclick=go;d.body.appendChild(b)}
-if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",function(){setTimeout(init,600)});else setTimeout(init,600)})();</script></body>
+</body>
 </html>
