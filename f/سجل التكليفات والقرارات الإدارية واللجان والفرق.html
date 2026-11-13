@@ -749,6 +749,29 @@ function applyGuardName(st){
   if(g) g.members.forEach(m=>{ if(!String(m.name||'').trim()||m.name.trim()==='محمد') m.name='محمد الزبيدي'; });
   st.settings.guardV=1;
 }
+/* مطابقة مواعيد خطة الاجتماعات مع تواريخ المحاضر المنفذة فعلياً */
+function syncPlanDates(st){
+  if(st.settings.planSyncV===1) return;
+  const now=hijriNow(); if(!now) return; const nd=hDays(now);
+  st.committees.filter(c=>c.kind!=='takleef' && c.plan && Array.isArray(c.plan.dates)).forEach(c=>{
+    c.plan.dates.forEach((row,si)=>{
+      const ms=(c.meetings||[]).filter(m=>(m.sem||1)===si+1 && m.agenda && m.agenda.length && parseHijri(m.date));
+      const used=new Set();
+      const match=d=>{ const h=parseHijri(d); return h? ms.find(m=>sameH(parseHijri(m.date),h)) : null; };
+      row.forEach(d=>{ const m=match(d); if(m) used.add(m); });
+      const out=row.map(d=>{
+        const h=parseHijri(d); if(!h || match(d) || hDays(h)>=nd) return d;
+        let best=null,bd=1e9;
+        ms.forEach(m=>{ if(used.has(m)) return; const x=Math.abs(hDays(parseHijri(m.date))-hDays(h)); if(x<bd){bd=x;best=m;} });
+        if(!best) return d; used.add(best);
+        return ((best.day||'').trim()? best.day.trim()+' ':'')+best.date;
+      });
+      out.sort((a,b)=>{ const x=parseHijri(a),y=parseHijri(b); return (x?hDays(x):1e9)-(y?hDays(y):1e9); });
+      c.plan.dates[si]=out;
+    });
+  });
+  st.settings.planSyncV=1;
+}
 function addFoundingMeeting(st){
   if(st.settings.foundV===1) return;
   const c=st.committees.find(x=>x.title==='اللجنة الإدارية للمدرسة'); if(!c) return;
@@ -1629,7 +1652,7 @@ try{
 try{ applyExtraDesc(S); } catch(e){}
   try{ applySourcedFills(S); }catch(e){}
   try{ applyNextAgendas(S); }catch(e){}
-  try{ if(S.settings.stampV!==2){ S.settings.stamp=STAMP; S.settings.stampV=2; } applyKnownSigs(S); applyTeacherData(S); applyFullNames(S); applyTeacherData(S); S.committees.forEach(c=>{ if(c.kind!=='takleef') fillMeetingContent(c); }); try{ applyRealMeetings(S); }catch(e){ console.error(e); } try{ addBehaviorMeeting(S); }catch(e){} try{ addFoundingMeeting(S); }catch(e){ console.error(e); } try{ addRemote0528(S); }catch(e){ console.error(e); } try{ applyDuty1448(S); }catch(e){ console.error(e); } try{ applyNoLabSped(S); }catch(e){ console.error(e); } try{ applyGuardName(S); }catch(e){ console.error(e); } applyKnownSigs(S); autoSignPast(S); save(); }catch(e){}
+  try{ if(S.settings.stampV!==2){ S.settings.stamp=STAMP; S.settings.stampV=2; } applyKnownSigs(S); applyTeacherData(S); applyFullNames(S); applyTeacherData(S); S.committees.forEach(c=>{ if(c.kind!=='takleef') fillMeetingContent(c); }); try{ applyRealMeetings(S); }catch(e){ console.error(e); } try{ addBehaviorMeeting(S); }catch(e){} try{ addFoundingMeeting(S); }catch(e){ console.error(e); } try{ addRemote0528(S); }catch(e){ console.error(e); } try{ applyDuty1448(S); }catch(e){ console.error(e); } try{ applyNoLabSped(S); }catch(e){ console.error(e); } try{ applyGuardName(S); }catch(e){ console.error(e); } try{ syncPlanDates(S); }catch(e){ console.error(e); } applyKnownSigs(S); autoSignPast(S); save(); }catch(e){}
 try{ applyFix67(S); save(); }catch(e){ console.error(e); }
 
 function applyFix67(st){
