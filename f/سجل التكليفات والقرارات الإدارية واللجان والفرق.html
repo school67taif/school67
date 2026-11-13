@@ -1889,7 +1889,7 @@ function decisionSheet(c){
       </ul>`;
   }else{
     body = `${pre}${membersTable(c)}
-      <div class="foot">
+      <div class="noprint" style="max-width:1100px;margin:14px auto;padding:10px 14px;border:1px solid #DDE5E5;border-radius:14px;font-family:'IBM Plex Sans Arabic',Tahoma,sans-serif" dir="rtl"><b style="color:#660033">ملف مرتبط:</b> <a href="./نماذج المتابعة الإدارية والتوجيه 1448هـ.html" style="color:#007575;font-weight:700">نماذج المتابعة الإدارية والتوجيه 1448هـ</a></div><div class="foot">
         <div></div>
         <div><div class="h">يعتمد مديرة المدرسة</div>
           <div class="appr-name">${esc(s.principal)}</div>${sigCell(c.approveSig,'appr')}${stampImg()}</div>
