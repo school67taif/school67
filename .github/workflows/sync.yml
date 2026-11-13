@@ -20,4 +20,7 @@ jobs:
           git fetch origin main gh-pages
           git checkout -B s origin/main
           git merge --no-edit origin/gh-pages || { git merge --abort; git merge -X theirs --no-edit origin/gh-pages; }
+          python3 .github/scripts/build_links.py || true
+          git add f/links.json || true
+          git diff --cached --quiet || git commit -m "تحديث الملفات والروابط تلقائياً"
           git push origin s:main s:gh-pages
