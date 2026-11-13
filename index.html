@@ -405,13 +405,14 @@ function enter(){
   S.view="home"; S.cat="all"; S.q="";
   setNoCopy(S.mode==="staff");
   $("#linksBtn").style.display=S.mode==="owner"?"":"none";
+  try{if(S.mode==="owner"){sessionStorage.setItem("s67own","1");localStorage.setItem("s67ownT",String(Date.now()))}}catch(e){}
   render();
 }
 $("#logoutFab").onclick=()=>$("#logout").click();
 $("#logout").onclick=()=>{
   if(S.dirty && !confirmDirty()) return;
   clearInterval(vTimer); vTimer=null;
-  try{sessionStorage.removeItem("s67c");localStorage.removeItem("s67own")}catch(e){}
+  try{sessionStorage.removeItem("s67c");localStorage.removeItem("s67own");sessionStorage.removeItem("s67own");localStorage.removeItem("s67ownT")}catch(e){}
   S={mode:null,me:null,cfg:null,files:[],cats:[],view:"home",cat:"all",q:"",dirty:false,code:null};
   $("#app").style.display="none"; $("#login").style.display="block"; setDirty(false); setNoCopy(false);
 };
