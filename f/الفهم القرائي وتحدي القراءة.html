@@ -1599,7 +1599,11 @@ try{$("#hijri").textContent=new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura
 
 // Navigation
 const rail=$("#rail");
-function show(id){
+let curSec="home";
+function show(id,noPush){
+  if(!document.getElementById("s-"+id))id="home";
+  if(!noPush&&id!==curSec){try{history.pushState({s67sec:id},"","#"+id)}catch(e){}}
+  curSec=id;window.__s67cur=id;window.s67show=show;try{bk67()}catch(e){}
   document.querySelectorAll(".sec").forEach(s=>s.classList.toggle("on",s.id==="s-"+id));
   rail.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.s===id));
   const b=rail.querySelector('button[data-s="'+id+'"]');
@@ -1615,7 +1619,10 @@ rail.addEventListener("click",e=>{const b=e.target.closest("button[data-s]");if(
 const hashId=(location.hash||"").slice(1);
 let start="home";try{start=localStorage.getItem("arc-tab")||"home"}catch(e){}
 if(hashId&&document.getElementById("s-"+hashId))start=hashId;
-if(start!=="home")show(start);
+try{history.replaceState({s67sec:start},"",start==="home"?location.pathname+location.search:"#"+start)}catch(e){}
+window.s67show=show;window.__s67cur="home";
+if(start!=="home")show(start,true);
+window.addEventListener("popstate",e=>{const s=(e.state&&e.state.s67sec)||(location.hash||"").slice(1)||"home";show(s,true)});
 
 // Static data
 const TASKS=[
@@ -2359,6 +2366,16 @@ var q=0;function sch(){if(q)return;q=1;setTimeout(function(){q=0;run()},400)}
 function st(){run();try{new MutationObserver(function(ms){for(var i=0;i<ms.length;i++){var x=ms[i].addedNodes;for(var j=0;j<x.length;j++){if(x[j].nodeType===1&&!(x[j].classList&&x[j].classList.contains("lk67"))){sch();return}}}}).observe(document.body,{childList:true,subtree:true})}catch(e){}}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",st);else st();})();</script>
 
+<button type="button" id="bk67" aria-label="رجوع" hidden>→ رجوع</button>
+<style>#bk67{position:fixed;right:14px;bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:60;font:inherit;font-weight:700;font-size:15px;color:#fff;background:#7A1F2B;border:0;border-radius:999px;padding:10px 18px;box-shadow:0 4px 14px rgba(0,0,0,.18);cursor:pointer}#bk67:active{transform:scale(.97)}@media print{#bk67{display:none!important}}</style>
+<script>
+function bk67(){var b=document.getElementById("bk67");if(!b)return;var site=/github\.io$/.test(location.hostname);
+ var cs=window.__s67cur||"home";if(cs==="home"){if(site){b.hidden=false;b.textContent="→ موقع المدرسة";}else b.hidden=true;}else{b.hidden=false;b.textContent="→ رجوع";}}
+document.getElementById("bk67").addEventListener("click",function(){
+ if((window.__s67cur||"home")==="home"){location.href=location.pathname.replace(/\/f\/[^\/]*$/,"/");return}
+ if(history.state&&history.state.s67sec&&history.length>1){history.back()}else if(window.s67show){window.s67show("home")}
+});
+</script>
 </body></html>
 <script id="nr67">(function(){if(window.__nr67)return;window.__nr67=1;
 var T="لم يُرصد بعد",N="لا يوجد";
