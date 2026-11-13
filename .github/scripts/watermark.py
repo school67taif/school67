@@ -23,3 +23,24 @@ for f in files:
     if f=="f/إعلان لقاء HPV.html": canon=g2
     if g2!=g: s=s[:i]+g2+s[j:]; open(f,"w",encoding="utf8").write(s); n+=1
 print("patched",n)
+
+# أي صفحة جديدة بدون قفل: يُضاف لها القفل والعلامة المائية تلقائياً
+SKIP = {"f/الملفات والروابط.html", "f/_t.html", "index.html"}
+try:
+    src = open("f/إعلان لقاء HPV.html", encoding="utf8").read()
+    a = src.find('<script id="s67guard">'); b = src.find('</script>', a) + 9
+    GUARD = src[a:b] if a >= 0 else None
+except Exception:
+    GUARD = None
+added = 0
+if GUARD and "s67wm" in GUARD:
+    for f in glob.glob("**/*.html", recursive=True):
+        if f in SKIP or f.startswith("dl/النظام المتكامل") or f.startswith(".github"):
+            continue
+        s = open(f, encoding="utf8", errors="ignore").read()
+        if "s67guard" in s or len(s) < 4000 or 'http-equiv="refresh"' in s or "location.replace(" in s[:3000]:
+            continue
+        k = s.lower().rfind("</body>")
+        s = (s[:k] + GUARD + s[k:]) if k >= 0 else s + GUARD
+        open(f, "w", encoding="utf8").write(s); added += 1
+print("guard added", added)
