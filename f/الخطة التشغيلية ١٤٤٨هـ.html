@@ -5342,7 +5342,7 @@ function sweep(){if(!locked())return;[].slice.call(d.querySelectorAll("button,a,
 d.addEventListener("keydown",function(e){if(!locked())return;var k=(e.key||"").toLowerCase();if((e.ctrlKey||e.metaKey)&&(k==="s"||k==="p"||k==="c"||k==="u")){e.preventDefault();e.stopPropagation()}},true);
 d.addEventListener("copy",function(e){if(locked()){e.preventDefault()}},true);
 function init(){sweep();try{new MutationObserver(function(){clearTimeout(init.t);init.t=setTimeout(sweep,150)}).observe(d.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:["class"]})}catch(e){}}
-if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",init);else init()})();</script></body></html>
+if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",init);else init()})();</script><style id="s67srch">input[type=search],input[type=text][placeholder*="بحث"],input[placeholder*="ابحث"],input[placeholder*="بحث"],input[placeholder*="Search"],#q,#search,#srch,#searchBox{color:#000!important;-webkit-text-fill-color:#000!important;caret-color:#000!important}input[type=search]::placeholder,input[placeholder*="بحث"]::placeholder,input[placeholder*="ابحث"]::placeholder{color:#333!important;-webkit-text-fill-color:#333!important;opacity:1!important}</style></body></html>
 <script id="kpi67">(function(){var D=document,de=D.documentElement;
 var CFG={};try{var c=D.getElementById("kpi67-cfg");if(c)CFG=JSON.parse(c.textContent)||{}}catch(e){}
 var KEEP=CFG.keep?new RegExp(CFG.keep.join("|")):null;
