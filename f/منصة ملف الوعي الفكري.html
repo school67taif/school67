@@ -923,12 +923,13 @@ ${CAN_WRITE?'<div class="row"><button class="btn" id="c-add">+ إضافة عضو
 <div class="row" style="margin-top:10px"><button class="btn mr" id="ex-decision" ${DL?"":"disabled"}>تنزيل قرار تشكيل اللجنة</button><span class="note">يتضمن الأسماء والمهام وخانات التوقيع.</span></div></div>
 <div class="panel"><div class="grid3"><div><span class="note">تعتمد مديرة المدرسة</span><br><b>${esc(S.basics.principal)}</b></div><div><span class="note">منسقة الوعي الفكري</span><br><b>${esc(S.basics.officer)||"—"}</b></div><div><span class="note">العام الدراسي</span><br><b>${esc(S.basics.year)}</b></div></div></div>`};
 
+const KITURL="https://school67taif.github.io/school67/f/%D8%AD%D9%82%D9%8A%D8%A8%D8%A9%20%D8%AA%D9%86%D9%81%D9%8A%D8%B0%20%D8%A8%D8%B1%D8%A7%D9%85%D8%AC%20%D8%A7%D9%84%D9%88%D8%B9%D9%8A%20%D8%A7%D9%84%D9%81%D9%83%D8%B1%D9%8A.html",KITP={q02:1,q03:1,q04:1,q05:1,q06:1,t1p08:1,t1p09:1};
 function progCard(p,i){const d=P(p.id);const ev=(d.evidence||[]).length;return `
 <div class="pc"><div class="top"><span class="ix">${i+1}</span><div style="min-width:0;flex:1"><div class="wk">${esc(p.week)}</div><h4>${esc(p.name)}</h4></div></div>
 <p>${esc(p.goal)}</p>
 <div class="foot"><span class="tag ${DCLS[p.d]}">${DOMAINS[p.d]}</span>
 <button class="st ${PST[pstate(p)][1]}" data-tog="${p.id}" ${dis()} aria-label="حالة التنفيذ، اضغطي للتبديل">${d.done?"✓ نُفّذ":PST[pstate(p)][0]}</button>
-${ev?`<span class="note">${ev} شاهد</span>`:""}<span class="sp"></span>
+${ev?`<span class="note">${ev} شاهد</span>`:""}<span class="sp"></span>${KITP[p.id]?`<a class="btn sm" href="${KITURL}" target="_blank" rel="noopener" title="شاشات العرض والاختبار القصير ودليل المعلمة">مواد التنفيذ الجاهزة</a>`:""}
 <button class="btn sm p" data-open="${p.id}">تقرير التنفيذ</button></div></div>`}
 function termView(t){const list=PROGRAMS.filter(p=>p.term===t);const shown=list.filter(p=>FILTER==="all"||(FILTER==="done"?P(p.id).done:FILTER==="todo"?!P(p.id).done:FILTER==="late"?pstate(p)==="late":p.d===FILTER));const dn=list.filter(p=>P(p.id).done).length;
  return `<h2>برامج الفصل الدراسي ${t===1?"الأول":"الثاني"}</h2>
