@@ -149,7 +149,7 @@ body.nocopy,body.nocopy *{-webkit-user-select:none!important;user-select:none!im
 body.nocopy img,body.nocopy a{-webkit-user-drag:none}
 #wm{position:fixed;inset:0;pointer-events:none;z-index:15;display:none;overflow:hidden}
 body.nocopy #wm{display:block}
-#wm div{position:absolute;white-space:nowrap;transform:rotate(-28deg);color:rgba(102,0,51,.09);font-family:"Noto Kufi Arabic";font-size:20px;font-weight:700}
+#wm div{position:absolute;white-space:nowrap;text-align:center;line-height:1.7;transform:rotate(-28deg);color:rgba(102,0,51,.09);font-family:"Noto Kufi Arabic";font-size:20px;font-weight:700}
 @media print{body.nocopy *{display:none!important}}
 .vo{background:#F6EFDF;color:var(--warn);border-radius:20px;padding:1px 9px;font-size:12px;white-space:nowrap}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:12px;padding:9px 16px;font-size:14px;z-index:30;display:none}
@@ -192,7 +192,7 @@ body.nocopy #wm{display:block}
  <section id="app">
   <div class="userbar">
    <div class="who"><div class="avatar" id="av"></div><div><b id="uName"></b><small id="uRole"></small></div></div>
-   <div style="display:flex;gap:8px;align-items:center"><div class="fz" title="حجم الخط"><button id="fzm" aria-label="تصغير الخط">A−</button><button id="fzp" aria-label="تكبير الخط">A+</button></div><button class="btn ghost sm" id="vbell" style="display:none;position:relative" title="طلبات دخول الزوار">🔔<span id="vbadge" style="display:none;position:absolute;top:-6px;left:-6px;background:#B03F35;color:#fff;border-radius:999px;font-size:11px;min-width:18px;height:18px;line-height:18px;padding:0 4px">0</span></button><button class="btn ghost sm" id="logout">🚪 خروج</button><button id="logoutFab" type="button" aria-label="تسجيل الخروج" title="تسجيل الخروج">🚪<span>خروج</span></button></div>
+   <div style="display:flex;gap:8px;align-items:center"><div class="fz" title="حجم الخط"><button id="fzm" aria-label="تصغير الخط">A−</button><button id="fzp" aria-label="تكبير الخط">A+</button></div><button class="btn ghost sm" id="vbell" style="display:none;position:relative" title="طلبات دخول الزوار">🔔<span id="vbadge" style="display:none;position:absolute;top:-6px;left:-6px;background:#B03F35;color:#fff;border-radius:999px;font-size:11px;min-width:18px;height:18px;line-height:18px;padding:0 4px">0</span></button><a class="btn ghost sm" id="linksBtn" href="https://school67taif.github.io/school67/rw/" target="_blank" rel="noopener" style="display:none;text-decoration:none">🔗 الملفات والروابط</a><button class="btn ghost sm" id="logout">🚪 خروج</button><button id="logoutFab" type="button" aria-label="تسجيل الخروج" title="تسجيل الخروج">🚪<span>خروج</span></button></div>
   </div>
   <div class="layout">
    <nav class="rail" id="rail" aria-label="أقسام النظام"></nav>
@@ -404,6 +404,7 @@ function enter(){
   $("#uRole").textContent=S.me.role;
   S.view="home"; S.cat="all"; S.q="";
   setNoCopy(S.mode==="staff");
+  $("#linksBtn").style.display=S.mode==="owner"?"":"none";
   render();
 }
 $("#logoutFab").onclick=()=>$("#logout").click();
@@ -685,9 +686,8 @@ function setNoCopy(on){
   document.body.classList.toggle("nocopy",!!on);
   const wm=$("#wm"); wm.innerHTML="";
   if(!on) return;
-  const d=new Intl.DateTimeFormat("ar-SA-u-nu-latn",{dateStyle:"short"}).format(new Date());
-  const t=esc(S.me.name)+" · عرض فقط · "+d;
-  let h=""; for(let y=-1;y<14;y++) for(let x=-1;x<6;x++) h+=`<div style="top:${y*110}px;left:${x*300+(y%2)*150}px">${t}</div>`;
+  const t="ناديه عوض الصخيري<br>الابتدائية السابعة والستون";
+  let h=""; for(let y=-1;y<12;y++) for(let x=-1;x<6;x++) h+=`<div style="top:${y*140}px;left:${x*300+(y%2)*150}px">${t}</div>`;
   wm.innerHTML=h;
 }
 $("#discardBtn").onclick=async()=>{ setDirty(false); await relogin(); toast("تم التراجع"); };
