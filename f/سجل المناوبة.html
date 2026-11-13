@@ -279,6 +279,12 @@ body.editing .view-only{display:none}
  #zoomv img{max-width:96vw;max-height:96vh;background:#fff}
  .warnbox{border:2px solid var(--warn);background:var(--warnf);border-radius:12px;padding:8px 14px;margin-top:10px;color:#6d5211}
  .lvl{font-weight:700}
+ .lnks{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+ .lnk{display:block;border:1px solid var(--line);border-radius:14px;padding:12px 14px;text-decoration:none;color:var(--ink);background:#fff}
+ .lnk:hover{border-color:var(--teal);background:var(--steal)}
+ .lnk b{display:block;color:var(--dteal);font-family:"Noto Kufi Arabic",Tahoma;font-size:14px}
+ .lnk small{color:var(--muted)}
+ .code{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:0 8px;font-size:12px;color:var(--muted);background:var(--s2)}
  .edit-zone input{min-width:0}
  .edit-zone{display:none}
  body.editing .edit-zone{display:flex}
@@ -357,6 +363,7 @@ body.editing .view-only{display:none}
    <button data-s="reps">📝 التقارير اليومية</button>
    <button data-s="late">⏰ التأخر والمخالفات</button>
    <button data-s="arch">🗂️ أرشيف المناوبة</button>
+   <button data-s="links">🔗 ملفات مرتبطة</button>
    <button data-s="print">🖨️ طباعة السجل</button>
    <button data-s="data">💾 النسخ والتصدير</button>
   </nav>
@@ -412,11 +419,21 @@ body.editing .view-only{display:none}
      <li>متابعة نظافة المكان بعد الفسحة.</li>
      <li>ملاحظة أي حالة صحية أو سلوكية وإبلاغ الإدارة.</li></ul></div>
    </div>
-   <div class="panel"><h3>مهام عامة للمعلمة المناوبة</h3><ul>
-    <li>الحضور إلى موقع المناوبة مبكراً قبل دخول الطالبات، والبقاء حتى خروج آخر طالبة.</li>
-    <li>التوقيع في السجل بعد تنفيذ المناوبة.</li>
-    <li>عند الغياب تُنقل المناوبة إلى معلمات اليوم التالي، ويُبلَّغ مكتب الوكيلة.</li>
-    <li>إبلاغ الإدارة فوراً عن أي ملاحظة تخص سلامة الطالبات.</li></ul></div>
+   <div class="panel"><h3>مهام المعلمة المناوبة <span class="code">وفق النشرة الداخلية (3) · دليل إجراءات عمل مدارس التعليم العام</span></h3><ul>
+    <li>الحضور مبكراً قبل الاصطفاف الصباحي بربع ساعة لمتابعة حضور الطالبات، ويُدوَّن تأخر المناوبة في تقرير المناوبة.</li>
+    <li>كل مناوبة مسؤولة عن موقعها قبل الاصطفاف الصباحي وحتى انصراف آخر طالبة ظهراً.</li>
+    <li>تفقد الساحات الداخلية والخارجية صباحاً (الإضاءة والصيانة والنظافة)، وإبلاغ الوكيلة بأي ملاحظة، وتشغيل الميكرفون للإذاعة.</li>
+    <li>صف الطوابير والمحافظة على عدم خروج الطالبات من المدرسة صباحاً.</li>
+    <li>تجميع طالبات السيارات الخاصة في فصل مخصص، وعدم السماح لطالبات الصفوف الأولية المنتظرات لأخواتهن بالخروج خارج المدرسة.</li>
+    <li>تفويج طالبات النقل المدرسي قبل نهاية الوقت بخمس دقائق فقط.</li>
+    <li>البقاء مع الطالبات المتأخرات بعد نهاية الدوام حتى مغادرة آخر طالبة.</li>
+    <li>تفقد الفصول وإقفال الأنوار، والتأكد من خلو الفصول ودورات المياه والساحات من الطالبات وإقفال صنابير المياه.</li>
+    <li>تسجيل جميع الملحوظات على الطالبات قبل الدوام وبعده في تقرير المناوبة اليومي <span class="code">نموذج (9) · و.ت.ع.ن-01-03</span>، وتسليمه لوكيلة المدرسة في اليوم التالي.</li></ul></div>
+   <div class="panel"><h3>إجراءات تحديد جدول المناوبة <span class="code">وفق النشرة الداخلية (2)</span></h3><ol>
+    <li>تتعرف وكيلة المدرسة على رغبات المعلمات في المناوبة واختيار الأيام المناسبة والزميلة المناسبة.</li>
+    <li>تحديد أيام المناوبة خلال العام الدراسي حسب الرغبات، وأخذ توقيعات المعلمات عليها في ملف المناوبة.</li>
+    <li>إبلاغ المعلمات بالجدول والإعلان عنه في غرفة المديرة والوكيلة والمعلمات.</li>
+    <li>تراجع الوكيلة التقارير اليومية المقدمة من المعلمات المناوبات، وتُعدّ تقريراً أسبوعياً عن سير المناوبة وترفعه لمديرة المدرسة.</li></ol></div>
    <div class="panel"><h3>إجراءات المعلمة المناوبة عند تكرار تأخر الطالبة في الانصراف</h3>
     <div class="procs">
      <div class="proc"><b>1</b><div><strong>التوثيق والاتصال</strong><br>يُسجَّل التأخر في سجل المناوبة اليومي، وتتواصل إدارة المدرسة مع ولي الأمر لمعرفة السبب.</div></div>
@@ -445,6 +462,11 @@ body.editing .view-only{display:none}
    <div class="panel scroll" style="padding:0"><table class="tbl" id="lateTbl"></table></div>
    <h3 style="margin-top:6px">متابعة تكرار التأخر</h3>
    <div class="panel scroll" style="padding:0"><table class="tbl" id="repeatTbl"></table></div>
+  </section>
+
+  <section class="sec" id="s-links">
+   <h2>ملفات مرتبطة بالمناوبة</h2>
+   <div class="lnks"><a class="lnk" href="https://school67taif.github.io/school67/f/%D9%85%D9%84%D9%81%20%D8%A7%D9%84%D9%86%D8%B4%D8%B1%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AF%D8%A7%D8%AE%D9%84%D9%8A%D8%A9.html" target="_blank" rel="noopener"><b>ملف النشرات الداخلية</b><small>النشرة (2) المناوبة والإشراف والانتظار، والنشرة (3) أعمال المناوبة</small></a><a class="lnk" href="https://school67taif.github.io/school67/f/%D9%83%D8%B4%D9%88%D9%81%20%D8%A7%D9%84%D8%AA%D9%88%D9%82%D9%8A%D8%B9%20%D8%A7%D9%84%D8%A5%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A%20%D9%84%D9%84%D9%85%D9%86%D8%B3%D9%88%D8%A8%D8%A7%D8%AA.html" target="_blank" rel="noopener"><b>كشوف التوقيع الإلكتروني للمنسوبات</b><small>توقيع المنسوبات بالعلم على نشرتي المناوبة</small></a><a class="lnk" href="https://school67taif.github.io/school67/f/%D8%B3%D8%AC%D9%84%20%D8%A7%D9%84%D8%AA%D9%83%D9%84%D9%8A%D9%81%D8%A7%D8%AA%20%D9%88%D8%A7%D9%84%D9%82%D8%B1%D8%A7%D8%B1%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A5%D8%AF%D8%A7%D8%B1%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D9%84%D8%AC%D8%A7%D9%86%20%D9%88%D8%A7%D9%84%D9%81%D8%B1%D9%82.html" target="_blank" rel="noopener"><b>سجل التكليفات والقرارات الإدارية واللجان والفرق</b><small>قرار التكليف وجدول المناوبة</small></a><a class="lnk" href="https://school67taif.github.io/school67/f/%D8%B3%D8%AC%D9%84%20%D8%A7%D9%84%D8%AC%D8%AF%D9%88%D9%84%20%D8%A7%D9%84%D9%85%D8%AF%D8%B1%D8%B3%D9%8A.html" target="_blank" rel="noopener"><b>سجل الجدول المدرسي</b><small>رغبات المعلمات في الإشراف والمناوبة وتوزيعها</small></a><a class="lnk" href="https://school67taif.github.io/school67/f/%D8%AC%D8%AF%D9%88%D9%84%20%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D8%B8%D8%A7%D8%B1%20%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85%D8%A7%D8%AA.html" target="_blank" rel="noopener"><b>جدول الانتظار للمعلمات</b><small>حصص الانتظار عند غياب المعلمات</small></a><a class="lnk" href="https://school67taif.github.io/school67/f/%D8%A7%D8%B3%D8%AA%D9%85%D8%A7%D8%B1%D8%A9%20%D9%85%D8%AA%D8%A7%D8%A8%D8%B9%D8%A9%20%D8%A7%D9%84%D8%B7%D8%A7%D8%A8%D9%88%D8%B1%20%D8%A7%D9%84%D8%B5%D8%A8%D8%A7%D8%AD%D9%8A.html" target="_blank" rel="noopener"><b>استمارة متابعة الطابور الصباحي</b><small>متابعة الاصطفاف الصباحي</small></a><a class="lnk" href="https://school67taif.github.io/school67/f/%D8%A7%D9%84%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%8A%D9%88%D9%85%D9%8A%D8%A9%20%D9%84%D9%84%D9%85%D8%AF%D8%B1%D8%B3%D8%A9.html" target="_blank" rel="noopener"><b>اللوحة اليومية للمدرسة</b><small>مناوبة اليوم على شاشة المدرسة</small></a><a class="lnk" href="https://school67taif.github.io/school67/f/%D9%85%D9%86%D8%B5%D8%A9%20%D8%A7%D9%84%D8%A7%D9%86%D8%B6%D8%A8%D8%A7%D8%B7%20%D9%88%D9%82%D9%88%D8%A7%D8%B9%D8%AF%20%D8%A7%D9%84%D8%B3%D9%84%D9%88%D9%83%20%D9%88%D8%A7%D9%84%D9%85%D9%88%D8%A7%D8%B8%D8%A8%D8%A9.html" target="_blank" rel="noopener"><b>منصة الانضباط وقواعد السلوك والمواظبة</b><small>معالجة التأخر والمخالفات</small></a><a class="lnk" href="https://school67taif.github.io/school67/f/%D8%B3%D8%AC%D9%84%20%D8%A7%D9%84%D9%86%D9%82%D9%84%20%D8%A7%D9%84%D9%85%D8%AF%D8%B1%D8%B3%D9%8A.html" target="_blank" rel="noopener"><b>سجل النقل المدرسي</b><small>تفويج طالبات النقل المدرسي</small></a><a class="lnk" href="https://school67taif.github.io/school67/f/%D8%B3%D8%AC%D9%84%20%D8%A5%D8%AF%D8%A7%D8%B1%D8%A9%20%D8%A7%D9%84%D9%85%D8%AE%D8%A7%D8%B7%D8%B1%20%D9%88%D8%A7%D9%84%D8%A3%D8%B2%D9%85%D8%A7%D8%AA%20-%20%D8%A7%D9%84%D8%A7%D8%A8%D8%AA%D8%AF%D8%A7%D8%A6%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B3%D8%A7%D8%A8%D8%B9%D8%A9%20%D9%88%D8%A7%D9%84%D8%B3%D8%AA%D9%88%D9%86.html" target="_blank" rel="noopener"><b>سجل إدارة المخاطر والأزمات</b><small>المناوبات ضمن ضوابط مخاطر الطالبات</small></a><a class="lnk" href="https://school67taif.github.io/school67/f/%D8%B3%D8%AC%D9%84%20%D8%AD%D9%82%D9%88%D9%82%20%D8%A7%D9%84%D9%85%D8%AA%D8%B9%D9%84%D9%85%D9%8A%D9%86%20%D9%88%D8%AD%D9%85%D8%A7%D9%8A%D8%AA%D9%87%D9%85.html" target="_blank" rel="noopener"><b>سجل حقوق المتعلمين وحمايتهم</b><small>الاستقبال والانصراف والتحقق من المستلم</small></a><a class="lnk" href="https://school67taif.github.io/school67/f/%D9%85%D9%86%D8%B5%D8%A9%20%D8%A5%D8%AC%D8%B1%D8%A7%D8%A1%D8%A7%D8%AA%20%D9%85%D9%86%D8%B3%D9%88%D8%A8%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%AF%D8%B1%D8%B3%D8%A9%201448%D9%87%D9%80.html" target="_blank" rel="noopener"><b>منصة إجراءات منسوبات المدرسة 1448هـ</b><small>نموذج تقرير المناوبة (و.ت.ع.ن-01-03)</small></a></div>
   </section>
 
   <section class="sec" id="s-arch">
@@ -625,12 +647,12 @@ function renderPrint(){
   <li>توزيع المناوبة على المعلمات بعدالة، وضمان استمراريتها عند غياب إحداهن.</li>
   <li>رصد الملاحظات السلوكية والصحية مبكراً وإبلاغ الإدارة بها.</li>
   <li>توثيق تنفيذ المناوبة يومياً بما يدعم المتابعة والتقويم.</li></ol></div>
- <div class="pbox"><h3>مهام المعلمة المناوبة</h3><ol>
-  <li>الحضور إلى موقع المناوبة مبكراً قبل دخول الطالبات، والبقاء حتى خروج آخر طالبة.</li>
-  <li>الالتزام بالموقع المحدد: الساحة الأمامية، الساحة الخلفية، عند المقصف المدرسي.</li>
-  <li>منع خروج أي طالبة دون ولي أمرها أو من ينوب عنه.</li>
-  <li>التوقيع في السجل بعد تنفيذ المناوبة.</li>
-  <li>عند الغياب تُنقل المناوبة إلى معلمات اليوم التالي ويُبلَّغ مكتب الوكيلة.</li></ol></div>
+ <div class="pbox"><h3>مهام المعلمة المناوبة (وفق النشرة الداخلية 3)</h3><ol>
+  <li>الحضور قبل الاصطفاف الصباحي بربع ساعة، والمسؤولية عن الموقع حتى انصراف آخر طالبة.</li>
+  <li>تفقد الساحات صباحاً، وصف الطوابير، والمحافظة على عدم خروج الطالبات صباحاً.</li>
+  <li>تفويج طالبات النقل المدرسي قبل نهاية الوقت بخمس دقائق، وتجميع طالبات السيارات الخاصة في فصل مخصص.</li>
+  <li>البقاء مع الطالبات المتأخرات حتى مغادرة آخر طالبة، ثم تفقد الفصول ودورات المياه وإقفال الأنوار والصنابير.</li>
+  <li>تسجيل الملحوظات في تقرير المناوبة اليومي (و.ت.ع.ن-01-03) وتسليمه لوكيلة المدرسة في اليوم التالي، وعند الغياب تُنقل المناوبة لمعلمات اليوم التالي.</li></ol></div>
  <div class="foot"></div></div>`;
  const procP=`<div class="pbreak"><img class="lh" src="${LH}" alt=""><div class="titlebar"><h1>إجراءات المعلمة المناوبة عند تكرار تأخر الطالبة في الانصراف</h1></div>
  <div class="pbox"><h3>1. التوثيق والاتصال</h3><p>يُسجَّل التأخر في سجل المناوبة اليومي، وتتواصل إدارة المدرسة مع ولي الأمر لمعرفة السبب.</p></div>
@@ -645,7 +667,7 @@ function renderPrint(){
  <div class="foot"></div></div>`;
  const archP=ARCH.length?`<div style="break-before:page"><img class="lh" src="${LH}" alt=""><div class="titlebar"><h1>ملحق: سجل المناوبة · الفصل الدراسي الثاني 1447هـ</h1><div class="sub">شاهد من العام السابق</div></div></div>`+ARCH.map(s=>`<div style="break-before:page;text-align:center"><img src="${s}" style="max-width:100%;max-height:270mm" alt=""></div>`).join(''):'';
  document.getElementById('printPage').innerHTML=cover+procP+`<img class="lh" src="${LH}" alt="">
- <div class="titlebar"><h1>سجل المناوبة للفصل الدراسي الأول من العام الدراسي 1448هـ</h1><div class="sub">المناوبة اليومية لبداية ونهاية الدوام الدراسي · ${SCHOOL} · ${ADMIN}</div></div>
+ <div class="titlebar"><h1>سجل المناوبة للفصل الدراسي الأول من العام الدراسي 1448هـ</h1><div class="sub">المناوبة اليومية لبداية ونهاية الدوام الدراسي · رمز النموذج (و.ت.ع.ن-01-02) · ${SCHOOL}</div></div>
  <table class="tbl">${rowsHTML({remote,editable:false,sign:true})}</table>
  <div class="note" style="margin-top:10px">${BASE.find(d=>d.midyear)?.midyear||''}</div>
  <div class="note" style="margin-top:8px"><b>ملاحظة هامة:</b> في حال غياب إحدى المعلمات المكلفات بالمناوبة في اليوم المحدد، تُنقل المناوبة مباشرة إلى معلمات المناوبة في اليوم التالي، وذلك لضمان استمرارية العمل وانتظام المناوبة.</div>
@@ -659,7 +681,7 @@ window.addEventListener('beforeprint',()=>{if(PMODE==='reports'||REPORTS_ONLY)re
 
 // ===== التقارير اليومية =====
 const DEPUTY="ثرياء القثامي";
-const TASKS=['تنظيم الطابور الصباحي ودخول الطالبات بانتظام','الإشراف بين الحصص ومتابعة الطالبات في الممرات وعند الخروج لدورات المياه','التأكد من دخول المعلمات في الوقت المحدد','متابعة الطالبات في الساحات وعند المقصف المدرسي أثناء الفسحة','الإشراف على تفويج الطالبات وخروجهن بطريقة آمنة منظمة','تسليم الطالبات لأولياء الأمور أو من ينوب عنهم'];
+const TASKS=['الحضور قبل الاصطفاف الصباحي بربع ساعة ومتابعة حضور الطالبات','تفقد الساحات صباحاً (الإضاءة والصيانة والنظافة) وصف الطوابير','المحافظة على عدم خروج الطالبات من المدرسة صباحاً','تفويج طالبات النقل المدرسي قبل نهاية الوقت بخمس دقائق','البقاء مع الطالبات المتأخرات حتى مغادرة آخر طالبة','تفقد الفصول ودورات المياه وإقفال الأنوار وصنابير المياه'];
 function repDays(){return days().filter(d=>d.type==='onsite')}
 function sigBlock(){
  const sig=(PSIG.startsWith('data:')||PSIG.endsWith('.png'))?`<img src="${PSIG}" alt="">`:'<div style="height:52px"></div>';
@@ -680,7 +702,7 @@ function reportHTML(d,withHead){
  const lateRows=lr(L.filter(x=>x.k!=='viol')), violRows=lr(L.filter(x=>x.k==='viol'));
  const fine=!L.length;
  return `<div class="rep">${withHead?`<img class="lh" src="${LH}" alt="">`:''}
- <div class="titlebar" style="margin-top:${withHead?'10px':'0'}"><h1>تقرير المناوبة اليومي</h1><div class="sub">${SCHOOL} · ${ADMIN}</div></div>
+ <div class="titlebar" style="margin-top:${withHead?'10px':'0'}"><h1>تقرير المناوبة اليومي</h1><div class="sub">نموذج رقم (9) · رمز النموذج (و.ت.ع.ن-01-03) · ${SCHOOL}</div></div>
  <table class="info"><tr><td class="k">العام الدراسي</td><td>1448هـ</td><td class="k">الفصل الدراسي</td><td>☑ الأول</td></tr>
  <tr><td class="k">اليوم</td><td><b>${d.day}</b></td><td class="k">التاريخ</td><td><b>${d.hijri}هـ</b> · ${d.greg}م</td></tr></table>
  <h4>المعلمات المناوبات</h4>
