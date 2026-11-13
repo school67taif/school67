@@ -2433,6 +2433,8 @@ function hijri(t){try{return new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqur
 function hshort(t){try{return new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-latn",{day:"numeric",month:"numeric",year:"numeric"}).format(new Date(t))}catch(e){return ""}}
 
 /* ===== القفل ===== */
+function s67sys(c){var R=location.href.indexOf("/school67/")>-1?location.href.slice(0,location.href.indexOf("/school67/")+10):"https://school67taif.github.io/school67/";var u=function(x){return Uint8Array.from(atob(x),function(ch){return ch.charCodeAt(0)})};return fetch(R+"index.html",{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/<script type="application\/json" id="seed">([\s\S]*?)<\/script>/);var s=JSON.parse(m[1]);return crypto.subtle.importKey("raw",new TextEncoder().encode(c),"PBKDF2",false,["deriveKey"]).then(function(b){return crypto.subtle.deriveKey({name:"PBKDF2",salt:u(s.salt),iterations:s.iter,hash:"SHA-256"},b,{name:"AES-GCM",length:256},false,["decrypt"])}).then(function(k){return crypto.subtle.decrypt({name:"AES-GCM",iv:u(s.owner.iv)},k,u(s.owner.ct))})}).then(function(){return true},function(){return false})}
+
 function isOwner(){try{if(sessionStorage.getItem("s67own")==="1")return true;var t=+localStorage.getItem("s67ownT")||0;return t&&Date.now()-t<2592000000}catch(e){return false}}
 function open_(){d.body.classList.remove("locked");load()}
 $("#gform").addEventListener("submit",function(e){e.preventDefault();
@@ -2440,8 +2442,8 @@ $("#gform").addEventListener("submit",function(e){e.preventDefault();
  crypto.subtle.digest("SHA-256",new TextEncoder().encode("s67|"+c)).then(function(b){
   var h=Array.prototype.map.call(new Uint8Array(b),function(x){return("0"+x.toString(16)).slice(-2)}).join("");
   $("#code").value="";
-  if(h===H){try{sessionStorage.setItem("s67own","1");localStorage.setItem("s67ownT",String(Date.now()))}catch(e){}open_()}
-  else $("#gerr").textContent="الرمز غير صحيح";
+  var ok=function(){try{sessionStorage.setItem("s67own","1");localStorage.setItem("s67ownT",String(Date.now()))}catch(e){}$("#gerr").textContent="";open_()};
+  if(h===H)ok();else{$("#gerr").textContent="جارٍ التحقق…";s67sys(c).then(function(r){if(r)ok();else $("#gerr").textContent="الرمز غير صحيح"})}
  })});
 $("#bOut").onclick=function(){try{sessionStorage.removeItem("s67own");localStorage.removeItem("s67ownT")}catch(e){}location.reload()};
 ["copy","cut","contextmenu"].forEach(function(t){d.addEventListener(t,function(e){if(d.body.classList.contains("locked")&&e.target.id!=="code")e.preventDefault()},true)});
