@@ -350,23 +350,27 @@ let cur=(location.hash||'').replace('#','');if(!LISTS.find(l=>l.id===cur))cur=LI
 const SIG={}; // listId -> idx -> {img,at}
 const PRE={};try{const P0=JSON.parse(document.getElementById('presig').textContent);Object.keys(P0.h).forEach(id=>{const o={};STAFF.forEach(st=>{if(P0.img[st.k])o[st.k]={img:P0.img[st.k],h:P0.h[id]}});PRE[id]=o;SIG[id]=Object.assign({},o)})}catch(e){}
 let db=null;
+function _n(s){return String(s||'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').trim().split(/\s+/)}
+function rkey(name){var X=window.__S67SG||{},PN=X.PN||{},t=_n(name);for(var k in PN){var p=_n(PN[k]);if(p[0]===t[0]&&p[p.length-1]===t[t.length-1])return k}return null}
+function mergeRemote(){var X=window.__S67SG;if(!X||!X.L)return;LISTS.forEach(function(L){var o=Object.assign({},PRE[L.id]||{}),A=X.L[L.id]||{},AL=X.L.nall||{};STAFF.forEach(function(st){var k=rkey(st.name);if(!k||!X.SG[k])return;var h=A[k]||(/^n\d+$/.test(L.id)?AL[k]:null);if(h&&!o[st.k])o[st.k]={img:X.SG[k],h:h}});SIG[L.id]=o})}
+window.addEventListener('s67sig',function(){mergeRemote();try{render()}catch(e){}});
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function hij(d){try{return new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn',{day:'numeric',month:'numeric',year:'numeric'}).format(d)}catch(e){return ''}}
 document.getElementById('hd').textContent='التاريخ: '+hij(new Date());
 function members(L){return L.who==='teachers'?STAFF.filter(s=>s.cat==='معلمة'):STAFF}
 function render(){
   const t=document.getElementById('tabs');
-  t.innerHTML=LISTS.map(l=>{const n=Object.keys(SIG[l.id]||{}).length,m=members(l).length;return '<button role="tab" aria-selected="'+(l.id===cur)+'" class="'+(l.id===cur?'on':'')+'" data-l="'+l.id+'">'+esc(l.short)+' · '+n+'/'+m+'</button>'}).join('');
+  t.innerHTML=LISTS.map(l=>{const m=members(l).length,n=members(l).filter(x=>(SIG[l.id]||{})[x.k]).length;return '<button role="tab" aria-selected="'+(l.id===cur)+'" class="'+(l.id===cur?'on':'')+'" data-l="'+l.id+'">'+esc(l.short)+' · '+n+'/'+m+'</button>'}).join('');
   t.querySelectorAll('button').forEach(b=>b.onclick=()=>{cur=b.dataset.l;try{history.replaceState(null,'','#'+cur)}catch(e){}render()});
-  const L=LISTS.find(l=>l.id===cur),M=members(L),sg=SIG[L.id]||{},n=Object.keys(sg).length;
+  const L=LISTS.find(l=>l.id===cur),M=members(L),sg=SIG[L.id]||{},n=M.filter(x=>sg[x.k]).length;
   let h='<div class="panel"><h2>'+esc(L.title)+'</h2><p class="desc">'+esc(L.desc)+'</p>';
   h+='<div class="prog"><span>وقّعت '+n+' من '+M.length+' ('+Math.round(100*n/M.length)+'%)</span><div class="bar"><i style="width:'+(100*n/M.length)+'%"></i></div></div>';
   h+='<div class="tbl"><table><thead><tr><th>م</th><th>الاسم</th><th>العمل</th><th>التوقيع</th><th>التاريخ</th></tr></thead><tbody>'+
-  M.map((s,i)=>{const x=sg[s.k];return '<tr><td>'+(i+1)+'</td><td>'+esc(s.name)+'</td><td>'+esc(s.job)+'</td><td class="sig">'+(x?'<img alt="توقيع '+esc(s.name)+'" src="'+x.img+'">':(db?'<button class="sbtn" data-k="'+s.k+'">وقّعي</button>':'<span class="desc">لم توقّع بعد</span>'))+'</td><td>'+(x?esc(x.h||''):'')+'</td></tr>'}).join('')+'</tbody></table></div>';
+  M.map((s,i)=>{const x=sg[s.k];return '<tr><td>'+(i+1)+'</td><td>'+esc(s.name)+'</td><td>'+esc(s.job)+'</td><td class="sig">'+(x?'<img alt="توقيع '+esc(s.name)+'" src="'+x.img+'">':(db?'<button class="sbtn" data-k="'+s.k+'">وقّعي</button>':'<a class="sbtn" href="/school67/f/%D8%A7%D9%84%D8%AA%D9%88%D9%82%D9%8A%D8%B9%20%D8%A7%D9%84%D8%A5%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A.html#l='+L.id+'">وقّعي</a>'))+'</td><td>'+(x?esc(x.h||''):'')+'</td></tr>'}).join('')+'</tbody></table></div>';
   h+='<div class="foot-sign"><div class="p"><span>مديرة المدرسة: <b>ناديه عوض الصخيري</b></span>'+(S.psig?'<img class="ps" alt="توقيع المديرة" src="'+S.psig+'">':'<span style="margin-inline-start:10px">التوقيع: ....................</span>')+'</div>'+(S.stamp?'<img class="st" alt="ختم المدرسة" src="'+S.stamp+'">':'<span class="st" style="display:inline-block;min-width:90px;text-align:center;color:#5D6D70">الختم</span>')+'</div></div>';
   document.getElementById('main').innerHTML=h;
   document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>openPad(L,M.find(s=>s.k===b.dataset.k)));
-  document.getElementById('st').textContent=db?'كل منسوبة تفتح الرابط من جوالها، تختار الكشف، وتضغط «وقّعي» أمام اسمها وتوقّع بإصبعها. التوقيع يُحفظ مباشرة ويظهر للجميع.':'وضع العرض فقط: افتحي المنصة الأصلية لتظهر أزرار التوقيع.';
+  document.getElementById('st').textContent=db?'كل منسوبة تفتح الرابط من جوالها، تختار الكشف، وتضغط «وقّعي» أمام اسمها وتوقّع بإصبعها. التوقيع يُحفظ مباشرة ويظهر للجميع.':'كل منسوبة تضغط «وقّعي» وتدخل برمز الدخول الخاص بها، وتوقّع بإصبعها، ويظهر توقيعها هنا تلقائياً.';
 }
 /* signature pad */
 const pad=document.getElementById('pad'),ctx=pad.getContext('2d');let drawing=false,dirty=false,target=null;
