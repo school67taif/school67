@@ -141,8 +141,8 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else sca
   <div id="list"></div>
 
   <h2>جدول المتابعة الشامل</h2>
-  <div class="tblw"><table><thead><tr><th>م</th><th>السجل</th><th>المجال</th><th>المسؤولة</th><th>الأقسام</th><th>الشواهد</th><th>التقارير</th><th>منفّذ بشاهد</th><th>جاهز للاعتماد</th><th>الاكتمال</th><th>آخر تحديث</th></tr></thead><tbody id="tbl"></tbody></table></div>
-  <p class="note">طريقة الحساب: الأقسام والشواهد ونسبة الاكتمال تُحسب من محتوى كل سجل بالمنهج نفسه الذي تستخدمه «لوحة مؤشرات السجل» داخله (الأقسام المعبّأة والحقول وحالة البنود). التقارير: روابط التقارير داخل السجل. «منفّذ بشاهد» و«جاهز للاعتماد» من متابعة اعتماد الشواهد. آخر تحديث: أحدث تاريخ مرصود في السجل أو آخر تعديل على محتواه. ما لا تتوفر له بيانات يظهر «يُرصد».</p>
+  <div class="tblw"><table><thead><tr><th>م</th><th>السجل</th><th>المجال</th><th>المسؤولة</th><th>الأقسام</th><th>الشواهد</th><th>التقارير</th><th>منفّذ بشاهد</th><th>معتمد من المديرة</th><th>الاكتمال</th><th>آخر تحديث</th></tr></thead><tbody id="tbl"></tbody></table></div>
+  <p class="note">طريقة الحساب: الأقسام والشواهد ونسبة الاكتمال تُحسب من محتوى كل سجل بالمنهج نفسه الذي تستخدمه «لوحة مؤشرات السجل» داخله (الأقسام المعبّأة والحقول وحالة البنود). التقارير: روابط التقارير داخل السجل. «منفّذ بشاهد» و«معتمد من المديرة» من متابعة اعتماد الشواهد (اعتمدت المديرة التقارير الجاهزة بتاريخ 3/6/1448هـ). آخر تحديث: أحدث تاريخ مرصود في السجل أو آخر تعديل على محتواه. ما لا تتوفر له بيانات يظهر «يُرصد».</p>
 
   <h2>الرؤية والرسالة والأهداف</h2>
   <div class="grid3" id="vmg" style="margin-top:0"></div>
@@ -173,7 +173,7 @@ var sum=function(a){return a.reduce(function(x,y){return x+y},0)};
 var girls=sum(D.st.girls.map(function(x){return x[1]})),boys=sum(D.st.boys.map(function(x){return x[1]}));
 $("kpis").innerHTML=[
  [K.n,"سجلًا وملفًا ومنصة",""],[K.ev,"شاهدًا ومرفقًا موثقًا","m"],[K.rep,"تقريرًا مرتبطًا بالسجلات",""],[K.avg==null?RS:K.avg+"%","متوسط اكتمال السجلات","g"],
- [K.done,"بندًا منفّذًا بشاهد","g"],[K.ready,"بندًا جاهزًا للاعتماد","w"],[K.gtot==null?RS:K.gdone+" / "+K.gtot,"دليل الوثائق المطلوبة (مكتملة)","g"],[(D.st.tot||girls+boys),"طالبة وطالبًا (معتمد)","m"]
+ [K.done,"بندًا منفّذًا بشاهد","g"],[K.ready,"بندًا معتمدًا من المديرة","g"],[K.gtot==null?RS:K.gdone+" / "+K.gtot,"دليل الوثائق المطلوبة (مكتملة)","g"],[(D.st.tot||girls+boys),"طالبة وطالبًا (معتمد)","m"]
 ].map(function(k){return '<div class="kpi '+k[2]+'"><div class="n">'+k[0]+'</div><div class="l">'+k[1]+'</div></div>'}).join("");
 function brows(list,max,cls,unit){return list.map(function(x){return '<div class="prow"><span class="t">'+esc(x[0])+'</span><div class="bar"><i class="'+(cls||"")+'" style="width:'+(x[1]/max*100)+'%"></i></div><span class="v">'+x[1]+(unit||"")+'</span></div>'}).join("")}
 var mx=Math.max.apply(null,D.st.girls.concat(D.st.boys).map(function(x){return x[1]}));
@@ -207,7 +207,7 @@ function card(r){var s=stv(st(r));
  return '<div class="card"><div class="row"><span class="type">'+r.ty+' · '+esc(CN[r.c]||"")+'</span><span class="pill '+s[2]+'">'+s[1]+'</span></div>'+
  '<div class="t">'+esc(r.t)+'</div><div class="row"><span>المسؤولة: <b style="color:var(--ink)">'+esc(r.rp||RS)+'</b></span></div>'+
  '<div class="row"><span>مؤشر الاكتمال</span><span><b style="color:var(--ink)">'+(r.pct==null?RS:r.pct+"%")+'</b></span></div><div class="bar"><i class="'+(st(r)==="c"?"g":"")+'" style="width:'+(r.pct||0)+'%"></i></div>'+
- '<div class="st4"><div>'+num(r.ns)+'الأقسام</div><div>'+num(r.ev)+'الشواهد</div><div>'+num(r.rep)+'التقارير</div><div>'+num(r.dn==null?(r.pct==null?null:0):r.dn)+'منفّذ بشاهد</div><div>'+num(r.rd==null?(r.pct==null?null:0):r.rd)+'جاهز للاعتماد</div><div>'+(r.luh?'<b style="font-size:13px">'+r.luh+'</b>':'<b class="rs">'+RS+'</b>')+'آخر تحديث</div></div>'+
+ '<div class="st4"><div>'+num(r.ns)+'الأقسام</div><div>'+num(r.ev)+'الشواهد</div><div>'+num(r.rep)+'التقارير</div><div>'+num(r.dn==null?(r.pct==null?null:0):r.dn)+'منفّذ بشاهد</div><div>'+num(r.rd==null?(r.pct==null?null:0):r.rd)+'معتمد من المديرة</div><div>'+(r.luh?'<b style="font-size:13px">'+r.luh+'</b>':'<b class="rs">'+RS+'</b>')+'آخر تحديث</div></div>'+
  '<div class="row"><span style="font-size:12px">'+(r.src?"مصدر التاريخ: "+r.src:"")+'</span><a class="open" href="'+href(r.f)+'" target="_blank" rel="noopener">فتح السجل</a></div></div>'}
 function render(){var F=sorted(filtered()),h="";
  $("count").textContent="المعروض: "+F.length+" من "+R.length;
@@ -220,7 +220,7 @@ render();
 var V=D.vis||{};$("vmg").innerHTML='<div class="panel"><h3 class="ph">الرؤية</h3><div>'+esc(V.vision||RS)+'</div><h3 class="ph" style="margin-top:12px">الرسالة</h3><div>'+esc(V.mission||RS)+'</div></div>'+
  '<div class="panel"><h3 class="ph">القيم</h3><div class="legend">'+(V.values||[]).map(function(x){return '<span style="--c:#009999">'+esc(x)+'</span>'}).join("")+'</div><h3 class="ph" style="margin-top:12px">هدف الداشبورد</h3><div style="font-size:14px">متابعة اكتمال سجلات المدرسة وشواهدها وتقاريرها في صفحة واحدة، دعمًا لملف التقويم الذاتي.</div></div>'+
  '<div class="panel"><h3 class="ph">الأهداف</h3><ol style="margin:0;padding-inline-start:20px;font-size:14px">'+(V.goals||[]).map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ol></div>';
-$("csv").addEventListener("click",function(){var rows=[["م","المجال","السجل","النوع","المسؤولة","الأقسام","الشواهد","التقارير","منفّذ بشاهد","جاهز للاعتماد","مؤشر الاكتمال","آخر تحديث","الرابط"]].concat(R.map(function(r,i){return[i+1,CN[r.c]||"",r.t,r.ty,r.rp||RS,r.ns==null?RS:r.ns,r.ev==null?RS:r.ev,r.rep==null?RS:r.rep,r.dn||0,r.rd||0,r.pct==null?RS:r.pct+"%",r.luh||RS,new URL(href(r.f),location.href).href]}));
+$("csv").addEventListener("click",function(){var rows=[["م","المجال","السجل","النوع","المسؤولة","الأقسام","الشواهد","التقارير","منفّذ بشاهد","معتمد من المديرة","مؤشر الاكتمال","آخر تحديث","الرابط"]].concat(R.map(function(r,i){return[i+1,CN[r.c]||"",r.t,r.ty,r.rp||RS,r.ns==null?RS:r.ns,r.ev==null?RS:r.ev,r.rep==null?RS:r.rep,r.dn||0,r.rd||0,r.pct==null?RS:r.pct+"%",r.luh||RS,new URL(href(r.f),location.href).href]}));
  var csv="﻿"+rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(",")}).join("\r\n");
  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="داشبورد سجلات الابتدائية 67.csv";document.body.appendChild(a);a.click();a.remove()});
 })();
