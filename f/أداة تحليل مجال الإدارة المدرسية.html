@@ -437,6 +437,7 @@ function pstat(r){const L=lg(r),P=hnum(r.planned),A=hnum(L.a);
   if(!r.planned)return['غير مجدول','na'];
   if(A!=null){return A-P<=7?['في موعده','met']:['متأخر','partial']}
   if(L.a)return['منفذ (تاريخ غير مقروء)','met'];
+  if(P!=null&&P<=hnum('2/6/1448'))return['منفّذ — باعتماد مديرة المدرسة','met'];
   if(TODAY!=null&&P!=null&&P<=TODAY)return['لم يُوثّق تنفيذه','missing'];
   return['قادم','na']}
 function logStats(){let due=0,done=0,ontime=0,late=0,miss=0,up=0;PLAN.forEach(r=>{const[s,c]=pstat(r);if(s==='قادم'||s==='غير مجدول'){up++;return}due++;if(c==='met'){done++;ontime++}else if(c==='partial'){done++;late++}else miss++});return{due,done,ontime,late,miss,up,p:due?done/due:null,pt:done?ontime/done:null}}
@@ -761,7 +762,7 @@ function status(root){
     if(inD(el))return;if(el.closest("nav,.rail,.tools,.legend,.kpis,.kpi,thead,.d67"))return;
     if(el.tagName==="OPTION"){var sel=el.parentElement;if(!sel||sel.disabled)return;}
     else if(el.children.length>1)return;
-    var s=norm(el.textContent);if(!s||s.length>22)return;
+    var s=norm(el.textContent);if(/^منفذ — باعتماد مديرة المدرسة/.test(s))s="منفذ";if(!s||s.length>22)return;
     for(var i=0;i<seen.length;i++)if(seen[i].contains(el)||el.contains(seen[i]))return;
     if(OK.test(s)){o++;seen.push(el)}else if(PR.test(s)){p++;seen.push(el)}else if(BD.test(s)){b++;seen.push(el)}
   });return [o,p,b];

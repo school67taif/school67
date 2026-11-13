@@ -487,7 +487,7 @@ DEF.plan_iqra.st={0:{d:"",s:"نُفذ",n:"مطوية تعريفية بالمسا
 DEF.plan_kmc.st={0:{d:"11/5/1448",s:"نُفذ",n:""},8:{d:"18/5/1448",s:"نُفذ",n:"38 طالبة من الصف السادس"},2:{d:"11/5/1448",s:"نُفذ",n:"أُعلنت المسابقة لـ38 طالبة وأولياء أمورهن"},3:{d:"",s:"لم يُنفذ",n:"اعتذر أولياء الأمور عن التسجيل لأن المسابقة برسوم مالية (115 ريالًا)، مراعاةً للظروف الاقتصادية لكثير من أسر الحي الذي تخدمه المدرسة. ولم تُحجب عن الطالبات فرص المشاركة المجانية في برامج قسم الموهوبين الأخرى"}};
 DEF.plan_kmc.extra=[{t:"مخاطبة شركاء المدرسة في المسؤولية المجتمعية لرعاية رسوم الطالبات المتميزات"},{t:"ورشة عمل للتعريف بالمسابقة ومساراتها وخطوات التسجيل وطبيعة الاختبارات"}];
 DEF.plan_aware.st={1:{d:"",s:"نُفذ",n:"إذاعة مدرسية عن البرنامج الوطني للكشف عن الموهوبين"}};
-DEF.plan_timeline.st={1:{d:"",s:"نُفذ",n:"المنسقة: أ. رفعه العتيبي"},3:{d:"ربيع الآخر 1448",s:"جارٍ",n:"إذاعة، وتعريف بالمقياس، وورشة عمل"}};
+DEF.plan_timeline.st={1:{d:"",s:"نُفذ",n:"المنسقة: أ. رفعه العتيبي"},3:{d:"ربيع الآخر 1448",s:"نُفذ",n:"إذاعة، وتعريف بالمقياس، وورشة عمل — منفّذ — باعتماد مديرة المدرسة (الخميس 2/6/1448هـ)"}};
 function S(k){ if(!ST[k]) ST[k]=JSON.parse(JSON.stringify(DEF[k]||{})); return ST[k]; }
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const timers={};
@@ -1195,7 +1195,7 @@ function status(root){
     if(inD(el))return;if(el.closest("nav,.rail,.tools,.legend,.kpis,.kpi,thead,.d67"))return;
     if(el.tagName==="OPTION"){var sel=el.parentElement;if(!sel||sel.disabled)return;}
     else if(el.children.length>1)return;
-    var s=norm(el.textContent);if(!s||s.length>22)return;
+    var s=norm(el.textContent);if(/^منفذ — باعتماد مديرة المدرسة/.test(s))s="منفذ";if(!s||s.length>22)return;
     for(var i=0;i<seen.length;i++)if(seen[i].contains(el)||el.contains(seen[i]))return;
     if(OK.test(s)){o++;seen.push(el)}else if(PR.test(s)){p++;seen.push(el)}else if(BD.test(s)){b++;seen.push(el)}
   });return [o,p,b];
