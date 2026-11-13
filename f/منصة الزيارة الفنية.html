@@ -4272,8 +4272,8 @@ var after=tn.splitText(m.index);var rest=after.splitText(m[0].length);var wr=d.c
 var st=res.id==="P"?stampFor(res):null;if(st&&st.inl)row.appendChild(img("ST","s67st"));if(st&&st.box){var sb=img("ST","s67st");sb.classList.add("s67box");st.box.appendChild(sb)}
 row.appendChild(img(res.id,"s67si"));var dl=d.createElement("span");dl.className="s67dl";dl.appendChild(after);wr.appendChild(dl);rest.parentNode.insertBefore(wr,rest);
 REP.push({ok:1,id:res.id,role:!!res.role,stamp:!!st,ctx:ctx})})}
-function rf(){var X=window.__S67SG;if(!X||!X.SG)return;d.querySelectorAll("img[alt]").forEach(function(im){if(im.classList.contains("s67si")||im.classList.contains("s67st"))return;var a=im.getAttribute("alt")||"",id=null;if(/^\s*\u062e\u062a\u0645/.test(a))id="ST";else if(/^\s*\u062a\u0648\u0642\u064a\u0639/.test(a)){var w=who(a);if(w.length===1)id=w[0];else{var r=role(a);if(r.length===1)id=r[0]}}if(id&&X.SG[id]&&im.src!==X.SG[id])im.src=X.SG[id]})}
-var T=0;function go(){clearTimeout(T);T=setTimeout(function(){try{mo.disconnect();rf();scan()}catch(e){}mo.observe(d.body,{childList:true,subtree:true,characterData:true})},120)}
+function rf(){var X=window.__S67SG;if(!X||!X.SG)return;d.querySelectorAll("img[alt]").forEach(function(im){var a=im.getAttribute("alt")||"",id=null;if(/^\s*\u062e\u062a\u0645/.test(a))id="ST";else if(/^\s*\u062a\u0648\u0642\u064a\u0639/.test(a)){var w=who(a);if(w.length===1)id=w[0];else{var r=role(a);if(r.length===1)id=r[0]}}if(id&&X.SG[id]&&im.src!==X.SG[id])im.src=X.SG[id]})}
+window.addEventListener("s67sig",function(){var X=window.__S67SG,k;for(k in X.SG)SG[k]=X.SG[k];for(k in X.PN)PN[k]=X.PN[k];rf();try{scan()}catch(e){}});var T=0;function go(){clearTimeout(T);T=setTimeout(function(){try{mo.disconnect();rf();scan()}catch(e){}mo.observe(d.body,{childList:true,subtree:true,characterData:true})},120)}
 var mo=new MutationObserver(go);
 function start(){rf();scan();mo.observe(d.body,{childList:true,subtree:true,characterData:true})}
 if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",start);else start();
