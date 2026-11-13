@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>
+<script>document.documentElement.lang="ar";document.documentElement.dir="rtl";</script>
+<meta name="robots" content="noindex,nofollow"><title>منصة متابعة خطة التحسين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* نظام الألوان: هوية المدرسة (عنابي/تركواز) + دلالات حالة التنفيذ */
+  --maroon:#660033; --maroon-ink:#4a0025;
+  --teal:#009999; --teal-dark:#007575; --teal-soft:#DCF1F1;
+  --gold:#A8832B;
+  --ink:#1B2A2D; --muted:#5D6D70; --line:#DDE5E5; --surface2:#F4F7F7; --bg:#ffffff;
+  --good:#1D7F55; --good-soft:#E7F5EE;
+  --warn:#9A7420; --warn-soft:#FBF1DD;
+  --bad:#B03F35; --bad-soft:#FBEAE8;
+  --idle:#5D6D70; --idle-soft:#EEF1F1;
+  color-scheme:light;
+  font-size:15px;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'IBM Plex Sans Arabic',Tahoma,sans-serif;
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+  padding-block:18px 0;
+  min-height:100%;
+}
+.kufi{font-family:'Noto Kufi Arabic',Tahoma,sans-serif}
+img{max-width:100%}
+a{color:var(--teal-dark)}
+button{font-family:inherit}
+
+/* ===== letterhead + hero ===== */
+.letterhead-wrap{max-width:1100px;margin:0 auto 14px;text-align:center}
+.letterhead-wrap img{width:100%;max-width:1100px;height:auto;display:block;margin:0 auto} /* مقاس الترويسة متناسب */
+
+.titlebar{
+  max-width:1100px;margin:0 auto 10px;
+  background:var(--maroon); border-radius:12px;
+  outline:2px solid var(--maroon); outline-offset:3px;
+  padding:16px 22px;
+  text-align:center;
+}
+.titlebar h1{
+  margin:0; color:#fff; font-family:'Noto Kufi Arabic',Tahoma,sans-serif;
+  font-weight:700; font-size:clamp(20px,4vw,28px); text-wrap:balance;
+}
+
+.schoolname{
+  max-width:1100px;margin:0 auto 10px; text-align:center;
+  display:flex; align-items:center; justify-content:center; gap:14px;
+}
+.schoolname .rule{height:1px;background:var(--line);flex:1;max-width:120px}
+.schoolname span{
+  font-family:'Noto Kufi Arabic',Tahoma,sans-serif; font-weight:700;
+  color:var(--maroon); font-size:18px; white-space:nowrap;
+}
+
+.metaline{
+  max-width:1100px;margin:0 auto 20px; text-align:center;
+  color:var(--muted); font-size:13.5px; line-height:1.9;
+}
+.metaline b{color:var(--ink)}
+
+/* ===== shell: rail + content ===== */
+.shell{max-width:1100px;margin:0 auto;display:flex;gap:18px;align-items:flex-start}
+.rail{
+  width:232px; flex:0 0 232px; min-width:0;
+  display:flex; flex-direction:column; gap:4px;
+}
+.rail .group-label{
+  color:var(--muted); font-size:11.5px; font-weight:600;
+  letter-spacing:.04em; padding:6px 10px 2px;
+}
+.rail button{
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+  border:1px solid transparent; background:transparent; color:var(--ink);
+  border-radius:12px; padding:10px 12px; font-size:14px; text-align:right;
+  cursor:pointer; width:100%;
+}
+.rail button .n{color:var(--muted); font-size:12px; font-variant-numeric:tabular-nums}
+.rail button:hover{background:var(--surface2)}
+.rail button.active{background:var(--teal); color:#fff}
+.rail button.active .n{color:rgba(255,255,255,.85)}
+
+.main{flex:1; min-width:0}
+html,body{overflow-x:hidden}
+@media (max-width:760px){.main{width:100%;max-width:100%}.tablewrap{max-width:100%}}
+
+/* mobile rail: horizontal pill row */
+@media (max-width:760px){
+  .shell{flex-direction:column}
+  .rail{
+    width:100%; flex:0 0 auto; flex-direction:row; gap:8px;
+    overflow-x:auto; padding-bottom:4px; -webkit-overflow-scrolling:touch;
+  }
+  .rail::-webkit-scrollbar{display:none}
+  .rail .group-label{display:none}
+  .rail button{
+    flex:0 0 auto; white-space:nowrap; border:1px solid var(--line); border-radius:999px;
+    padding:8px 14px;
+  }
+  .rail button.active{border-color:var(--teal)}
+}
+
+h2.section{
+  font-family:'Noto Kufi Arabic',Tahoma,sans-serif; color:var(--maroon);
+  font-weight:700; font-size:19px; margin:4px 0 12px;
+}
+
+.panel{
+  background:#fff; border:1px solid var(--line); border-radius:14px;
+  padding:16px; margin-bottom:16px;
+}
+
+/* ===== KPI tiles ===== */
+.kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px}
+@media (max-width:620px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{
+  background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px;
+  display:flex; flex-direction:column; gap:4px;
+}
+.kpi .num{font-size:26px; font-weight:700; color:var(--teal-dark); font-variant-numeric:tabular-nums}
+.kpi .lbl{color:var(--muted); font-size:12.5px}
+
+.progress{height:8px;border-radius:999px;background:var(--surface2);overflow:hidden}
+.progress > i{display:block;height:100%;background:var(--teal);border-radius:999px}
+
+.committee-card{
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;
+  margin-bottom:12px; cursor:pointer;
+}
+.committee-card:hover{border-color:var(--teal)}
+.cc-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.cc-top h3{margin:0;font-family:'Noto Kufi Arabic',Tahoma,sans-serif;font-size:15.5px;color:var(--ink)}
+.cc-top .pct{font-weight:700;color:var(--teal-dark);font-variant-numeric:tabular-nums}
+.cc-breakdown{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-inline-end:4px}
+
+/* ===== table ===== */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;min-width:860px;font-size:13.5px}
+thead th{
+  background:var(--teal); color:#fff; font-weight:700; text-align:right;
+  padding:10px 10px; border-left:1px solid rgba(255,255,255,.35);
+  position:sticky; top:0;
+}
+thead th:first-child{border-left:none}
+tbody td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even){background:var(--surface2)}
+tbody tr:hover{background:var(--teal-soft)}
+.cell-area{color:var(--muted);font-size:12px;white-space:nowrap}
+.cell-action{min-width:220px}
+.cell-action .plannote{display:block;color:var(--muted);font-size:11.5px;margin-top:3px}
+.cell-date{white-space:nowrap;color:var(--muted);font-size:12.5px}
+.cell-assignee{white-space:nowrap;font-size:12.5px}
+
+input.newdate, input.tracknote, select.statussel{
+  border:1px solid var(--line); border-radius:8px; padding:6px 8px;
+  font-size:13px; font-family:inherit; width:100%; min-width:110px;
+  background:#fff; color:var(--ink);
+}
+input.newdate{min-width:100px}
+input.tracknote{min-width:160px}
+select.statussel{font-weight:600; min-width:92px}
+input:disabled, select:disabled{background:var(--surface2); color:var(--muted)}
+
+.badge{
+  display:inline-flex; align-items:center; gap:5px; padding:3px 9px;
+  border-radius:999px; font-size:12px; font-weight:600; white-space:nowrap;
+}
+.badge.good{background:var(--good-soft);color:var(--good)}
+.badge.warn{background:var(--warn-soft);color:var(--warn)}
+.badge.bad{background:var(--bad-soft);color:var(--bad)}
+.badge.idle{background:var(--idle-soft);color:var(--idle)}
+
+.readonly-note{
+  background:var(--warn-soft); color:var(--warn); border-radius:10px;
+  padding:8px 12px; font-size:12.5px; margin-bottom:12px;
+}
+
+.exportbtns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  border:none; border-radius:10px; padding:10px 16px; font-size:14px; font-weight:600;
+  cursor:pointer; color:#fff; background:var(--teal-dark);
+}
+.btn:hover{background:var(--maroon)}
+.btn.secondary{background:#fff;color:var(--teal-dark);border:1px solid var(--teal-dark)}
+.btn.secondary:hover{background:var(--teal-soft)}
+.btn:disabled{background:var(--surface2);color:var(--muted);cursor:not-allowed}
+
+.footer-grad{
+  height:12px;border-radius:0;margin:28px auto 10px;max-width:1100px;
+  background:linear-gradient(to left,#3d7eb9,#2891b1,#13a4a8,#0ba98d,#07a86c);
+}
+.copyline{text-align:center;color:var(--muted);font-size:12px;padding-bottom:18px}
+
+.toast{
+  position:fixed; bottom:18px; right:18px; background:var(--ink); color:#fff;
+  padding:9px 16px; border-radius:10px; font-size:13px; opacity:0; transform:translateY(8px);
+  transition:opacity .2s, transform .2s; pointer-events:none; z-index:50;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+.pbtn67{font:600 14px "IBM Plex Sans Arabic",Tahoma,sans-serif;border:1px solid #007575;background:#007575;color:#fff;border-radius:10px;padding:7px 14px;cursor:pointer}
+.pbtn67:hover{background:#009999}
+@media print{.rail,.pbtn67,.toast{display:none!important}.shell{display:block}thead th{position:static}input,select{border:0!important;background:none!important}thead th,.titlebar,.footer-grad{-webkit-print-color-adjust:exact;print-color-adjust:exact}tr{break-inside:avoid}}
+</style>
+
+<div class="letterhead-wrap">
+  <img src="img/letterhead.png" alt="شعار الإدارة العامة للتعليم بمحافظة الطائف - الابتدائية السابعة والستون" width="1400" height="212">
+</div>
+
+<div class="titlebar"><h1>منصة متابعة خطة التحسين</h1></div>
+
+<div class="schoolname">
+  <span class="rule"></span>
+  <span>الابتدائية السابعة والستون</span>
+  <span class="rule"></span>
+</div>
+
+<div class="metaline">
+  الإدارة العامة للتعليم بمحافظة الطائف<br>
+  مديرة المدرسة: <b>ناديه عوض الصخيري</b> &nbsp;·&nbsp;
+  المرحلة: <b>الابتدائية</b> &nbsp;·&nbsp;
+  العام الدراسي: <b>1448هـ</b> &nbsp;·&nbsp;
+  اليوم: <b id="todayHijri">—</b>
+  <div style="margin-top:8px"><button type="button" class="pbtn67" onclick="window.print()">طباعة</button></div>
+</div>
+
+<div class="shell">
+  <nav class="rail" id="rail">
+    <div class="group-label">المتابعة</div>
+    <button data-view="summary">لوحة المتابعة <span class="n"></span></button>
+    <button data-view="plan48">خطة التحسين الشاملة 1448هـ</button>
+    <div class="group-label">اللجان</div>
+    <button data-view="c1">لجنة التميز <span class="n"></span></button>
+    <button data-view="c2">لجنة التحصيل الدراسي <span class="n"></span></button>
+    <button data-view="c3">لجنة التوجيه الطلابي <span class="n"></span></button>
+    <button data-view="c4">اللجنة الإدارية <span class="n"></span></button>
+    <div class="group-label">أدوات</div>
+    <button data-view="export">تصدير البيانات</button>
+    <button data-view="evidence">الشواهد والمرفقات</button>
+  </nav>
+
+  <main class="main" id="main"></main>
+</div>
+
+<style id="drv67-css">
+.drv67{direction:rtl;font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;color:#1B2A2D;max-width:1180px;margin:26px auto 0;padding:0 16px;box-sizing:border-box}
+.drv67 *{box-sizing:border-box}
+.drv67 .dh{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:2px solid #DCF1F1;padding-bottom:8px;margin-bottom:12px}
+.drv67 h2{font-family:"Noto Kufi Arabic",Tahoma,sans-serif;color:#660033;font-size:21px;margin:0;line-height:1.6}
+.drv67 .dm{color:#5D6D70;font-size:13.5px;line-height:1.8}
+.drv67 .root{display:inline-flex;align-items:center;gap:6px;background:#007575;color:#fff;text-decoration:none;border-radius:10px;padding:6px 14px;font-weight:700;font-size:13.5px}
+.drv67 details{background:#fff;border:1px solid #DDE5E5;border-radius:14px;margin-bottom:10px;overflow:hidden}
+.drv67 summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:11px 14px;font-family:"Noto Kufi Arabic",Tahoma,sans-serif;font-weight:700;color:#007575;font-size:15.5px}
+.drv67 summary::-webkit-details-marker{display:none}
+.drv67 summary:after{content:"";margin-inline-start:auto;width:9px;height:9px;border-left:2px solid #009999;border-bottom:2px solid #009999;transform:rotate(-45deg);transition:transform .15s}
+.drv67 details[open] summary:after{transform:rotate(135deg)}
+.drv67 summary .n{background:#DCF1F1;color:#007575;border-radius:999px;padding:0 10px;font-size:12.5px;font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif}
+.drv67 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;padding:0 14px 14px}
+.drv67 a.it{display:flex;align-items:center;gap:10px;border:1px solid #DDE5E5;border-radius:12px;padding:9px 11px;text-decoration:none;color:#1B2A2D;background:#fff;min-height:52px}
+.drv67 a.it:hover{border-color:#009999;background:#F4F7F7}
+.drv67 a.it svg{width:22px;height:22px;flex:none;fill:none;stroke:#009999;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.drv67 a.it.t-d svg{stroke:#A8832B}.drv67 a.it.t-p svg{stroke:#B03F35}.drv67 a.it.t-v svg{stroke:#660033}
+.drv67 a.it b{display:block;font-size:14px;font-weight:600;line-height:1.5}
+.drv67 a.it small{color:#5D6D70;font-size:12px}
+.drv67 a.fo{display:inline-flex;margin:0 14px 12px;color:#007575;font-weight:700;font-size:13.5px;text-decoration:none}
+.drv67 a.fo:hover{text-decoration:underline}
+@media (max-width:600px){.drv67 .grid{grid-template-columns:1fr}}
+@media print{.drv67 details{break-inside:avoid}.drv67 details:not([open]) .grid{display:block}}
+</style>
+<section class="drv67" id="drv67" aria-label="شواهد ومجلدات الدرايف">
+<div class="dh"><div><h2>شواهد ومجلدات الدرايف</h2><div class="dm">شواهد ومرفقات خطة التحسين المحفوظة في درايف المدرسة · تُفتح للعرض في تبويب جديد</div></div><a class="root" href="https://drive.google.com/drive/folders/14mn01e_xEnWLgi6X-qS9neWLHad2d80E" target="_blank" rel="noopener">مجلد الإبتدائية ٦٧ للعام ١٤٤٨</a></div>
+<details open><summary>التحصيل الدراسي <span class="n">7</span></summary>
+<div class="grid">
+<a class="it t-d" href="https://drive.google.com/drive/folders/1JgdDHr49FQZuWWqvjFB-Neh1nrddXYZc" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>لجنة التحصيل الدراسي</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1HqDtKJeQpmC2Dc7mtmA-o6UrTHyBf_By" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>تحليل النتائج</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1xfrmhXf-HFbftJofvtBXCSs1UZIfgDmA" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>تصنيف الطالبات</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1FH74umDJCfgfBFiqe6dVnvlaAEkhoVnc" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الطالبات المتعثرات</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1WvM02Uz6BHUxrXAyWQTmyP4iusxGiu5U" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الطالبات المتميزات</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/15AtvxYqtMFtjVHXJsZ2oXftmAGLdvAI6" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الخطط العلاجية</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1nrCTdsjoEKCbn9jRxDD4sjVyk_xvJco8" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الخطط الإثرائية</b><small>مجلد</small></span></a>
+</div>
+<a class="fo" href="https://drive.google.com/drive/folders/1rawDy0Cz9mXKo_ym_jDEr-Ld-CVqBE9f" target="_blank" rel="noopener">فتح مجلد «التحصيل الدراسي» كاملًا ←</a>
+</details>
+<details><summary>الخطة التشغيلية <span class="n">3</span></summary>
+<div class="grid">
+<a class="it t-x" href="https://drive.google.com/file/d/1mrLZG4MNrV7vjr5XdQ7OPvW83w11nwL5/view" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M4 15h16M10 4v16"/></svg><span><b>الخطة التشغيلية 1448هـ (Excel)</b><small>Excel</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1fMFw6eAGZx2OTaCIOU2uT8gCF80c6dPd" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الشواهد للبرامج المنفذة في الخطة</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1Bb74R6ER9lUFJUuhYSuZeID2rtj1lQOt" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الاستبيان للخطة التشغيلية</b><small>مجلد</small></span></a>
+</div>
+<a class="fo" href="https://drive.google.com/drive/folders/1gB5Box59bizThskeDKZTh98ptwhyoIaF" target="_blank" rel="noopener">فتح مجلد «الخطة التشغيلية» كاملًا ←</a>
+</details>
+<details><summary>التخطيط والمتابعة والتقويم <span class="n">8</span></summary>
+<div class="grid">
+<a class="it t-d" href="https://drive.google.com/drive/folders/154tzzE56CkMcmTcEZ8SP4JJGwUASdcej" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>التقويم الذاتي</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/12btr4zGY2_FvfawXPM70tHdUV7Npupuq" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>المبادرات والمشاريع</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1PZHeCpXPxw6qqhOWz1detVDjXs8E2ioW" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>متابعة الأداء الوظيفي</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1BCpNeWRlCOEwaafFiT-EFVoyEuq2y_w9" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>ملفات إنجاز</b><small>مجلد</small></span></a>
+<a class="it t-p" href="https://drive.google.com/file/d/1EofhB63Nu8nPGWS6s6-3YQpCHsBIXzX1/view" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span><b>سجل اللجان والفرق</b><small>PDF</small></span></a>
+<a class="it t-p" href="https://drive.google.com/file/d/1gRbz4s3R9-M8aTzR68vqX2ImJXXfxrLA/view" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span><b>سجل التطوير والنمو المهني</b><small>PDF</small></span></a>
+<a class="it t-p" href="https://drive.google.com/file/d/1oLOfrmhSSTjitqV2xqj26rCB7OW6OF53/view" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span><b>صلاحيات مديرة المدرسة</b><small>PDF</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1nnworOU2mxBpIprP-2zBSKmnIPIkMTUn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>ملف استطلاع الرأي</b><small>مجلد</small></span></a>
+</div>
+</details>
+<details><summary>نافس ونواتج التعلم <span class="n">7</span></summary>
+<div class="grid">
+<a class="it t-p" href="https://drive.google.com/file/d/16vRzpETZ-bztI80AkeIs5fYKtj1AYm2F/view" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span><b>خطة تحسين نواتج التعلم نافس ١٤٤٨هـ</b><small>PDF</small></span></a>
+<a class="it t-p" href="https://drive.google.com/file/d/113XGdvL5j0SDEv99EoVNnGiLRQzijh73/view" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span><b>سجل الاختبارات الوطنية نافس 1448</b><small>PDF</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1pW57kPF5FmyhKaTen-dq_yRLjt5qfjhb" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>نواتج التعلم</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/10IK4schoj08liPJfyXrOZB3wXOYglIl1" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>تحليل الاختبارات القبلية</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1CAFpzMsy56cn4-QYzBxyzK39odawytzs" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>سهم نافس</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1sM_zA1iqYWxw6HoVmb80JaOppYckJybq" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الممارسات التدريسية</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1jViy7loiLAJA6UaPY9069D9-u5vKP-Ws" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>البحث الإجرائي والتشخيصي والصحي</b><small>مجلد</small></span></a>
+</div>
+</details>
+<details><summary>مجالات الخطة: الطالبات والبيئة المدرسية <span class="n">10</span></summary>
+<div class="grid">
+<a class="it t-d" href="https://drive.google.com/drive/folders/1xZwQQ-5dpFdnLQ1x9Qm3Zl4oAaBaiSPb" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>التوجيه الطلابي</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/12VcPQJmenvfRP--4xDXxjijJ0PfePie9" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الدعم الموحد</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1dL068zLT4yPN8lP1zkfeZsa7sNadrwAV" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الموهوبون والمتفوقون</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1CjxUnoxUT1CMBTQ4MV8zyPPe5fjW3udK" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>النشاط الطلابي</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1AXlbc1PKrDtiZyh-PqSiOlEWLwYOOA9D" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>سجل الانضباط المدرسي</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1wKMG37vFuxI1puwP0ij3O26jP9UyzfPt" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الوعي الفكري</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/16IPWOTbz89pVHqunMmoweX_uh0AqdwXF" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الأمن والسلامة</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1vfY86aRDpOZBtLTV07bFOsWV49xYfOwc" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>التوجيه الصحي</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1MJ0AJaYV4UloIWUqCnOo-t4QVmmYdPvT" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>المرافق والصيانة</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/10-60euwy-hIXdZSS_JtpDIzZoQ3bjzYf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الميزانية التشغيلية والصندوق المدرسي</b><small>مجلد</small></span></a>
+</div>
+</details>
+<details><summary>الشراكة والتطوع والتكريم <span class="n">7</span></summary>
+<div class="grid">
+<a class="it t-d" href="https://drive.google.com/drive/folders/1aDoEkTi85ii-ls5xdpk-ERx8fEP6RdPX" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>الشراكات المجتمعية</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1jdG1umZ3-oJRjRQhNp9uOFEc8R__k9b4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>العمل التطوعي</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1PosWw3OgQZtFtI69ZZV2IrGHiyipB2gB" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>سجل التكريم</b><small>مجلد</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1tdYbENdz7f-WLPIMagD8whZnTMb9ySLJ" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>بطاقات الشكر للمدرسة</b><small>مجلد</small></span></a>
+<a class="it t-p" href="https://drive.google.com/file/d/1DH8rO_T6KGCfQoS2KjZC2AjXeNkt7Ys-/view" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span><b>تقرير شهادات الشكر للشراكة المجتمعية</b><small>PDF</small></span></a>
+<a class="it t-p" href="https://drive.google.com/file/d/1sNk0oqg4zN34VZ72WxYT7joJqZUKmm5J/view" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span><b>تقرير بطاقات الشكر لمنسوبات المدرسة</b><small>PDF</small></span></a>
+<a class="it t-d" href="https://drive.google.com/drive/folders/1JOUukQR0R4Cg-_gSH4vFhWA45NuNILZr" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span><b>التقارير</b><small>مجلد</small></span></a>
+</div>
+</details>
+</section>
+<div class="footer-grad"></div>
+<div class="copyline">منصة متابعة خطة التحسين · الابتدائية السابعة والستون · الإدارة العامة للتعليم بمحافظة الطائف<br>هاتف المدرسة <bdi dir="ltr">0559752844</bdi> · البريد <bdi dir="ltr">30800@taifdue.gov.sa</bdi> · آخر تحديث: 13 جمادى الأولى 1448هـ</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+document.documentElement.setAttribute("lang","ar");
+try{var _th=new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-latn",{day:"numeric",month:"long",year:"numeric"}).format(new Date()).replace(/\s*هـ$/,"")+"هـ";byId0("todayHijri").textContent=_th;}catch(e){}
+function byId0(i){return document.getElementById(i);}
+document.body.setAttribute("dir","rtl");
+
+var STATIC_ACTIONS = [{"id": "a1", "committee": "c1", "area": "الإدارة المدرسية", "action": "حصر البرامج وبناء خطة التحسين", "planDate": "7/15 إلى 7/19", "assignee": "لجنة التميز", "planNote": ""}, {"id": "a2", "committee": "c1", "area": "الإدارة المدرسية", "action": "تعيين مكلف لكل هدف (خطابات التكليف)", "planDate": "7/15 إلى 7/19", "assignee": "لجنة التميز", "planNote": ""}, {"id": "a3", "committee": "c1", "area": "الإدارة المدرسية", "action": "المتابعة الدورية للأعمال حتى إنجازها (استمارة تنفيذ)", "planDate": "حتى 1447/8/29", "assignee": "لجنة التميز", "planNote": ""}, {"id": "a4", "committee": "c4", "area": "الإدارة المدرسية", "action": "اجتماعات متابعة اللجان (التحصيل الدراسي، التوجيه الطلابي، الإدارية)", "planDate": "1447/9/16 - 1447/10/28 - 1447/11/27 - 1447/12/29", "assignee": "اللجان", "planNote": "التاريخ الأول في الاستمارة مكتوب بشكل غير واضح (14428/9/16)"}, {"id": "a5", "committee": "c1", "area": "الرخصة المهنية", "action": "حصر المعلمات الحاصلات على الرخصة ورتبتها (قائمة حصر)", "planDate": "7/15 إلى 7/19", "assignee": "لجنة التميز", "planNote": ""}, {"id": "a6", "committee": "c1", "area": "الرخصة المهنية", "action": "نشر مواعيد الاختبارات التربوية والتخصص (بريد وواتس)", "planDate": "1447/8/3 إلى 1447/8/12", "assignee": "لجنة التميز", "planNote": ""}, {"id": "a7", "committee": "c1", "area": "الرخصة المهنية", "action": "ورشة لتبصير المعلمات بالأساليب المثلى للحصول على الرخصة", "planDate": "1447/7/9", "assignee": "ثرياء مغزي حمود القثامي (وكيلة المدرسة)", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a8", "committee": "c1", "area": "الرخصة المهنية", "action": "اختبارات محاكية وتجميعات أسئلة (إيميل وواتس وتلجرام)", "planDate": "1447/8/3 إلى 1447/8/12", "assignee": "لجنة التميز", "planNote": ""}, {"id": "a9", "committee": "c1", "area": "الرخصة المهنية", "action": "تكريم الحاصلات على الرخصة والدرجات العليا", "planDate": "بعد نتائج الاختبارات", "assignee": "لجنة التميز", "planNote": ""}, {"id": "a10", "committee": "c1", "area": "التدريس", "action": "ورشة تدريبية: تصاميم الإنفوجرافيك", "planDate": "1447/6/27", "assignee": "فاطمه مبارك عوض الحارثي (علوم حاسب)", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a11", "committee": "c1", "area": "التدريس", "action": "ورشة تدريبية: ملف الإنجاز الإلكتروني", "planDate": "1447/7/1", "assignee": "فاطمه مبارك عوض الحارثي (علوم حاسب)", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a12", "committee": "c1", "area": "التدريس", "action": "ورشة تدريبية: تصميم الألعاب التعليمية بالدرس", "planDate": "1447/6/24", "assignee": "فاطمه مبارك عوض الحارثي (علوم حاسب)", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a13", "committee": "c1", "area": "التدريس", "action": "الألعاب الإلكترونية (تؤامة مدرسية مع الابتدائية الرابعة)", "planDate": "1447/8/22", "assignee": "الموجهة الطلابية", "planNote": ""}, {"id": "a14", "committee": "c1", "area": "التدريس", "action": "تنفيذ أنشطة إلكترونية داخل الحصة (ألعاب بوربوينت، تقارير، تطبيقات)", "planDate": "الفصل الدراسي الثاني", "assignee": "جميع المعلمات", "planNote": ""}, {"id": "a15", "committee": "c1", "area": "التدريس", "action": "ورشة عمل: أساليب التقويم الفعالة", "planDate": "1447/6/16", "assignee": "نوف محمد منزل البيالي (قياس وتقويم)", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a16", "committee": "c1", "area": "التدريس", "action": "مجتمعات تعلم مهنية (التقويم)", "planDate": "1447/8/2 - 9/15 - 11/6 - 12/10", "assignee": "جميع المعلمات", "planNote": "التاريخ الأخير مكتوب (1447-12010) وقُرئ 12/10"}, {"id": "a17", "committee": "c1", "area": "التدريس", "action": "تبادل زيارات بين المعلمات", "planDate": "1447/8/15 إلى 1447/8/29", "assignee": "جميع المعلمات", "planNote": ""}, {"id": "a18", "committee": "c2", "area": "التدريس", "action": "مجتمع تعلم عن تحليل النتائج", "planDate": "1447/6/13", "assignee": "ثرياء مغزي حمود القثامي (وكيلة المدرسة، رئيسة لجنة التحصيل الدراسي)", "planNote": "المنفذ معبّأ من سجل التحصيل الدراسي (رئيسة اللجنة المكلفة بتحليل نتائج الطالبات ورفع التقارير)"}, {"id": "a19", "committee": "c2", "area": "التدريس", "action": "تحليل نتائج الطالبات", "planDate": "7/29 إلى 8/3", "assignee": "المعلمات", "planNote": ""}, {"id": "a20", "committee": "c2", "area": "التدريس", "action": "تدخلات علاجية فردية", "planDate": "طوال الفصل الدراسي الثاني", "assignee": "المعلمات", "planNote": ""}, {"id": "a21", "committee": "c3", "area": "التدريس", "action": "حصر طالبات صعوبات التعلم", "planDate": "غير محدد", "assignee": "لجنة التوجيه ولجنة الإعاقة", "planNote": ""}, {"id": "a22", "committee": "c3", "area": "التدريس", "action": "تدخلات علاجية للصعوبات", "planDate": "غير محدد", "assignee": "لجنة التوجيه ولجنة الإعاقة", "planNote": ""}, {"id": "a23", "committee": "c2", "area": "التدريس", "action": "إثراء للمتفوقات", "planDate": "الفصل الدراسي الثاني", "assignee": "جميع المعلمات", "planNote": ""}, {"id": "a24", "committee": "c1", "area": "التدريس", "action": "ورشة: دمج طالبات التوحد بفنيات وأساليب تربوية", "planDate": "1447/6/19", "assignee": "هند بدر بندر العتيبي", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a25", "committee": "c1", "area": "التدريس", "action": "ورشة: شرح مؤشرات التدريس", "planDate": "1447/8/1", "assignee": "مديرة المدرسة", "planNote": ""}, {"id": "a26", "committee": "c1", "area": "التدريس", "action": "ورشة: التنوع باستراتيجيات التدريس (تؤامة مع الابتدائية الرابعة)", "planDate": "1447/6/12", "assignee": "رفعه عبدالله مبارك العتيبي", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a27", "committee": "c1", "area": "التدريس", "action": "ورقة علمية عن تطبيق مهارات البحث والتجريب داخل الفصل", "planDate": "1447/8/7", "assignee": "مديرة المدرسة", "planNote": ""}, {"id": "a28", "committee": "c1", "area": "التدريس", "action": "ورشة إثرائية لدعم تعلم طالبات الصعوبات وذوات الإعاقة", "planDate": "1447/8/10", "assignee": "هند بدر بندر العتيبي", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a29", "committee": "c1", "area": "التدريس", "action": "تبصير المعلمات بأنشطة ومواد إثرائية لسريعات التعلم والموهوبات", "planDate": "1447/8/6", "assignee": "مديرة المدرسة", "planNote": ""}, {"id": "a30", "committee": "c1", "area": "التدريس", "action": "مجتمع تعلم مهني تخصصي", "planDate": "1447/8/2 - 9/15 - 11/6 - 12/10", "assignee": "معلمات التخصص", "planNote": ""}, {"id": "a31", "committee": "c1", "area": "التدريس", "action": "مهام أدائية لمهارات التفكير العليا (تكليفات، أبحاث، مقالات)", "planDate": "طوال الفصل الدراسي الثاني", "assignee": "رفعه عبدالله مبارك العتيبي", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a32", "committee": "c1", "area": "التدريس", "action": "تجارب عملية", "planDate": "طوال الفصل الدراسي الثاني", "assignee": "معلمات العلوم (نوره القثامي، هلا العتيبي)", "planNote": ""}, {"id": "a33", "committee": "c1", "area": "التدريس", "action": "معرض ابتكارات الطالبات وإبداعهن، وتكريم المبدعات", "planDate": "غير محدد", "assignee": "معلمات", "planNote": ""}, {"id": "a34", "committee": "c1", "area": "التدريس", "action": "ورشة للمعلمات: التفكير الإبداعي", "planDate": "1447/8/13", "assignee": "رفعه عبدالله مبارك العتيبي", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a35", "committee": "c1", "area": "التدريس", "action": "مهام أدائية رقمية (رسم بالآيباد، خرائط ذهنية، إنفوجرافيك، موشن جرافيك، قصص إلكترونية، ملف إنجاز)", "planDate": "طوال الفصل الدراسي الثاني", "assignee": "معلمات", "planNote": ""}, {"id": "a36", "committee": "c1", "area": "التدريس", "action": "تكريم الأعمال التقنية المتميزة للطالبات", "planDate": "نهاية كل وحدة", "assignee": "معلمات", "planNote": ""}, {"id": "a37", "committee": "c1", "area": "التدريس", "action": "تدريب الطالبات على المهارات التقنية: Gemini Google", "planDate": "1447/8/1", "assignee": "فاطمه مبارك عوض الحارثي (علوم حاسب)", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a38", "committee": "c1", "area": "التدريس", "action": "ملفات الإنجاز الرقمية للطالبات", "planDate": "1447/8/7", "assignee": "فاطمه مبارك عوض الحارثي (علوم حاسب)", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a39", "committee": "c1", "area": "التدريس", "action": "تصميم مدن ذكية", "planDate": "1447/8/... (غير مكتمل)", "assignee": "فاطمه مبارك عوض الحارثي (علوم حاسب)", "planNote": "اليوم غير محدد في الاستمارة | المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a40", "committee": "c1", "area": "التدريس", "action": "برنامج Plicers", "planDate": "1447/8/... (غير مكتمل)", "assignee": "فاطمه مبارك عوض الحارثي (علوم حاسب)", "planNote": "اليوم غير محدد في الاستمارة | المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a41", "committee": "c3", "area": "التدريس", "action": "ورشة عمل: توعية الطالبات بجرائم المعلوماتية", "planDate": "1447/9/10", "assignee": "الموجهة الطلابية", "planNote": ""}, {"id": "a42", "committee": "c2", "area": "نواتج التعلم (مشترك)", "action": "تفعيل مهارة القراءة لكل المواد (دقائق من كل حصة)", "planDate": "الفصل الدراسي الثاني", "assignee": "جميع المعلمات", "planNote": "الاستمارة تذكر الفصل الأول والثاني في مواضع مختلفة"}, {"id": "a43", "committee": "c2", "area": "نواتج التعلم (مشترك)", "action": "اجتماع مع الأمهات لتفعيل مشاركة الأسرة", "planDate": "1447/5/18", "assignee": "الموجهة الطلابية", "planNote": ""}, {"id": "a44", "committee": "c3", "area": "نواتج التعلم (مشترك)", "action": "جلسات فردية ورسائل توجيهية للأسر", "planDate": "الفصل الدراسي الثاني", "assignee": "الموجهة الطلابية", "planNote": "الاستمارة تذكر 1447/8/15 وفي القراءة 1448/8/15 (يبدو خطأ)"}, {"id": "a45", "committee": "c3", "area": "نواتج التعلم (مشترك)", "action": "ورشة: دور الأسرة في تعزيز الدافعية", "planDate": "1447/8/15", "assignee": "ثرياء القثامي (وكيلة المدرسة) والموجهة الطلابية", "planNote": ""}, {"id": "a46", "committee": "c3", "area": "نواتج التعلم (مشترك)", "action": "إرشاد جمعي بحصص الاحتياط وجلسات فردية لتعزيز الدافعية", "planDate": "الأسبوعان 14 و15 من الفصل الأول", "assignee": "الموجهة الطلابية", "planNote": ""}, {"id": "a47", "committee": "c2", "area": "القراءة (نافس)", "action": "اختبارات تشخيصية وتحليلها وتحليل نتائج نافس", "planDate": "1447/7/29 إلى 1447/8/3", "assignee": "معلمات اللغة العربية (عيشه الحارثي، نوف البيالي)", "planNote": ""}, {"id": "a48", "committee": "c2", "area": "القراءة (نافس)", "action": "أنشطة إثرائية للمتفوقات وحصص علاجية للمتدنيات", "planDate": "الفصل الدراسي الثاني", "assignee": "معلمات اللغة العربية (عيشه الحارثي، نوف البيالي) ورائدة النشاط والموجهة", "planNote": ""}, {"id": "a49", "committee": "c2", "area": "القراءة (نافس)", "action": "مسابقات وتكريم المتفوقات والمتحسنات", "planDate": "بعد كل وحدة دراسية", "assignee": "معلمات اللغة العربية (عيشه الحارثي، نوف البيالي)", "planNote": "الاستمارة تسأل: هل التكريم بعد كل فترة أو كل شهر؟ يحتاج قرار"}, {"id": "a50", "committee": "c2", "area": "القراءة (نافس)", "action": "اختبارات تكوينية لمتابعة التقدم", "planDate": "مستمر", "assignee": "معلمات اللغة العربية (عيشه الحارثي، نوف البيالي)", "planNote": "يحتاج تحديد: بعد كل فترة أو مستمرة"}, {"id": "a51", "committee": "c2", "area": "القراءة (نافس)", "action": "تضمين مهارات نافس في الدروس (5-10 دقائق من كل حصة) وأنشطة دلالات الألفاظ", "planDate": "الفصل الدراسي الثاني", "assignee": "معلمات اللغة العربية (عيشه الحارثي، نوف البيالي)", "planNote": ""}, {"id": "a52", "committee": "c1", "area": "القراءة (نافس)", "action": "ورشة عمل للطالبات: التفكير الإبداعي", "planDate": "غير محدد", "assignee": "رفعه عبدالله مبارك العتيبي", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a53", "committee": "c1", "area": "القراءة (نافس)", "action": "ورشة عمل للطالبات: الفهم القرائي (صف ثالث وصف سادس)", "planDate": "غير محدد", "assignee": "عيشه فاضل عيضه الحارثي", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a54", "committee": "c1", "area": "القراءة (نافس)", "action": "تدريب الطالبات على مهارات نافس (أوراق عمل)", "planDate": "كل يوم خميس بالفصل الثاني", "assignee": "معلمات اللغة العربية (عيشه الحارثي، نوف البيالي)", "planNote": "المنفذ مكتوب معلمات الرياضيات في قسم القراءة، يبدو نسخًا"}, {"id": "a55", "committee": "c1", "area": "القراءة (نافس)", "action": "ورشة للمعلمات: توظيف مهارات الفهم القرائي في لغتي", "planDate": "غير محدد", "assignee": "عيشه فاضل عيضه الحارثي", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a56", "committee": "c1", "area": "القراءة (نافس)", "action": "مجتمع تعلم مهني (أدوات التعلم الفعال) لمعلمات اللغة العربية", "planDate": "1447/3/24 و 1447/8/2", "assignee": "معلمات اللغة العربية (عيشه الحارثي، نوف البيالي)", "planNote": ""}, {"id": "a57", "committee": "c1", "area": "القراءة (نافس)", "action": "مبادرة عيادة الإملاء والقراءة", "planDate": "1447/3/1", "assignee": "معلمات اللغة العربية (عيشه الحارثي، نوف البيالي)", "planNote": ""}, {"id": "a58", "committee": "c1", "area": "القراءة (نافس)", "action": "مبادرة هيا نقرأ", "planDate": "1447/3/1", "assignee": "معلمات اللغة العربية (عيشه الحارثي، نوف البيالي)", "planNote": ""}, {"id": "a59", "committee": "c2", "area": "القراءة (نافس)", "action": "اختبار بعدي لقياس تحقق مهارات نافس", "planDate": "غير محدد", "assignee": "معلمات اللغة العربية (عيشه الحارثي، نوف البيالي)", "planNote": ""}, {"id": "a60", "committee": "c2", "area": "الرياضيات (نافس)", "action": "اختبارات تشخيصية وتحليلها وتحليل نتائج نافس", "planDate": "1447/7/29 إلى 1447/8/3", "assignee": "معلمات الرياضيات (رفعه العتيبي، عزه الزهراني، غزيل العتيبي)", "planNote": ""}, {"id": "a61", "committee": "c2", "area": "الرياضيات (نافس)", "action": "أنشطة إثرائية للمتفوقات وحصص علاجية ومسابقات وتكريم", "planDate": "الفصل الدراسي الثاني", "assignee": "معلمات الرياضيات (رفعه العتيبي، عزه الزهراني، غزيل العتيبي) ورائدة النشاط والموجهة", "planNote": ""}, {"id": "a62", "committee": "c2", "area": "الرياضيات (نافس)", "action": "اختبارات تكوينية لمتابعة التقدم", "planDate": "الفصل الدراسي الثاني", "assignee": "معلمات الرياضيات (رفعه العتيبي، عزه الزهراني، غزيل العتيبي)", "planNote": ""}, {"id": "a63", "committee": "c2", "area": "الرياضيات (نافس)", "action": "تضمين مهارات نافس في الدروس وأنشطة في حصص الانتظار", "planDate": "الفصل الدراسي الثاني", "assignee": "معلمات الرياضيات (رفعه العتيبي، عزه الزهراني، غزيل العتيبي)", "planNote": ""}, {"id": "a64", "committee": "c1", "area": "الرياضيات (نافس)", "action": "تدريب الطالبات على مهارات نافس (أوراق عمل)", "planDate": "كل يوم خميس بالفصل الثاني", "assignee": "معلمات الرياضيات (رفعه العتيبي، عزه الزهراني، غزيل العتيبي)", "planNote": ""}, {"id": "a65", "committee": "c1", "area": "الرياضيات (نافس)", "action": "ورش عمل للمعلمات: الفهم القرائي في تعليم الرياضيات", "planDate": "الفصل الدراسي الثاني", "assignee": "رفعه عبدالله مبارك العتيبي", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a66", "committee": "c1", "area": "الرياضيات (نافس)", "action": "مجتمع تعلم مهني: تحسين الممارسات التدريسية", "planDate": "1447/8/2", "assignee": "غزيل فهيد مبارك العتيبي (منسقة مجتمع الرياضيات)", "planNote": "المنفذ معبّأ من سجل النمو المهني 1448هـ (كان: أ. ........)"}, {"id": "a67", "committee": "c1", "area": "الرياضيات (نافس)", "action": "مبادرة مدينة الأعداد الجميلة", "planDate": "1447/5/8", "assignee": "غزيل فهيد مبارك العتيبي (منسقة مجتمع الرياضيات)", "planNote": ""}, {"id": "a68", "committee": "c2", "area": "الرياضيات (نافس)", "action": "تشخيص بعدي لقياس تحقق مهارات نافس", "planDate": "غير محدد", "assignee": "معلمات الرياضيات (رفعه العتيبي، عزه الزهراني، غزيل العتيبي)", "planNote": ""}, {"id": "a69", "committee": "c2", "area": "العلوم (نافس)", "action": "اختبارات تشخيصية وتحليلها وتحليل نتائج نافس", "planDate": "1447/7/29 إلى 1447/8/3", "assignee": "معلمات العلوم (نوره القثامي، هلا العتيبي)", "planNote": "المنفذ مكتوب الرياضيات في الاستمارة، عُدّل إلى العلوم"}, {"id": "a70", "committee": "c2", "area": "العلوم (نافس)", "action": "أنشطة إثرائية للمتفوقات وحصص علاجية ومسابقات", "planDate": "الفصل الدراسي الثاني", "assignee": "معلمات العلوم (نوره القثامي، هلا العتيبي) ورائدة النشاط والموجهة", "planNote": "المنفذ مكتوب اللغة العربية في الاستمارة، عُدّل إلى العلوم"}, {"id": "a71", "committee": "c1", "area": "العلوم (نافس)", "action": "اختبارات تكوينية لمتابعة التقدم", "planDate": "الفصل الدراسي الثاني", "assignee": "معلمات العلوم (نوره القثامي، هلا العتيبي)", "planNote": "المنفذ مكتوب الرياضيات في الاستمارة، عُدّل إلى العلوم"}, {"id": "a72", "committee": "c2", "area": "العلوم (نافس)", "action": "تضمين مهارات نافس في الدروس وأنشطة في حصص الانتظار", "planDate": "الفصل الدراسي الأول", "assignee": "معلمات العلوم (نوره القثامي، هلا العتيبي)", "planNote": ""}, {"id": "a73", "committee": "c2", "area": "العلوم (نافس)", "action": "مبادرة قارئ العلوم الصغير", "planDate": "1447/5/21", "assignee": "معلمات العلوم (نوره القثامي، هلا العتيبي)", "planNote": ""}, {"id": "a74", "committee": "c1", "area": "العلوم (نافس)", "action": "مجتمع تعلم مهني: الفهم القرائي", "planDate": "غير محدد", "assignee": "معلمات العلوم (نوره القثامي، هلا العتيبي)", "planNote": ""}, {"id": "a75", "committee": "c2", "area": "العلوم (نافس)", "action": "مجتمع تعلم مهني: تحسين الممارسات التدريسية", "planDate": "1447/8/2", "assignee": "معلمات العلوم (نوره القثامي، هلا العتيبي)", "planNote": ""}, {"id": "a76", "committee": "c2", "area": "العلوم (نافس)", "action": "اختبار بعدي لقياس تحقق مهارات نافس", "planDate": "1447/5/17", "assignee": "معلمات العلوم (نوره القثامي، هلا العتيبي)", "planNote": ""}, {"id": "a77", "committee": "c4", "area": "النشاط الطلابي", "action": "تنفيذ برامج الأنشطة الطلابية وفق المحتوى المعد من المركز الوطني للمناهج (موقع عين)", "planDate": "الفصل الدراسي الأول", "assignee": "جميع المعلمات", "planNote": ""}, {"id": "a78", "committee": "c4", "area": "النشاط الطلابي", "action": "الاحتفال باليوم الوطني السعودي", "planDate": "1447/4/3", "assignee": "المعلمات", "planNote": ""}, {"id": "a79", "committee": "c4", "area": "النشاط الطلابي", "action": "الأمن السيبراني", "planDate": "1447/3/15 إلى 1447/3/17", "assignee": "المعلمات", "planNote": ""}, {"id": "a80", "committee": "c4", "area": "النشاط الطلابي", "action": "الاحتفال بيوم التأسيس", "planDate": "1447/9/6", "assignee": "المعلمات", "planNote": ""}, {"id": "a81", "committee": "c4", "area": "النشاط الطلابي", "action": "مدن المستقبل", "planDate": "1447/4/27 إلى 1447/5/8", "assignee": "المعلمات", "planNote": ""}, {"id": "a82", "committee": "c4", "area": "النشاط الطلابي", "action": "تطبيقات ستيم", "planDate": "1447/10/10", "assignee": "المعلمات", "planNote": ""}, {"id": "a83", "committee": "c4", "area": "النشاط الطلابي", "action": "الفنون المسرحية", "planDate": "1447/4/27 إلى 1447/5/15", "assignee": "المعلمات", "planNote": ""}, {"id": "a84", "committee": "c4", "area": "النشاط الطلابي", "action": "برنامج الذكاء الاصطناعي", "planDate": "الفصل الدراسي الأول", "assignee": "المعلمات", "planNote": ""}, {"id": "a85", "committee": "c4", "area": "النشاط الطلابي", "action": "إعلان تعريفي بمقياس موهبة وآلية التسجيل للطالبات وأولياء الأمور", "planDate": "1447/5/28", "assignee": "منسقة الموهوبات", "planNote": ""}, {"id": "a86", "committee": "c4", "area": "النشاط الطلابي", "action": "ورشة تدريبية: كيفية إجراء اختبار موهبة", "planDate": "1447/6/17", "assignee": "منسقة الموهوبات", "planNote": ""}, {"id": "a87", "committee": "c4", "area": "النشاط الطلابي", "action": "إعلان لتشجيع التسجيل في مسابقة بيبراس موهبة (من الصف الثالث)", "planDate": "1447/5/15", "assignee": "جميع المعلمات", "planNote": ""}, {"id": "a88", "committee": "c4", "area": "النشاط الطلابي", "action": "أسبوع الكيمياء", "planDate": "يحدده الوزارة", "assignee": "منسقة الموهوبات", "planNote": ""}, {"id": "a89", "committee": "c4", "area": "النشاط الطلابي", "action": "أسبوع الفضاء", "planDate": "1447/4/6 إلى 1447/4/10", "assignee": "منسقة الموهوبات", "planNote": ""}, {"id": "a90", "committee": "c4", "area": "النشاط الطلابي", "action": "أسبوع موهبة للعلوم", "planDate": "1447/10/10", "assignee": "منسقة الموهوبات", "planNote": "التاريخ يحتاج تأكيدًا، ترتيب التواريخ في الاستمارة غير واضح"}, {"id": "a91", "committee": "c4", "area": "النشاط الطلابي", "action": "مسابقة كونجارو وموهبة وورش العمل", "planDate": "1447/12/1", "assignee": "منسقة الموهوبات", "planNote": "التاريخ يحتاج تأكيدًا"}, {"id": "a92", "committee": "c3", "area": "التوجيه الطلابي", "action": "إعداد خطة مزمنة شاملة لتعزيز السلوك الإيجابي وأهدافها واضحة", "planDate": "الفصل الدراسي الأول", "assignee": "الموجهة الطلابية ورائدة النشاط", "planNote": ""}, {"id": "a93", "committee": "c3", "area": "التوجيه الطلابي", "action": "استبانة لحصر المشكلات السلوكية ورصدها بشكل دوري", "planDate": "مرة كل فصل دراسي", "assignee": "الموجهة الطلابية", "planNote": ""}, {"id": "a94", "committee": "c3", "area": "التوجيه الطلابي", "action": "جلسات فردية للطالبات لتعديل السلوك وتعزيز المهارات", "planDate": "الفصل الأول وعند الحاجة", "assignee": "الموجهة الطلابية", "planNote": ""}, {"id": "a95", "committee": "c3", "area": "التوجيه الطلابي", "action": "إشراك أولياء الأمور في متابعة السلوك (جلسات، اتصال، رسائل)", "planDate": "الفصل الدراسي الأول", "assignee": "الموجهة الطلابية", "planNote": ""}, {"id": "a96", "committee": "c3", "area": "التوجيه الطلابي", "action": "تكريم الطالبات المتميزات سلوكيًا ومسابقات", "planDate": "نهاية الفصل الدراسي الأول", "assignee": "الموجهة الطلابية", "planNote": ""}, {"id": "a97", "committee": "c3", "area": "التوجيه الطلابي", "action": "تعزيز السلوك الإيجابي مباشرة بعد حدوثه", "planDate": "في حينه", "assignee": "الموجهة الطلابية", "planNote": ""}, {"id": "a98", "committee": "c3", "area": "التوجيه الطلابي", "action": "تكريم الطالبات المنضبطات", "planDate": "نهاية كل شهر خلال الفصل الأول", "assignee": "الموجهة الطلابية", "planNote": ""}];
+
+var COMMITTEES = {
+  c1:{name:"لجنة التميز"},
+  c2:{name:"لجنة التحصيل الدراسي"},
+  c3:{name:"لجنة التوجيه الطلابي"},
+  c4:{name:"اللجنة الإدارية"}
+};
+var STATUSES = ["لم يبدأ","جارٍ","منجز","متأخر"];
+var STATUS_CLASS = {"لم يبدأ":"idle","جارٍ":"warn","منجز":"good","متأخر":"bad"};
+
+/* overrides: id -> {status, newDate, trackingNote} */
+var DEF_OVR = {"a5": {"status": "منجز", "newDate": "", "trackingNote": "نُفّذ 17/10/2026: تقرير البيانات الإضافية للكادر التعليمي والإداري 1448هـ (الرخص والرتب والمؤهلات) — المصدر: منصة خطة تحسين نتائج التقويم ومجلد النمو المهني"}, "a17": {"status": "جارٍ", "newDate": "", "trackingNote": "تقارير تبادل الزيارات 1448 في مجلد التقارير على الدرايف (سبتمبر–نوفمبر 2026): رفعه العتيبي، غزيل العتيبي، هلا العتيبي، نوره القثامي، أمل الهيفاني، بدرية العتيبي، هند العتيبي، عزه الزهراني"}, "a47": {"status": "منجز", "newDate": "", "trackingNote": "نُفّذ 1448: تقرير التشخيص — اللغة العربية للصفين الثالث والخامس (عيشه الحارثي 10/10/2026)، والاختبارات التشخيصية (نوف البيالي 9/10/2026) — مجلد التقارير على الدرايف"}, "a60": {"status": "منجز", "newDate": "", "trackingNote": "نُفّذ 1448: الاختبار التشخيصي رياضيات (غزيل العتيبي 28/9/2026)، وتشخيصي الثاني والثالث والسادس (رفعه العتيبي 28/9/2026) — مجلد التقارير والتحصيل الدراسي/تحليل النتائج"}, "a69": {"status": "منجز", "newDate": "", "trackingNote": "نُفّذ 1448: تقارير التشخيص — العلوم (نوره القثامي 18/10/2026)، والاختبار التشخيصي للثالث والخامس علوم وتحليله (هلا العتيبي 11–14/10/2026) — مجلد التقارير على الدرايف"}};
+var overrides = Object.assign({}, DEF_OVR);
+var db = null, downloads = null, userCap = null, canWrite = false;
+var currentView = "summary";
+var writeTimers = {};
+
+function byId(id){return document.getElementById(id);}
+function esc(s){
+  return String(s==null?"":s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
+}
+function get(a){
+  var o = overrides[a.id] || {};
+  return {
+    status: o.status || "لم يبدأ",
+    newDate: o.newDate != null ? o.newDate : "",
+    trackingNote: o.trackingNote != null ? o.trackingNote : ""
+  };
+}
+function committeeActions(code){
+  return STATIC_ACTIONS.filter(function(a){return a.committee===code;});
+}
+function committeeStats(code){
+  var list = committeeActions(code);
+  var counts = {"لم يبدأ":0,"جارٍ":0,"منجز":0,"متأخر":0};
+  list.forEach(function(a){ counts[get(a).status]++; });
+  var total = list.length;
+  var pct = total ? Math.round((counts["منجز"]/total)*100) : 0;
+  return {total:total, counts:counts, pct:pct};
+}
+function totalStats(){
+  var counts = {"لم يبدأ":0,"جارٍ":0,"منجز":0,"متأخر":0};
+  STATIC_ACTIONS.forEach(function(a){ counts[get(a).status]++; });
+  var total = STATIC_ACTIONS.length;
+  var pct = total ? Math.round((counts["منجز"]/total)*100) : 0;
+  return {total:total, counts:counts, pct:pct};
+}
+
+function toast(msg){
+  var t = byId("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._h);
+  t._h = setTimeout(function(){ t.classList.remove("show"); }, 2200);
+}
+
+function setView(view){
+  currentView = view;
+  try{ history.replaceState(null,"","#"+view); }catch(e){}
+  Array.prototype.forEach.call(document.querySelectorAll("#rail button"), function(b){
+    b.classList.toggle("active", b.getAttribute("data-view")===view);
+  });
+  render();
+}
+
+document.getElementById("rail").addEventListener("click", function(e){
+  var b = e.target.closest("button[data-view]");
+  if(b) setView(b.getAttribute("data-view"));
+});
+
+function updateRailCounts(){
+  var t = totalStats();
+  Array.prototype.forEach.call(document.querySelectorAll("#rail button"), function(b){
+    var v = b.getAttribute("data-view");
+    var n = b.querySelector(".n");
+    if(!n) return;
+    if(v==="summary") n.textContent = t.total + " إجراء";
+    else if(COMMITTEES[v]) n.textContent = committeeStats(v).total;
+  });
+}
+
+function renderSummary(){
+  var t = totalStats();
+  var html = "";
+  html += '<h2 class="section">لوحة متابعة خطة التحسين</h2>';
+  html += '<div class="kpis">';
+  html += kpiTile(t.total, "إجمالي الإجراءات");
+  html += kpiTile(t.counts["منجز"], "منجز");
+  html += kpiTile(t.counts["جارٍ"], "جارٍ");
+  html += kpiTile(t.counts["متأخر"], "متأخر");
+  html += '</div>';
+
+  html += '<div class="panel">';
+  html += '<div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px;color:var(--muted)">' +
+          '<span>نسبة الإنجاز الإجمالية</span><b style="color:var(--teal-dark)">'+t.pct+'٪</b></div>';
+  html += '<div class="progress"><i style="width:'+t.pct+'%"></i></div>';
+  html += '</div>';
+
+  html += '<h2 class="section" style="font-size:16px">اللجان</h2>';
+  Object.keys(COMMITTEES).forEach(function(code){
+    var s = committeeStats(code);
+    html += '<div class="committee-card" data-view="'+code+'">';
+    html += '<div class="cc-top"><h3>'+esc(COMMITTEES[code].name)+'</h3><span class="pct">'+s.pct+'٪</span></div>';
+    html += '<div class="progress" style="margin-top:8px"><i style="width:'+s.pct+'%"></i></div>';
+    html += '<div class="cc-breakdown">';
+    html += '<span><i class="dot" style="background:var(--idle)"></i>لم يبدأ '+s.counts["لم يبدأ"]+'</span>';
+    html += '<span><i class="dot" style="background:var(--warn)"></i>جارٍ '+s.counts["جارٍ"]+'</span>';
+    html += '<span><i class="dot" style="background:var(--good)"></i>منجز '+s.counts["منجز"]+'</span>';
+    html += '<span><i class="dot" style="background:var(--bad)"></i>متأخر '+s.counts["متأخر"]+'</span>';
+    html += '<span style="margin-inline-start:auto">من إجمالي '+s.total+'</span>';
+    html += '</div></div>';
+  });
+  byId("main").innerHTML = html;
+  Array.prototype.forEach.call(document.querySelectorAll(".committee-card"), function(c){
+    c.addEventListener("click", function(){ setView(c.getAttribute("data-view")); });
+  });
+}
+
+function kpiTile(num, lbl){
+  return '<div class="kpi"><span class="num">'+num+'</span><span class="lbl">'+esc(lbl)+'</span></div>';
+}
+
+function renderCommittee(code){
+  var list = committeeActions(code);
+  var s = committeeStats(code);
+  var html = "";
+  html += '<h2 class="section">'+esc(COMMITTEES[code].name)+' <span style="color:var(--muted);font-weight:500;font-size:13px">('+list.length+' إجراء)</span></h2>';
+
+
+  html += '<div class="kpis">';
+  html += kpiTile(s.counts["منجز"], "منجز");
+  html += kpiTile(s.counts["جارٍ"], "جارٍ");
+  html += kpiTile(s.counts["متأخر"], "متأخر");
+  html += kpiTile(s.counts["لم يبدأ"], "لم يبدأ");
+  html += '</div>';
+
+  html += '<div class="tablewrap"><table><thead><tr>' +
+    '<th>المجال</th><th>الإجراء</th><th>الموعد في الخطة (1447)</th>' +
+    '<th>الموعد الجديد (1448)</th><th>المنفذ</th><th>الحالة</th><th>ملاحظات المتابعة</th>' +
+    '</tr></thead><tbody>';
+
+  list.forEach(function(a){
+    var ov = get(a);
+    html += '<tr data-id="'+a.id+'">';
+    html += '<td class="cell-area">'+esc(a.area)+'</td>';
+    html += '<td class="cell-action">'+esc(a.action) +
+            (a.planNote ? '<span class="plannote">⚠ '+esc(a.planNote)+'</span>' : '') + '</td>';
+    html += '<td class="cell-date">'+esc(a.planDate)+'</td>';
+    html += '<td><input type="text" class="newdate" data-field="newDate" value="'+esc(ov.newDate)+'" placeholder="١٤٤٨/.../..." '+(canWrite?'':'disabled')+'></td>';
+    html += '<td class="cell-assignee">'+esc(a.assignee)+'</td>';
+    html += '<td>'+statusSelect(ov.status)+'</td>';
+    html += '<td><input type="text" class="tracknote" data-field="trackingNote" value="'+esc(ov.trackingNote)+'" placeholder="أضيفي ملاحظة" '+(canWrite?'':'disabled')+'></td>';
+    html += '</tr>';
+  });
+  html += '</tbody></table></div>';
+  byId("main").innerHTML = html;
+  wireTableInputs();
+}
+
+function statusSelect(current){
+  var cls = STATUS_CLASS[current] || "idle";
+  var opts = STATUSES.map(function(s){
+    return '<option value="'+esc(s)+'"'+(s===current?' selected':'')+'>'+esc(s)+'</option>';
+  }).join("");
+  return '<select class="statussel badge '+cls+'" data-field="status" '+(canWrite?'':'disabled')+'>'+opts+'</select>';
+}
+
+function wireTableInputs(){
+  var rows = document.querySelectorAll("#main tbody tr");
+  Array.prototype.forEach.call(rows, function(row){
+    var id = row.getAttribute("data-id");
+    var sel = row.querySelector("select.statussel");
+    if(sel){
+      sel.addEventListener("change", function(){
+        sel.className = "statussel badge " + (STATUS_CLASS[sel.value] || "idle");
+        commit(id, {status: sel.value});
+      });
+    }
+    Array.prototype.forEach.call(row.querySelectorAll("input"), function(inp){
+      inp.addEventListener("input", function(){
+        var field = inp.getAttribute("data-field");
+        clearTimeout(writeTimers[id+field]);
+        writeTimers[id+field] = setTimeout(function(){
+          var patch = {}; patch[field] = inp.value;
+          commit(id, patch);
+        }, 600);
+      });
+    });
+  });
+}
+
+function commit(id, patch){
+  overrides[id] = Object.assign({}, overrides[id]||{}, patch);
+  updateRailCounts();
+  if(currentView==="summary") renderSummary();
+  if(!db || !canWrite) return;
+  var cur = overrides[id];
+  db.collection("actions").doc(id).set({
+    status: cur.status || "لم يبدأ",
+    newDate: cur.newDate || "",
+    trackingNote: cur.trackingNote || "",
+    updatedAt: Date.now()
+  }).then(function(){
+    toast("تم الحفظ");
+  }).catch(function(err){
+    toast("تعذّر الحفظ: " + (err && err.code ? err.code : "خطأ"));
+  });
+}
+
+function renderExport(){
+  var html = "";
+  html += '<h2 class="section">تصدير البيانات</h2>';
+  html += '<div class="panel">';
+  html += '<p style="color:var(--muted);font-size:13.5px;margin-top:0">نسخة احتياطية كاملة بكل الإجراءات وحالتها الحالية، أو جدول CSV يُفتح في إكسل.</p>';
+  html += '<div class="exportbtns">';
+  html += '<button class="btn" id="btn-json">تنزيل نسخة احتياطية JSON</button>';
+  html += '<button class="btn secondary" id="btn-csv">تنزيل جدول CSV</button>';
+  html += '</div>';
+  if(!downloads){
+  }
+  html += '</div>';
+  byId("main").innerHTML = html;
+
+  var jb = byId("btn-json"), cb = byId("btn-csv");
+  if(jb) jb.addEventListener("click", doExportJson);
+  if(cb) cb.addEventListener("click", doExportCsv);
+  if(!downloads){ if(jb) jb.disabled = true; if(cb) cb.disabled = true; }
+}
+
+function mergedRows(){
+  return STATIC_ACTIONS.map(function(a){
+    var ov = get(a);
+    return Object.assign({}, a, {
+      status: ov.status, newDate: ov.newDate, trackingNote: ov.trackingNote,
+      committeeName: COMMITTEES[a.committee].name
+    });
+  });
+}
+
+function doExportJson(){
+  if(!downloads) return;
+  var data = JSON.stringify(mergedRows(), null, 2);
+  downloads.save({filename:"نسخة احتياطية - خطة التحسين.json", data: data})
+    .then(function(){ toast("تم التنزيل"); })
+    .catch(function(err){ if(err && err.code!=="declined") toast("تعذّر التنزيل"); });
+}
+
+function csvEscape(v){
+  v = String(v==null?"":v);
+  if(/[",\n]/.test(v)) v = '"' + v.replace(/"/g,'""') + '"';
+  return v;
+}
+function doExportCsv(){
+  if(!downloads) return;
+  var head = ["اللجنة","المجال","الإجراء","الموعد في الخطة","الموعد الجديد","المنفذ","الحالة","ملاحظات المتابعة","ملاحظة الخطة"];
+  var lines = [head.map(csvEscape).join(",")];
+  mergedRows().forEach(function(r){
+    lines.push([r.committeeName, r.area, r.action, r.planDate, r.newDate, r.assignee, r.status, r.trackingNote, r.planNote].map(csvEscape).join(","));
+  });
+  var csv = "﻿" + lines.join("\r\n");
+  downloads.save({filename:"متابعة خطة التحسين.csv", data: csv})
+    .then(function(){ toast("تم التنزيل"); })
+    .catch(function(err){ if(err && err.code!=="declined") toast("تعذّر التنزيل"); });
+}
+
+
+var PLAN48={"domains": [["الأداء العام", "76%", "91%", "التميز", "95%"], ["الإدارة المدرسية", "81.25%", "98.25%", "التميز", "98.25% (محافظة)"], ["التعليم والتعلم", "79.25%", "99%", "التميز", "99% (محافظة)"], ["نواتج التعلم", "81.25%", "75.75%", "التقدم", "90%"], ["البيئة المدرسية", "49.75%", "91.5%", "التميز", "95%"]], "ind": [["1-2-1-4", "100%", "100%", "وكيلة المدرسة ثرياء القثامي والموجهة الطلابية", "الفصل الدراسي الثاني 1448", "متوسط (3 من 5)"], ["1-2-1-5", "99%", "99%", "منسقة الموهبة رفعه العتيبي", "12/5/1448 – نهاية العام", "متوسط (4 من 5)"], ["1-3-1-3", "100%", "100%", "مديرة المدرسة ناديه الصخيري", "الفصل الدراسي الثاني 1448", "منخفض (2 من 5)"], ["1-4-1-4", "90%", "95%", "مديرة المدرسة — وكيلة المدرسة", "الفصل الدراسي الثاني 1448", "متوسط (4 من 5)"], ["1-5-1-2", "100%", "100%", "الموجهة الطلابية هند العتيبي", "12/5/1448 – نهاية العام", "متوسط (3 من 5)"], ["2-1-1-7", "100%", "100%", "وكيلة المدرسة (متابعة) — بدرية العتيبي ومعلمات المواد", "12/5/1448 – نهاية الفصل الثاني", "متوسط (3 من 5)"], ["2-1-1-8", "99.75%", "99.75%", "وكيلة المدرسة — معلمات المواد", "الفصل الدراسي الثاني 1448", "متوسط (3 من 5)"], ["2-2-1-2", "97.25%", "97.25%", "وكيلة المدرسة — نوف البيالي وغزيل العتيبي", "الفصل الدراسي الثاني 1448", "متوسط (3 من 5)"], ["2-2-1-4", "99.75%", "99.75%", "وكيلة المدرسة — جميع المعلمات", "12/5/1448 – نهاية العام", "متوسط (3 من 5)"], ["3-1-1-1", "62.09% — الانطلاق", "75% — التقدم", "لجنة التحصيل — غزيل العتيبي ومعلمات لغتي", "1/5/1448 – نتائج نافس 2027", "متوسط (4 من 5)"], ["3-1-1-2", "70.34% — الانطلاق", "75% — التقدم", "لجنة التحصيل — غزيل العتيبي ومعلمات الرياضيات", "1/5/1448 – نتائج نافس 2027", "متوسط (4 من 5)"], ["3-1-1-3", "77.28% — التقدم", "90% — التميز", "لجنة التحصيل — معلمات العلوم", "1/5/1448 – نتائج نافس 2027", "متوسط (4 من 5)"], ["3-1-1-4 / 5 / 6", "لم يُقس في الدورة الثانية", "تقدم على نتائج نافس السابقة", "لجنة التحصيل — معلمات لغتي والرياضيات والعلوم", "1/5/1448 – نتائج نافس 2027", "متوسط (4 من 5)"], ["3-2-1-4", "99.75%", "99.75%", "رائدة النشاط عيشه الحارثي", "الفصل الدراسي الثاني 1448", "متوسط (3 من 5)"], ["4-1-1-1", "87% — التقدم", "90% — التميز", "حصه العتيبي — صالحه السهيمي", "الفصل الدراسي الثاني 1448", "منخفض (1 من 5)"], ["4-1-1-2", "80.75% — التقدم", "90% — التميز", "حصه العتيبي — صالحه السهيمي", "الفصل الدراسي الثاني 1448", "منخفض (2 من 5)"], ["4-1-1-3", "87.25% — التقدم", "90% — التميز", "حصه العتيبي — مديرة المدرسة", "الفصل الدراسي الثاني 1448", "منخفض (2 من 5)"], ["4-1-1-4", "88.75% — التقدم", "90% — التميز", "فاطمه الحارثي — صالحه السهيمي", "الفصل الدراسي الثاني 1448", "منخفض (1 من 5)"], ["4-2-1-3", "96.5%", "96.5%", "صالحه السهيمي", "الفصل الدراسي الثاني 1448", "منخفض (2 من 5)"]]};
+function tbl48(h,rows){return '<div class="tablewrap"><table style="min-width:640px"><thead><tr>'+h.map(function(x){return '<th>'+esc(x)+'</th>'}).join('')+'</tr></thead><tbody>'+rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+esc(c)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table></div>';}
+function renderPlan48(){
+  var h='<h2 class="section">خطة التحسين المدرسية الشاملة 1448هـ</h2>';
+  h+='<div class="panel" style="font-size:13.5px;color:var(--muted)">المصدر: مستند «1-4-1-7 — خطة التحسين المدرسية الشاملة — 13-5-1448» في مجلد المدرسة. النسخة الكاملة الموقعة (31 صفحة) داخل ملف التقويم الذاتي.</div>';
+  h+='<h2 class="section" style="font-size:16px">أولًا: تحليل الأداء وفق المجالات</h2>'+tbl48(['المجال','الدورة الأولى (خارجي)','الحالية (ذاتي 1448)','المستوى','المستهدف'],PLAN48.domains);
+  h+='<h2 class="section" style="font-size:16px;margin-top:18px">ثانيًا: المؤشرات ذات الأولوية (إنجاز منخفض أو متوسط حتى 3 من 5، ومؤشرات نافس والبيئة)</h2>'+tbl48(['المؤشر','الدرجة الحالية','المستهدفة','مسؤولية التنفيذ','مدة الإنجاز','درجة الإنجاز'],PLAN48.ind);
+  byId("main").innerHTML=h;
+}
+function renderEvidence(){
+  var rows=[["خطة التحسين المدرسية الشاملة 1448هـ (موقعة ومختومة)","ملف التقويم الذاتي — المؤشر 1-4-1-7","مرفق"],["استمارة متابعة تنفيذ الإجراءات لكل لجنة","لجنة التميز","يُستكمل"],["محاضر اجتماعات متابعة اللجان","اللجنة الإدارية","يُستكمل"],["نتائج الاختبارات التشخيصية والبعدية لمهارات نافس","لجنة التحصيل الدراسي","يُستكمل"],["تقارير الورش ومجتمعات التعلم (سجل النمو المهني)","لجنة التميز","يُستكمل"],["بلاغات الصيانة ومتابعة مؤشرات البيئة 4-1-1-1 إلى 4-1-1-4","الأمن والسلامة","يُستكمل"]];
+  byId("main").innerHTML='<h2 class="section">الشواهد والمرفقات</h2>'+tbl48(['الشاهد','الجهة','الحالة'],rows)+'<p style="color:var(--muted);font-size:13px">تُحدَّث الحالة عند رفع الشاهد في مجلد المدرسة على Google Drive.</p>';
+}
+function render(){
+  updateRailCounts();
+  if(currentView==="summary") renderSummary();
+  else if(COMMITTEES[currentView]) renderCommittee(currentView);
+  else if(currentView==="export") renderExport();
+  else if(currentView==="plan48") renderPlan48();
+  else if(currentView==="evidence") renderEvidence();
+  else renderSummary();
+}
+
+/* initial paint before any capability resolves */
+var initial = (location.hash || "").replace("#","");
+if(initial && (initial==="summary" || COMMITTEES[initial] || initial==="export" || initial==="plan48" || initial==="evidence")) currentView = initial;
+Array.prototype.forEach.call(document.querySelectorAll("#rail button"), function(b){
+  b.classList.toggle("active", b.getAttribute("data-view")===currentView);
+});
+render();
+
+/* capabilities */
+(async function(){
+  try{
+    userCap = (window.claude && window.claude.use) ? await window.claude.use("user") : null;
+    if(userCap){
+      canWrite = !!(userCap.isOwner && (await userCap.isOwner()));
+    }
+  }catch(e){}
+
+  try{
+    downloads = (window.claude && window.claude.use) ? await window.claude.use("downloads") : null;
+  }catch(e){ downloads = null; }
+  if(currentView==="export") renderExport();
+
+  try{
+    db = (window.claude && window.claude.use) ? await window.claude.use("db") : null;
+  }catch(e){ db = null; }
+
+  if(!db){ canWrite = false; render(); return; }
+
+  db.collection("actions").onSnapshot(function(snap){
+    var next = {};
+    snap.docs.forEach(function(doc){
+      var d = doc.data() || {};
+      next[doc.id] = {status:d.status, newDate:d.newDate, trackingNote:d.trackingNote};
+    });
+    overrides = Object.assign({}, DEF_OVR, next);
+    render();
+  }, function(err){});
+})();
+
+window.addEventListener("hashchange", function(){
+  var v = (location.hash || "").replace("#","");
+  if(v && (v==="summary" || COMMITTEES[v] || v==="export" || v==="plan48" || v==="evidence")) setView(v);
+});
+
+})();
+</script>
+
+<div class="sig67" style="direction:rtl;max-width:1180px;margin:22px auto;padding:14px 16px;box-sizing:border-box;font-family:inherit;border:1px solid #d9e3e3;border-radius:12px;background:#fff;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;text-align:center;font-size:13px">
+ <div style="flex:1;min-width:150px"><div style="color:#667">رئيسة لجنة التحصيل الدراسي · المتابعة</div><div style="height:34px;border-bottom:1px dotted #999;margin:6px 12px"></div><b>ثرياء القثامي</b><div style="color:#667">وكيلة المدرسة</div></div>
+ <div style="flex:1;min-width:150px"><div style="color:#667">رئيسة لجنة التميز</div><div style="height:34px;border-bottom:1px dotted #999;margin:6px 12px"></div><b>……………………</b></div>
+ <div style="flex:1;min-width:150px"><div style="color:#667">الاعتماد</div><div style="height:34px;border-bottom:1px dotted #999;margin:6px 12px"></div><b>ناديه عوض الصخيري</b><div style="color:#667">مديرة المدرسة</div></div>
+ <div style="flex-basis:100%;font-size:11px;color:#889">التوقيع والختم في نسخة PDF المعتمدة.</div></div>
+<!-- identity-lock: principal / school / education administration are fixed and not editable -->
+<style>.id-locked{background:#F4F7F7!important;color:#1B2A2D!important;cursor:not-allowed!important}</style>
+<script>
+(function(){
+"use strict";
+var FIXED={principal:"ناديه عوض الصخيري",school:"الابتدائية السابعة والستون",admin:"الإدارة العامة للتعليم بمحافظة الطائف"};
+window.SCHOOL_FIXED=FIXED;
+var RX={
+ principal:/^(اسم\s*)?(مديرة|قائدة)\s*المدرسة$|^المديرة$|^اسم المديرة$|^مديرة المدرسة \/ القائدة$/,
+ school:/^(اسم\s*)?المدرسة$|^المدرسة\s*\/\s*المجمع$/,
+ admin:/^(الإدارة التعليمية|إدارة التعليم|الإدارة العامة للتعليم|الإدارة العامة|مكتب\/?إدارة التعليم)$/
+};
+function clean(t){return String(t||"").replace(/[:*：]/g,"").replace(/\s+/g," ").trim();}
+function labelOf(el){
+ var t="";
+ if(el.id){var l=document.querySelector('label[for="'+el.id.replace(/"/g,'\\"')+'"]');if(l)t=l.textContent;}
+ if(!t){var p=el.closest("label");if(p&&p!==el){var c=p.cloneNode(true);c.querySelectorAll("input,select,textarea").forEach(function(x){x.remove()});t=c.textContent;}}
+ if(!t){var f=el.closest(".fld,.field,.form-row,.row,.f,.inp,.frm");if(f){var l2=f.querySelector("label,.lbl,.label,span.k");if(l2)t=l2.textContent;}}
+ if(!t){var prev=el.previousElementSibling;if(prev&&/^(LABEL|SPAN|B|STRONG|DIV)$/.test(prev.tagName)&&prev.textContent.length<40)t=prev.textContent;}
+ if(!t)t=el.getAttribute("aria-label")||el.getAttribute("placeholder")||"";
+ return clean(t);
+}
+function kindOf(el){
+ var k=(el.getAttribute("data-fixed")||"");if(FIXED[k])return k;
+ var l=labelOf(el);
+ for(var key in RX){if(RX[key].test(l))return key;}
+ var nm=(el.name||el.id||"").toLowerCase();
+ if(/^(principal|manager|mudira|director|leader|headmistress|prin)$/.test(nm))return "principal";
+ if(/^(school|schoolname|school_name|sch)$/.test(nm))return "school";
+ if(/^(edu|eduadmin|edu_admin|admin_edu|idara|directorate|dept_edu|region)$/.test(nm))return "admin";
+ return null;
+}
+function fix(el,k){
+ var v=FIXED[k];
+ if(el.isContentEditable||el.getAttribute("contenteditable")!=null&&!/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)){
+  if(el.textContent!==v)el.textContent=v;
+  el.setAttribute("contenteditable","false");el.classList.add("id-locked");return;
+ }
+ if(el.tagName==="SELECT"){
+  var has=[].some.call(el.options,function(o){return o.value===v||o.text===v});
+  if(!has){var o=document.createElement("option");o.value=v;o.text=v;el.appendChild(o);}
+  if(el.value!==v){el.value=v;el.dispatchEvent(new Event("change",{bubbles:true}));}
+  el.disabled=true;el.classList.add("id-locked");el.title="ثابت — غير قابل للتعديل";return;
+ }
+ if(el.type==="checkbox"||el.type==="radio"||el.type==="file"||el.type==="number"||el.type==="date")return;
+ if(el.value!==v){el.value=v;el.dispatchEvent(new Event("input",{bubbles:true}));el.dispatchEvent(new Event("change",{bubbles:true}));}
+ el.readOnly=true;el.setAttribute("readonly","");el.classList.add("id-locked");el.title="ثابت — غير قابل للتعديل";el.tabIndex=-1;
+}
+var busy=false;
+function lockAll(){
+ if(busy)return;busy=true;
+ try{
+  document.querySelectorAll("input,textarea,select,[contenteditable]").forEach(function(el){
+   if(el.closest("[data-no-lock]"))return;
+   var k=kindOf(el);if(k)fix(el,k);
+  });
+ }catch(e){}
+ busy=false;
+}
+window.lockIdentity=lockAll;
+function start(){lockAll();try{new MutationObserver(function(){clearTimeout(start.t);start.t=setTimeout(lockAll,30)}).observe(document.body,{childList:true,subtree:true});}catch(e){}
+ document.addEventListener("focusin",function(e){var el=e.target;if(el&&el.classList&&el.classList.contains("id-locked"))el.blur();},true);
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
+setTimeout(lockAll,800);setTimeout(lockAll,2500);
+})();
+</script>
+
+<script>window.BK67={hash:true,content:"#main",cur:function(){var h="";try{h=decodeURIComponent(location.hash.slice(1))}catch(e){}return h||"summary"},go:function(id){var r=document.querySelector("#rail"),s="["+"data-view"+"=\""+id+"\"]",b=(r&&r.querySelector(s))||document.querySelector(s);if(b){b.click();return}var t=document.createElement("button");t.type="button";t.setAttribute("data-view",id);t.style.display="none";(r||document.body).appendChild(t);t.click();t.remove();}};</script>
+<!-- back-nav67: «رجوع» returns to the previous view -->
+<style>
+#bk67{position:fixed;z-index:120;display:none;align-items:center;gap:6px;height:40px;padding:0 16px;border:1.5px solid #009999;background:#fff;color:#007575;border-radius:12px;font:600 15px "Noto Kufi Arabic","IBM Plex Sans Arabic",Tahoma,sans-serif;cursor:pointer;box-shadow:0 2px 10px rgba(27,42,45,.14);direction:rtl;white-space:nowrap}
+#bk67.show{display:inline-flex}
+#bk67:hover{background:#DCF1F1}
+#bk67:focus-visible{outline:2px solid #007575;outline-offset:2px}
+#bk67 .a{font-size:18px;line-height:1}
+@media (max-width:860px){#bk67{right:16px!important;left:auto!important;top:auto!important;bottom:calc(20px + env(safe-area-inset-bottom,0px))!important}}
+@media print{#bk67{display:none!important}}
+</style>
+<script>
+(function(){
+"use strict";
+var C=window.BK67||{};if(!C.cur||!C.go)return;
+var stack=[],restoring=false,pushed=0,standalone=false;
+try{standalone=(window.top===window)}catch(e){}
+var b=document.createElement("button");b.id="bk67";b.type="button";b.title="العودة للصفحة السابقة";b.setAttribute("aria-label","رجوع للصفحة السابقة");
+b.innerHTML='<span class="a" aria-hidden="true">→</span><span>رجوع</span>';document.body.appendChild(b);
+function cur(){try{return C.cur()||""}catch(e){return ""}}
+var last=cur();
+function content(){return C.content?document.querySelector(C.content):null}
+var mq=window.matchMedia("(max-width:860px)");
+var padC=null,padO="";
+function pad(on){var c=content();if(!c)return;
+ if(on&&!mq.matches){if(padC!==c){if(padC)padC.style.paddingTop=padO;padC=c;padO=c.style.paddingTop;var cs=parseFloat(getComputedStyle(c).paddingTop)||0;c.style.paddingTop=(cs+52)+"px"}}
+ else if(padC){padC.style.paddingTop=padO;padC=null}}
+function place(){
+ pad(b.classList.contains("show"));
+ if(!b.classList.contains("show"))return;
+ if(mq.matches){b.style.top="";b.style.right="";return}
+ var c=content();if(!c){b.style.top="12px";b.style.right="16px";return}
+ var r=c.getBoundingClientRect();
+ b.style.right=Math.max(8,window.innerWidth-r.right)+"px";
+ var mt=12;if(C.topEl){var t=document.querySelector(C.topEl);if(t){var tb=t.getBoundingClientRect().bottom;if(tb>0)mt=Math.max(mt,tb+8)}}
+ b.style.top=Math.max(mt,r.top+(padC?parseFloat(getComputedStyle(c).paddingTop)-52:0)+4)+"px";
+}
+function update(){b.classList.toggle("show",stack.length>0);place();}
+
+function changed(){
+ var c=cur();if(c===last)return;
+ if(!restoring){stack.push(last);if(stack.length>50)stack.shift();
+  if(standalone){try{history.pushState({bk67:1},"",location.href);pushed++}catch(e){}}}
+ last=c;update();
+}
+function closeModal(){
+ if(C.modal){try{if(C.modal())return true}catch(e){}}
+ var d=document.querySelector("dialog[open]");if(d){try{d.close()}catch(e){}return true}
+ var m=[].filter.call(document.querySelectorAll(".scrim,.modal-backdrop,[role=dialog],.overlay.open,.modal.open"),function(x){return x.offsetParent!==null||getComputedStyle(x).position==="fixed"&&getComputedStyle(x).display!=="none"})[0];
+ if(m){var x=m.querySelector('[data-close],.close,.x,[aria-label="إغلاق"],[aria-label="close"]');
+  document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}));
+  if(document.contains(m)&&x)x.click();
+  if(document.contains(m)&&m.classList.contains("scrim"))m.click();
+  return true}
+ return false;
+}
+function doBack(){
+ var p=stack.pop();if(p==null){update();return}
+ restoring=true;try{C.go(p)}catch(e){}
+ setTimeout(function(){last=cur();restoring=false;update();
+  var c=content();if(c){var y=c.getBoundingClientRect().top+window.scrollY-70;if(window.scrollY>y)window.scrollTo({top:Math.max(0,y)})}},0);
+}
+b.addEventListener("click",function(){if(closeModal())return;doBack();});
+window.addEventListener("popstate",function(){if(pushed>0){pushed--;if(!closeModal())doBack();}});
+if(C.hash){var rs=history.replaceState;history.replaceState=function(){var r=rs.apply(history,arguments);setTimeout(changed,0);return r};window.addEventListener("hashchange",function(){setTimeout(changed,0)});}
+if(C.wrap){C.wrap.forEach(function(n){var f=window[n];if(typeof f!=="function")return;window[n]=function(){var r=f.apply(this,arguments);changed();return r};});}
+setInterval(changed,500);
+window.addEventListener("scroll",place,{passive:true});window.addEventListener("resize",place);
+try{mq.addEventListener("change",place)}catch(e){}
+update();
+window.BK67.back=doBack;window.BK67.depth=function(){return stack.length};
+})();
+</script>
+</body></html>
+<script id="lock67">
+/* Locks the principal's name and the school's name: only the artifact owner may edit them. */
+(function(){
+  var NAMES=["ناديه عوض الصخيري","الابتدائية السابعة والستون"];
+  var KEY=/(principal|manager|mudeera|school_?name|schoolname|^school$|مديرة|اسم المدرسة|المدرسة)/i;
+  var owner=false, decided=false;
+  function hasName(v){v=String(v||"");for(var i=0;i<NAMES.length;i++)if(v.indexOf(NAMES[i])>-1)return true;return false}
+  function keyed(el){var s=(el.id||"")+" "+(el.name||"")+" "+(el.getAttribute("data-k")||"")+" "+(el.getAttribute("data-f")||"")+" "+(el.getAttribute("aria-label")||"")+" "+(el.placeholder||"");
+    if(/(مديرة|المديرة|principal|manager)/i.test(s))return true;
+    if(/(اسم المدرسة|school_?name|schoolname|^\s*school\b)/i.test(s))return true;
+    var l=el.closest&&el.closest("label");if(l){var t=(l.textContent||"").replace(/\s+/g," ");if(/(اسم المديرة|مديرة المدرسة|اسم المدرسة)/.test(t))return true}
+    return false}
+  function lock(el){
+    if(owner||el.__l67)return;
+    var tag=el.tagName,val=(tag==="INPUT"||tag==="TEXTAREA")?el.value:(tag==="SELECT"?"":el.textContent);
+    if(tag==="INPUT"||tag==="TEXTAREA"){
+      if(!(hasName(val)||keyed(el)))return;
+      el.__l67=val;el.readOnly=true;el.setAttribute("aria-readonly","true");el.title="مقفل — التعديل لمديرة المدرسة فقط";el.style.cursor="not-allowed";
+    }else if(el.isContentEditable||el.getAttribute("contenteditable")==="true"){
+      if(!hasName(val))return;
+      el.__l67=el.innerHTML;el.setAttribute("contenteditable","false");el.title="مقفل — التعديل لمديرة المدرسة فقط";
+    }
+  }
+  function sweep(r){if(owner)return;var n=(r||document).querySelectorAll?(r||document).querySelectorAll('input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=search]),textarea,[contenteditable]'):[];for(var i=0;i<n.length;i++)lock(n[i]);
+    if(r&&r.nodeType===1&&r.matches&&r.matches('input,textarea,[contenteditable]'))lock(r)}
+  /* restore any change a non-owner manages to make */
+  function guard(e){if(owner)return;var el=e.target;if(!el||el.__l67===undefined)return;
+    if("value" in el&&el.tagName!=="DIV"){if(el.value!==el.__l67){el.value=el.__l67;e.stopImmediatePropagation&&e.stopImmediatePropagation()}}
+    else if(el.innerHTML!==el.__l67){el.innerHTML=el.__l67}}
+  ["input","change","keydown","paste","drop","cut"].forEach(function(t){document.addEventListener(t,function(e){if(!owner&&e.target&&e.target.__l67!==undefined){if(t!=="input"&&t!=="change"){e.preventDefault();e.stopImmediatePropagation&&e.stopImmediatePropagation()}else guard(e)}},true)});
+  var mo=new MutationObserver(function(ms){if(owner)return;for(var i=0;i<ms.length;i++){var a=ms[i].addedNodes;for(var j=0;j<a.length;j++)if(a[j].nodeType===1)sweep(a[j]);if(ms[i].type==="attributes")lock(ms[i].target)}});
+  function start(){sweep(document);mo.observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:["value","contenteditable"]})}
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
+  setInterval(function(){sweep(document)},1500);
+  (async function(){try{if(window.claude&&window.claude.use){var u=await window.claude.use("user");if(u&&u.isOwner&&await u.isOwner()){owner=true;unlockAll()}}else if(location.protocol==="file:"){owner=true;unlockAll()}}catch(e){}})();
+  function unlockAll(){mo.disconnect();var n=document.querySelectorAll("input,textarea,[contenteditable]");for(var i=0;i<n.length;i++){var el=n[i];if(el.__l67===undefined)continue;
+    if("readOnly" in el&&!el.hasAttribute("data-vo"))el.readOnly=false;if(el.getAttribute("contenteditable")==="false"&&el.title.indexOf("مقفل")===0)el.setAttribute("contenteditable","true");el.title="";el.style.cursor="";delete el.__l67}}
+})();
+</script>
+<!--d67:start-->
+<script type="application/json" id="d67-cfg">{"cols": [{"c": "actions", "l": "إجراءات خطة التحسين"}], "after": ".metaline"}</script>
+<style id="d67-css">
+#d67{--d67t:#009999;--d67td:#007575;--d67ts:#DCF1F1;--d67m:#660033;--d67g:#A8832B;--d67i:#1B2A2D;--d67mu:#5D6D70;--d67l:#DDE5E5;--d67s:#F4F7F7;
+--d67ok:#1D7F55;--d67oks:#E3F3EA;--d67w:#9A7420;--d67ws:#F8F0DC;--d67b:#B03F35;--d67bs:#F7E4E1;
+direction:rtl;font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;color:var(--d67i);background:#fff;border:1px solid var(--d67l);border-radius:14px;
+max-width:1180px;margin:18px auto 8px;padding:14px 16px;box-sizing:border-box;line-height:1.6;font-size:14px;text-align:right}
+#d67{display:block!important;visibility:visible!important}
+#d67 *{box-sizing:border-box}
+#d67 .d67h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+#d67 .d67h h2{margin:0;font-family:"Noto Kufi Arabic","IBM Plex Sans Arabic",Tahoma,sans-serif;font-weight:700;color:var(--d67m);font-size:19px;display:flex;align-items:center;gap:8px}
+#d67 .d67h h2::before{content:"";width:6px;height:22px;border-radius:3px;background:var(--d67t)}
+#d67 .d67sub{color:var(--d67mu);font-size:12.5px}
+#d67 .d67tg{all:unset;cursor:pointer;font-size:13px;font-weight:600;color:var(--d67td);border:1px solid var(--d67t);border-radius:9px;padding:3px 12px}
+#d67 .d67tg:focus-visible{outline:2px solid var(--d67m);outline-offset:2px}
+#d67 .d67k{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+#d67 .d67c{border:1px solid var(--d67l);border-radius:12px;padding:10px 12px;background:#fff;min-width:0}
+#d67 .d67c .n{font-family:"Noto Kufi Arabic",Tahoma,sans-serif;font-size:24px;font-weight:700;color:var(--d67td);line-height:1.35;font-variant-numeric:tabular-nums}
+#d67 .d67c .l{font-size:12.5px;color:var(--d67mu)}
+#d67 .d67c.dt .n{font-size:17px;line-height:1.9}
+#d67 .d67c.ok .n{color:var(--d67ok)}#d67 .d67c.w .n{color:var(--d67w)}#d67 .d67c.b .n{color:var(--d67b)}
+#d67 .d67g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:12px;margin-top:12px}
+#d67 .d67p{border:1px solid var(--d67l);border-radius:12px;padding:10px 12px;min-width:0}
+#d67 .d67p h3{margin:0 0 6px;font-family:"Noto Kufi Arabic",Tahoma,sans-serif;font-size:14.5px;color:var(--d67td)}
+#d67 .d67ring{display:flex;align-items:center;gap:14px}
+#d67 .d67ring svg{flex:none}
+#d67 .d67st{display:flex;height:14px;border-radius:99px;overflow:hidden;border:1px solid var(--d67l);background:var(--d67s);margin:6px 0 8px}
+#d67 .d67st i{display:block;height:100%}
+#d67 .d67lg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--d67mu)}
+#d67 .d67lg span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;margin-inline-end:5px;background:var(--c)}
+#d67 .d67r{display:grid;grid-template-columns:minmax(0,1fr) 38% 48px;gap:8px;align-items:center;font-size:13px;padding:3px 0}
+#d67 .d67r .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#d67 .d67r .v{color:var(--d67mu);text-align:left;font-variant-numeric:tabular-nums;white-space:nowrap}
+#d67 .d67bar{height:9px;background:var(--d67s);border:1px solid var(--d67l);border-radius:99px;overflow:hidden}
+#d67 .d67bar i{display:block;height:100%;background:var(--d67t);border-radius:99px}
+#d67 .d67bar i.lt{background:#9fd6d6}
+#d67 .d67e{color:var(--d67mu);font-size:13px}
+#d67 .d67sl{max-height:330px;overflow-y:auto;padding-inline-end:2px}
+#d67 .d67ft{margin-top:8px;font-size:12px;color:var(--d67mu);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+#d67.d67x .d67body{display:none}
+@media (max-width:980px){#d67 .d67k{grid-template-columns:repeat(3,minmax(0,1fr))}#d67 .d67g{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){#d67{margin:12px 0 6px;padding:12px}#d67 .d67k{grid-template-columns:repeat(2,minmax(0,1fr))}#d67 .d67c .n{font-size:21px}#d67 .d67r{grid-template-columns:minmax(0,1fr) 32% 44px}}
+@media print{#d67{break-inside:avoid}#d67 .d67tg{display:none}#d67.d67x .d67body{display:block}#d67 *{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+<script id="d67-js">
+(function(){
+"use strict";
+var KEY="d67-hide:"+location.pathname;
+var OK=/^(مكتمل|مكتملة|منجز|منجزة|تم|تمت|تم التنفيذ|نُفذ|نفذ|منفذ|منفذة|موجود|متوفر|متوفرة|مرفق|معتمد|معتمدة|مغلق|مغلقة|تم الحل|محلولة|ممتاز|حاضرة|✓|✔)$/;
+var PR=/^(قيد التنفيذ|قيد العمل|جاري|جارٍ|جارية|قيد الإعداد|قيد المراجعة|قيد المتابعة|جزئي|جزئياً|مجدول|مجدولة|مخطط|قادم|قادمة|مفتوح|مفتوحة|قيد الدراسة)$/;
+var BD=/^(لم يتم|لم تنفذ|لم يُنفذ|غير منفذ|غير مكتمل|ناقص|ناقصة|غير متوفر|غير موجود|متأخر|متأخرة|يحتاج متابعة|لم يبدأ|لم تبدأ|معلق|معلقة|غائبة|✗|✘)$/;
+function norm(s){return (s||"").replace(/[ً-ْ]/g,"").replace(/\s+/g," ").trim()}
+function inD(el){return !!(el.closest&&el.closest("#d67"))}
+function vis(el){if(el.type==="hidden")return false;var t=(el.type||"").toLowerCase();return ["search","button","submit","reset","file","image","color","range"].indexOf(t)<0}
+function ar(n){return String(n)}
+function host(){
+  var tb=document.querySelector(".titlebar")||document.querySelector("h1");
+  if(!tb)return null;
+  var h=tb.closest(".hero,header,.head,.top,.cover");
+  if(h&&h!==document.body)return h;
+  var p=tb;while(p.parentElement&&p.parentElement!==document.body&&p.parentElement.children.length<4&&!/^(MAIN|SECTION)$/.test(p.parentElement.tagName))p=p.parentElement;
+  return p;
+}
+function place(box){
+  try{if(CFG.after){var a=document.querySelector(CFG.after);if(a){a.insertAdjacentElement("afterend",box);return}}}catch(e){}
+  var h=host();
+  if(h){var nx=h;var sib=h.nextElementSibling;
+    while(sib&&sib.matches&&sib.matches(".school,.meta,.metas,.sub,.chips,.info,.staff,p.meta,div.meta")){nx=sib;sib=sib.nextElementSibling}
+    nx.insertAdjacentElement("afterend",box);}
+  else document.body.insertBefore(box,document.body.firstChild);
+}
+function okH2(h){return !inD(h)&&norm(h.textContent)&&!h.closest(".hero,header,.titlebar,.cover-hero,.topbar")&&!h.classList.contains("school")&&norm(h.textContent)!=="الابتدائية السابعة والستون"}
+function h2n(el){var n=0,l=el.querySelectorAll("h2");for(var i=0;i<l.length;i++)if(okH2(l[i]))n++;return n}
+function sections(){
+  var hs=[].slice.call(document.querySelectorAll("h2")).filter(okH2);
+  return hs.map(function(h){
+    var el=h;while(el.parentElement&&el.parentElement!==document.body&&!el.parentElement.matches("main,.shell,.wrap,.content,.container")&&h2n(el.parentElement)===1)el=el.parentElement;
+    return {h:h,c:el!==h?el:null,t:norm(h.textContent).replace(/^[\u{1F300}-\u{1FAFF}\u2600-\u27BF\s]+/u,"").replace(/\s*[▲▼▾▸]+\s*$/,"").replace(/\s*\d+\s*$/,"")};
+  });
+}
+function scope(s){
+  if(s.c){var sib=s.c.nextElementSibling,out=[s.c];
+    /* heading wrapper alone: include following siblings until next section */
+    if(norm(s.c.textContent).length<norm(s.h.textContent).length+40){while(sib&&h2n(sib)===0&&!inD(sib)){out.push(sib);sib=sib.nextElementSibling}}
+    return out}
+  var out=[],n=s.h.nextElementSibling;
+  while(n&&!(n.tagName==="H2")&&h2n(n)===0){out.push(n);n=n.nextElementSibling}
+  return out;
+}
+function items(root){if(!root.querySelectorAll)return 0;var n=rows(root);
+  [].slice.call(root.querySelectorAll("li,.card,.item,.tile,.prog-card,.evidence-row,.box,.entry,.rec,.row-card,figure,blockquote,p")).forEach(function(x){
+    if(inD(x)||x.closest("nav,.rail,.tools,.toolbar,thead,tbody,.legend"))return;if(x.tagName==="P"&&norm(x.textContent).length<25)return;
+    if(x.parentElement&&x.parentElement.closest&&x.parentElement.closest("li,.card,.item,.tile,.prog-card,.box,.entry,.rec,.row-card")&&x.tagName!=="LI")return;n++});
+  return n}
+function rows(root){
+  var n=0;[].slice.call(root.querySelectorAll?root.querySelectorAll("tbody tr"):[]).forEach(function(tr){
+    if(inD(tr))return;var td=tr.querySelectorAll("td");if(!td.length)return;
+    if(td.length===1&&td[0].colSpan>1)return;if(tr.classList.contains("empty"))return;
+    if(!norm(tr.textContent)&&!tr.querySelector("input,select,textarea"))return;n++});
+  if(root.tagName==="TR")n=0;return n;
+}
+function fields(root){
+  var t=0,f=0;[].slice.call(root.querySelectorAll?root.querySelectorAll("input,select,textarea"):[]).forEach(function(el){
+    if(inD(el)||!vis(el)||el.disabled)return;var ty=(el.type||"").toLowerCase();
+    if(ty==="checkbox"||ty==="radio")return;
+    if(el.closest(".tools,.toolbar,.filters,.search,.filter,nav,.rail"))return;
+    t++;var v=el.tagName==="SELECT"?(el.value&&el.selectedIndex>0?el.value:(el.value&&el.options.length&&el.options[0].value?el.value:"")):el.value;
+    if(norm(v))f++});
+  return [t,f];
+}
+function checks(root){
+  var t=0,c=0;[].slice.call(root.querySelectorAll?root.querySelectorAll('input[type=checkbox]'):[]).forEach(function(el){
+    if(inD(el)||el.closest(".tools,.toolbar,.filters,nav,.rail"))return;t++;if(el.checked)c++});return [t,c];
+}
+function status(root){
+  var o=0,p=0,b=0,seen=[];
+  [].slice.call(root.querySelectorAll?root.querySelectorAll(".chip,.pill,.badge,.tag,.status,.st,td,span,b,option:checked"):[]).forEach(function(el){
+    if(inD(el))return;if(el.closest("nav,.rail,.tools,.legend,.kpis,.kpi,thead,.d67"))return;
+    if(el.tagName==="OPTION"){var sel=el.parentElement;if(!sel||sel.disabled)return;}
+    else if(el.children.length>1)return;
+    var s=norm(el.textContent);if(!s||s.length>22)return;
+    for(var i=0;i<seen.length;i++)if(seen[i].contains(el)||el.contains(seen[i]))return;
+    if(OK.test(s)){o++;seen.push(el)}else if(PR.test(s)){p++;seen.push(el)}else if(BD.test(s)){b++;seen.push(el)}
+  });return [o,p,b];
+}
+function evid(){
+  var a=[].slice.call(document.querySelectorAll('a[href]')).filter(function(x){return !inD(x)&&!x.closest("nav,.rail")&&/\.(pdf|docx?|xlsx?|pptx?|png|jpe?g)(\?|$)|drive\.google|docs\.google|forms\.gle|youtu|claude\.ai\/artifact/i.test(x.getAttribute("href"))}).length;
+  var im=[].slice.call(document.querySelectorAll("img")).filter(function(x){return !inD(x)&&!/letterhead|logo/i.test(x.getAttribute("src")||"")&&!x.closest(".hero,header,.sig,.sigs,.stamp")&&(x.naturalWidth>80||x.width>80)}).length;
+  return a+im;
+}
+function ring(p){
+  var r=30,c=2*Math.PI*r,v=p===null?0:p;var col=v>=80?"#1D7F55":v>=50?"#009999":v>0?"#C79A2E":"#DDE5E5";
+  return '<svg width="78" height="78" viewBox="0 0 78 78" role="img" aria-label="نسبة الإنجاز '+(p===null?"غير محددة":p+"%")+'"><circle cx="39" cy="39" r="'+r+'" fill="none" stroke="#F4F7F7" stroke-width="9"/><circle cx="39" cy="39" r="'+r+'" fill="none" stroke="'+col+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+(c*v/100)+' '+c+'" transform="rotate(-90 39 39)"/><text x="39" y="44" text-anchor="middle" font-family="Noto Kufi Arabic,Tahoma" font-size="16" font-weight="700" fill="#1B2A2D">'+(p===null?"—":p+"%")+'</text></svg>';
+}
+
+var CFG={cols:[]};try{var ce=document.getElementById("d67-cfg");if(ce)CFG=JSON.parse(ce.textContent)||CFG}catch(e){}
+var SK=(CFG.status||[]).concat(["st","status","state","stat","hal","halah","done","حالة","الحالة"]);
+var DK=["at","updatedAt","updated","ts","time","date","created","createdAt","savedAt","d"];
+var DB=null,DS={};
+function cls(v){if(v===true)return 0;if(v===false)return 2;var s=norm(String(v==null?"":v)).toLowerCase();if(!s)return -1;
+ if(/^(done|ok|yes|complete|completed|closed|resolved|y|1|good|ex|exc|full|approved|present)$/.test(s)||OK.test(s)||/مكتمل|منجز|^تم|منفذ|متحقق|محلول/.test(s))return 0;
+ if(/^(prog|progress|wip|doing|partial|open|pending|plan|planned|todo|mid|p)$/.test(s)||PR.test(s)||/قيد|جار|جزئي|مجدول/.test(s))return 1;
+ if(/^(late|bad|no|missing|n|0|overdue|absent|fail)$/.test(s)||BD.test(s)||/لم |غير |ناقص|متأخر|يحتاج/.test(s))return 2;return -1}
+function tsOf(v){if(v==null)return 0;if(typeof v==="number")return v>1e12?v:(v>1e9?v*1000:0);var t=Date.parse(String(v));return isNaN(t)?0:t}
+function scanObj(o,acc){var st=-1,ts=0;for(var k in o){if(!Object.prototype.hasOwnProperty.call(o,k))continue;var v=o[k];
+  if(SK.indexOf(k)>=0&&(typeof v!=="object"||v===null)){var c=cls(v);if(c>=0)st=c}
+  if(DK.indexOf(k)>=0){var t=tsOf(v);if(t>ts)ts=t}}
+  if(st>=0)acc.s[st]++;if(ts>acc.t)acc.t=ts;}
+function colStats(docs){var acc={n:0,s:[0,0,0],t:0};docs.forEach(function(d){var o=d||{};var arrs=[];for(var k in o){var v=o[k];if(Array.isArray(v)&&v.length&&typeof v[0]==="object"&&v[0])arrs.push(v)}
+  if(arrs.length){arrs.forEach(function(a){a.forEach(function(it){acc.n++;scanObj(it,acc)})});scanObj(o,{s:[0,0,0],t:0});var tt={s:[0,0,0],t:0};scanObj(o,tt);if(tt.t>acc.t)acc.t=tt.t}
+  else{acc.n++;scanObj(o,acc)}});return acc}
+function startDB(){if(!CFG.cols||!CFG.cols.length||!window.claude||!claude.use)return;
+ claude.use("db").then(function(db){if(!db)return;DB=db;
+  CFG.cols.slice(0,14).forEach(function(c){try{
+   if(c.d){db.doc(c.d).onSnapshot(function(sn){var o=sn&&sn.exists!==false?sn.data():null;DS[c.c]=colStats(o?[o]:[]);if(!o)DS[c.c].n=0;last="";sched()},function(){})}
+   else db.collection(c.c).limit(1000).onSnapshot(function(snap){DS[c.c]=colStats(snap.docs.filter(function(x){return x.exists!==false}).map(function(x){return x.data()}));last="";sched()},function(){})}catch(e){}});
+ }).catch(function(){})}
+var box,busy=false,tmr=null,last="";
+function build(){
+  if(busy)return;busy=true;
+  try{
+    var doc=document.body,S=sections();
+    var R=items(doc),F=fields(doc),C=checks(doc),ST=status(doc),E=evid();
+    var tables=[].slice.call(document.querySelectorAll("table")).filter(function(t){return !inD(t)}).length;
+    var parts=[],num=0,den=0;
+    if(F[0]){num+=F[1];den+=F[0]}
+    if(C[0]){num+=C[1];den+=C[0]}
+    var sTot=ST[0]+ST[1]+ST[2];if(sTot){num+=ST[0]+ST[1]*0.5;den+=sTot}
+    var pct=den?Math.round(num/den*100):null;
+    var secs=S.map(function(s,i){
+      var sc=scope(s),r=0,f=[0,0],ch=[0,0],st=[0,0,0];
+      sc.forEach(function(el){r+=items(el);var a=fields(el);f[0]+=a[0];f[1]+=a[1];var b=checks(el);ch[0]+=b[0];ch[1]+=b[1];var c=status(el);st[0]+=c[0];st[1]+=c[1];st[2]+=c[2]});
+      var d=f[0]+ch[0]+st[0]+st[1]+st[2],nn=f[1]+ch[1]+st[0]+st[1]*0.5;
+      return {t:s.t,r:r,p:d?Math.round(nn/d*100):null};
+    });
+    var dbAll=0;for(var q in DS)dbAll+=DS[q].n;var useDB=dbAll>0&&dbAll>=Math.min(R,3),dbN=0,dbS=[0,0,0],dbT=0;
+    if(useDB){secs=CFG.cols.map(function(c){var a=DS[c.c]||{n:0,s:[0,0,0],t:0};dbN+=a.n;for(var j=0;j<3;j++)dbS[j]+=a.s[j];if(a.t>dbT)dbT=a.t;var d=a.s[0]+a.s[1]+a.s[2];return {t:c.l||c.c,r:a.n,p:d?Math.round((a.s[0]+a.s[1]*0.5)/d*100):null}});
+      R=dbN;ST=dbS;C=[0,0];var dd=dbS[0]+dbS[1]+dbS[2];pct=dd?Math.round((dbS[0]+dbS[1]*0.5)/dd*100):(F[0]?Math.round(F[1]/F[0]*100):null);}
+    var secFill=null;if(secs.length){var fl=0;secs.forEach(function(x){if(x.r>0||(x.p!==null&&x.p>0))fl++});secFill=Math.round(fl/secs.length*100)}
+    else if(R>0||E>0){secFill=100}
+    if(pct===null)pct=secFill;else if(secFill!==null)pct=Math.round((pct+secFill)/2);
+    var sig=[pct,useDB,dbT,R,F.join(),C.join(),ST.join(),E,secs.map(function(x){return x.r+":"+x.p}).join()].join("|");
+    if(sig===last){busy=false;return}last=sig;
+    function fmtD(t){try{return new Date(t).toLocaleDateString("ar-SA-u-ca-islamic-umalqura-nu-latn",{day:"numeric",month:"short"})}catch(e){return "—"}}
+    var mxr=Math.max.apply(null,[1].concat(secs.map(function(x){return x.r})));
+    var k=[
+      [secs.length||1,"أقسام السجل",""],
+      [R,useDB?"إجمالي الإدخالات":"عناصر المحتوى"+(tables?" ("+tables+" جدول)":""),""],
+      useDB?[dbT?fmtD(dbT):"لا يوجد بعد","آخر إدخال","dt"]:(F[0]?[Math.round(F[1]/F[0]*100)+"%","الحقول المعبّأة ("+F[1]+" من "+F[0]+")",""]:[(pct===null?0:pct)+"%","نسبة اكتمال السجل",""]),
+      [ST[0]+(C[0]?C[1]:0),"مكتمل / منجز","ok"],
+      [ST[1]+(C[0]?0:0),"قيد العمل","w"],
+      [ST[2]+(C[0]?C[0]-C[1]:0),"يحتاج متابعة","b"]
+    ];
+    var oT=ST[0]+C[1],pT=ST[1],bT=ST[2]+(C[0]-C[1]),all=oT+pT+bT;
+    var html='<div class="d67h"><h2>لوحة مؤشرات السجل</h2><span class="d67sub">تُحسب تلقائياً من بيانات هذا السجل وتتحدث مع كل إدخال</span><button type="button" class="d67tg" aria-expanded="'+(!box.classList.contains("d67x"))+'">'+(box.classList.contains("d67x")?"إظهار اللوحة":"إخفاء")+'</button></div>'+
+    '<div class="d67body"><div class="d67k">'+k.map(function(x){return '<div class="d67c '+x[2]+'"><div class="n">'+x[0]+'</div><div class="l">'+x[1]+'</div></div>'}).join("")+'</div>'+
+    '<div class="d67g"><div class="d67p"><h3>مؤشر اكتمال السجل</h3><div class="d67ring">'+ring(pct)+'<div style="min-width:0;flex:1">'+
+      (all?'<div class="d67st" role="img" aria-label="مكتمل '+oT+'، قيد العمل '+pT+'، يحتاج متابعة '+bT+'">'+(oT?'<i style="width:'+oT/all*100+'%;background:#1D7F55"></i>':"")+(pT?'<i style="width:'+pT/all*100+'%;background:#C79A2E"></i>':"")+(bT?'<i style="width:'+bT/all*100+'%;background:#B03F35"></i>':"")+'</div><div class="d67lg"><span style="--c:#1D7F55">مكتمل: <b>'+oT+'</b></span><span style="--c:#C79A2E">قيد العمل: <b>'+pT+'</b></span><span style="--c:#B03F35">يحتاج متابعة: <b>'+bT+'</b></span></div>'
+       :'<div class="d67e">'+(pct===null?"يُحسب من اكتمال أقسام السجل وحالة بنوده وحقوله المعبّأة.":"")+'</div>')+
+      '<div class="d67lg" style="margin-top:8px"><span style="--c:#A8832B">الشواهد والمرفقات: <b>'+E+'</b></span>'+(C[0]?'<span style="--c:#009999">بنود التحقق: <b>'+C[1]+' / '+C[0]+'</b></span>':'')+'</div></div></div></div>'+
+    '<div class="d67p"><h3>الأقسام ('+secs.length+')</h3><div class="d67sl">'+(secs.length?secs.map(function(x){var w=x.p===null?x.r/mxr*100:x.p;return '<div class="d67r"><span class="t" title="'+x.t.replace(/"/g,"&quot;")+'">'+x.t.replace(/</g,"&lt;")+'</span><div class="d67bar"><i class="'+(x.p===null?"lt":"")+'" style="width:'+w+'%"></i></div><span class="v">'+(x.p===null?x.r+(useDB?"":" عنصر"):x.p+"%")+'</span></div>'}).join("")+'':'<div class="d67e">لا توجد أقسام فرعية.</div>')+'</div>'+
+    '<div class="d67e" style="margin-top:4px;font-size:12px">الشريط الغامق = نسبة الإنجاز (الحقول المعبّأة والبنود المنجزة)، والفاتح = حجم المحتوى.</div></div></div>'+
+    '<div class="d67ft"><span>آخر احتساب: '+new Date().toLocaleString("ar-SA-u-ca-islamic-umalqura-nu-latn",{hour:"2-digit",minute:"2-digit",day:"numeric",month:"long"})+'</span><span>الابتدائية السابعة والستون · 1448هـ</span></div></div>';
+    box.innerHTML=html;
+    box.querySelector(".d67tg").onclick=function(){box.classList.toggle("d67x");try{localStorage.setItem(KEY,box.classList.contains("d67x")?"1":"")}catch(e){}last="";build()};
+  }catch(e){}
+  busy=false;
+}
+function sched(){clearTimeout(tmr);tmr=setTimeout(build,600)}
+function init(){
+  if(document.getElementById("d67"))return;
+  box=document.createElement("section");box.id="d67";box.setAttribute("aria-label","لوحة مؤشرات السجل");
+  try{if(localStorage.getItem(KEY))box.classList.add("d67x")}catch(e){}
+  place(box);build();startDB();
+  new MutationObserver(function(ms){for(var i=0;i<ms.length;i++){if(!inD(ms[i].target)){sched();return}}}).observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["value","class","checked"]});
+  document.addEventListener("input",function(e){if(!inD(e.target))sched()},true);
+  document.addEventListener("change",function(e){if(!inD(e.target))sched()},true);
+  setTimeout(build,1500);setTimeout(build,4000);
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+})();
+</script>
+<!--d67:end-->
+<!--ev67:start--><style>#ev67{direction:rtl;font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;color:#1B2A2D;background:#fff;border:1px solid #DDE5E5;border-radius:14px;max-width:1180px;margin:10px auto 14px;padding:14px 16px;box-sizing:border-box;display:block!important}#ev67 *{box-sizing:border-box}#ev67 h2{margin:0 0 4px;font-family:"Noto Kufi Arabic",Tahoma,sans-serif;color:#660033;font-size:18px}#ev67 .ev67s{color:#5D6D70;font-size:13px;margin-bottom:10px}#ev67 .ev67k{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}#ev67 .ev67k span{background:#DCF1F1;color:#007575;border-radius:999px;padding:3px 12px;font-size:13px;font-weight:600}#ev67 details{border:1px solid #DDE5E5;border-radius:12px;margin:6px 0;background:#fff}#ev67 summary{cursor:pointer;padding:8px 12px;display:flex;justify-content:space-between;gap:8px;color:#007575}#ev67 summary span{color:#5D6D70;font-size:13px}#ev67 ul{list-style:none;margin:0;padding:0 12px 8px}#ev67 li{display:flex;align-items:center;gap:8px;padding:5px 0;border-top:1px dashed #DDE5E5;font-size:14px;flex-wrap:wrap}#ev67 li a{color:#1B2A2D;text-decoration:none;flex:1 1 180px;min-width:0;overflow-wrap:anywhere}#ev67 li a:hover{color:#007575;text-decoration:underline}#ev67 .ev67d{color:#5D6D70;font-size:12px;font-variant-numeric:tabular-nums}#ev67 .ev67p{background:#E3F3EA;color:#1D7F55;border-radius:999px;padding:0 9px;font-size:12px;font-weight:600}@media print{#ev67 details{display:block}#ev67 details>*{display:block}}</style>
+<template id="ev67-t"><section id="ev67" aria-label="شواهد ملفات المعلمات"><h2>شواهد ملفات المعلمات (الدرايف)</h2><div class="ev67s">مرفوعة من ملفات إنجاز المعلمات في مجلد المدرسة على قوقل درايف، وتفتح لمن لديها صلاحية المجلد.</div><div class="ev67k"><span>60 شاهد</span><span>12 معلمة / ملف</span><span>آخر رفع: 2026-10-28</span></div><details class="ev67g"><summary><b>أمل الهيفاني</b><span>5 شاهد</span></summary><ul><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1dzzpR6VhUy5yvP15gIiLbKboM5VwSmSN/view" target="_blank" rel="noopener">تقرير مبادره ( عزنا بكتابنا )</a><span class="ev67d">2026-10-04</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">🎬</span><a href="https://drive.google.com/file/d/1dbNNG4veZEo3zNAfuUmDXTMeU2GkLGuU/view" target="_blank" rel="noopener">مبادره عزنا بكتابنا</a><span class="ev67d">2026-10-10</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1IhbB_KQwmoqcvPS4sOKelYZ9LdqR3iW2/view" target="_blank" rel="noopener">تحليل نتائج الاختبار التشخيصي - الصف الخامس ف 1 امل الهيفاني</a><span class="ev67d">2026-10-10</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/17p9HRF8Jz0nx_bJPPTnHlLy93MoTM3fS/view" target="_blank" rel="noopener">تحليل نتائج الاختبار التشخيصي - الصف السادس ف 1 امل الهيفاني</a><span class="ev67d">2026-10-10</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1ORPnoVlb5hn1E09rBCJAH_iJtTurU1Bm/view" target="_blank" rel="noopener">تقرير مبادرة</a><span class="ev67d">2026-10-10</span><span class="ev67p">مرفق</span></li></ul></details><details class="ev67g"><summary><b>بدرية العتيبي</b><span>5 شاهد</span></summary><ul><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1CJMU9innbAcMmKsdv6lrKA2-UliYI5eS/view" target="_blank" rel="noopener">اختبار تشخيصي ثاني</a><span class="ev67d">2026-10-03</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">🖼️</span><a href="https://drive.google.com/file/d/1JKZhXvOhSwyEh5JBEzUUaA1tpUNn8oIX/view" target="_blank" rel="noopener">مبادرة</a><span class="ev67d">2026-10-03</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">🖼️</span><a href="https://drive.google.com/file/d/1l_PdwVTMFUjUTpWBL3DLBBHtxPywbGu7/view" target="_blank" rel="noopener">مبادرة ساحتي اجمل بيدي الصغيره</a><span class="ev67d">2026-10-03</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1NDiRFNmdVwX33XzoCbsLaxg47Zzy1UQT/view" target="_blank" rel="noopener">تحليل الاختبار التشخيصي ثاني بنات </a><span class="ev67d">2026-10-03</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1fQnFAWfM-Nf3Ycg3ri9q58pPrFVD_nSW/view" target="_blank" rel="noopener">تحليل نتائج اختبار تشخيصي رابع </a><span class="ev67d">2026-10-03</span><span class="ev67p">مرفق</span></li></ul></details><details class="ev67g"><summary><b>رفعه العتيبي</b><span>9 شاهد</span></summary><ul><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1olskNRies0I_dkylJxuzv39y8poz7rHF/view" target="_blank" rel="noopener">تشخيصي ثالث</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1eiytICXKX0bzH4hJP8KO6v36moY-27-J/view" target="_blank" rel="noopener">تشخيصي سادس</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1ay8gQxQa2D8zaJlEDx0YRFjoJ_5WUSC1/view" target="_blank" rel="noopener">تشخيصي ثاني</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">🖼️</span><a href="https://drive.google.com/file/d/1OKoafdT1ee_fui8nVzWv3YCSJzJJNTnH/view" target="_blank" rel="noopener">تقرير الفهم القرائي </a><span class="ev67d">2026-10-03</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1LNEGfPoytu6BshbIi5r9Tt-uD8qGgVdN/view" target="_blank" rel="noopener">تقرير توثيق تدريب نافس</a><span class="ev67d">2026-10-03</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1YiN1turuZSQP7GujAGMWbmknNPzBTbY9/view" target="_blank" rel="noopener">مبادرة تحدي نافس الإسبوعيه١</a><span class="ev67d">2026-10-12</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/10nATrMfLoAEAIHzeCX_EQLkllR_B4Vjq/view" target="_blank" rel="noopener">توثيق تدريب نافس ٢</a><span class="ev67d">2026-10-14</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1iwwGAaF5ix8raB05ejqn2QeefwnR-fQG/view" target="_blank" rel="noopener">تحليل نتائج سادس الفتره الأولى</a><span class="ev67d">2026-10-18</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1ni5TWSpCEKdDbzEWvt--O6wUR4Up0QpH/view" target="_blank" rel="noopener">تحليل نتائج الفتره الأولى رياضيات ثاني ٢</a><span class="ev67d">2026-10-18</span><span class="ev67p">مرفق</span></li></ul></details><details class="ev67g"><summary><b>سارة العصيمي</b><span>6 شاهد</span></summary><ul><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1DfJl0y2Sxqeb6olOmZuksMalK73rt-vT/view" target="_blank" rel="noopener">نتائج تحليل اختبار تشخيصي E 3</a><span class="ev67d">2026-10-09</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1b30Rh4JMhE6JjaKIGsCcQy1EdC2cytH6/view" target="_blank" rel="noopener">الاختبار التشخيصي خامس</a><span class="ev67d">2026-10-09</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1Jik5SUoTjvAzuWmr5lIGwLBNpJsfDy0D/view" target="_blank" rel="noopener">تحليل الاختبار التشخيصي E</a><span class="ev67d">2026-10-13</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1BJH7GA4-fZTBHGYfiKJnZIj-Qen4YAub/view" target="_blank" rel="noopener">اختبار تشخيصي سادس</a><span class="ev67d">2026-10-13</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1TwC2axz9IpQSAusDCRq4BS-iwdUGAKf_/view" target="_blank" rel="noopener">مبادرة اليوم الوطني 1</a><span class="ev67d">2026-10-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1AK5C17NG7lAoLX0tuchkcAM5edKj8DYn/view" target="_blank" rel="noopener">مبادرة راية العز</a><span class="ev67d">2026-10-28</span><span class="ev67p">مرفق</span></li></ul></details><details class="ev67g"><summary><b>عزه الزهراني</b><span>6 شاهد</span></summary><ul><li><span class="ev67i">🖼️</span><a href="https://drive.google.com/file/d/1FhonX1Hvwt_s-lhl3yB0C0cw_GLfbbKe/view" target="_blank" rel="noopener">صورة شاهد · تحصيل</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">🖼️</span><a href="https://drive.google.com/file/d/1-Bx1Q2GbgQ5fiuDccJ0N22OeldC13WpI/view" target="_blank" rel="noopener">صورة شاهد · تحصيل</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1YPnyRW358x0buEfe8C2B66svB-78DGIg/view" target="_blank" rel="noopener">تحليل رااابع</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1cn45TyQ2YJ2cbZcP_-BtE_fbtLyrR3hF/view" target="_blank" rel="noopener">تحليل ثاني رياضيات</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1cbH67QHZnPKBpmpdwBqL8ix3q__VGgL7/view" target="_blank" rel="noopener">تحليل خامس. عزه الزهراني</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">🖼️</span><a href="https://drive.google.com/file/d/1wDGXeCbvjGX9GA_pgx2Y0lXn4M5IVNui/view" target="_blank" rel="noopener">F2D9E93B-79BF-48F0-9BE3-7A012B2D7A7E</a><span class="ev67d">2026-10-11</span><span class="ev67p">مرفق</span></li></ul></details><details class="ev67g"><summary><b>عيشه الحارثي</b><span>2 شاهد</span></summary><ul><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1YFygtCT9eVKa95KPUL1vzu8TDlLuxwxX/view" target="_blank" rel="noopener">تقرير التشخيص - اللغة العربية - ثالث بنات</a><span class="ev67d">2026-10-10</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/14QxEwBhCKEJrup3q1Is215gGdViupvbX/view" target="_blank" rel="noopener">تقرير التشخيص - اللغة العربية - خامس بنات</a><span class="ev67d">2026-10-10</span><span class="ev67p">مرفق</span></li></ul></details><details class="ev67g"><summary><b>غزيل العتيبي</b><span>4 شاهد</span></summary><ul><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1UFFL1zS9I9EKpsATSU6HNdU7XC_EMSar/view" target="_blank" rel="noopener">ملف شاهد · تحصيل</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/15Shbw0WP8b66Oo6bW6y-rc9ORitacJk5/view" target="_blank" rel="noopener">ملف شاهد · تحصيل</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1ccZktG864rtPFy5yvVmBAI5Xy7dYcMup/view" target="_blank" rel="noopener">ملف شاهد · تحصيل</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1KWl6O4-C_1jqbilbTDpL0P-lF8dh13JK/view" target="_blank" rel="noopener">ملف شاهد · تحصيل</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li></ul></details><details class="ev67g"><summary><b>نوره القثامي</b><span>4 شاهد</span></summary><ul><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1awH6wlvUW1r2m896FnQRdHwcq-9qoV9W/view" target="_blank" rel="noopener">تقرير التشخيص - العلوم - ثاني بنات</a><span class="ev67d">2026-10-18</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1wnI3IayDFHqfUuzyyXdesCFNPAS6eqcX/view" target="_blank" rel="noopener">تقرير التشخيص - العلوم - سادس بنات</a><span class="ev67d">2026-10-18</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/155wp15T4g_jjeANH9_YyuHmIj_VP5Omx/view" target="_blank" rel="noopener">تقرير التشخيص - العلوم - ثاني بنين 1</a><span class="ev67d">2026-10-18</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1BgMFLEobCd-9nFPR42qk3UXUAtHbzJIt/view" target="_blank" rel="noopener">تقرير التشخيص - العلوم - ثاني بنين 2</a><span class="ev67d">2026-10-18</span><span class="ev67p">مرفق</span></li></ul></details><details class="ev67g"><summary><b>نوف البيالي</b><span>12 شاهد</span></summary><ul><li><span class="ev67i">🎬</span><a href="https://drive.google.com/file/d/1fZrVOnc2iYePtVRnndq-y4Fpyh8Dn8ZJ/view" target="_blank" rel="noopener">.مبادرة متحدثة الأسبوع</a><span class="ev67d">2026-10-09</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1yWhIHLy42EdnC4LHHkf7YrhMcGKwfGP5/view" target="_blank" rel="noopener">اختبار تشخيصي</a><span class="ev67d">2026-10-09</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1weKLdsL_sLsJzw5mYvmZDRys6rmIV0Go/view" target="_blank" rel="noopener">الاختبار التشخيصي</a><span class="ev67d">2026-10-09</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1zNBJjNsVzd02jU-1wobKx_6A9cX9No6-/view" target="_blank" rel="noopener">اختبار تشخيصي ٢</a><span class="ev67d">2026-10-09</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1_YXuvxHDkG9zTSbnaCQv8F_8SMugSmi_/view" target="_blank" rel="noopener">تحليل نتائج مادة لصف واحد 2</a><span class="ev67d">2026-10-13</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1WG_AEKhisGm5eLrcUfvSDdahQ7uJXkvb/view" target="_blank" rel="noopener">تحليل نتائج مادة لصف واحد</a><span class="ev67d">2026-10-13</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1-VYR2hMZp-Xnra231KrBkIKIC117fM6M/view" target="_blank" rel="noopener">تحليل نتائج مادة لصف واحد (نسخة)</a><span class="ev67d">2026-10-13</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1a1Xr3M5Fmbte6v8rv-d5jk_X_FwAjc-9/view" target="_blank" rel="noopener">نافس3</a><span class="ev67d">2026-10-20</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1XuYCHpTRFdqaZuZu5faFFCP7nrqf1qjL/view" target="_blank" rel="noopener">الاختبار التشخيصي </a><span class="ev67d">2026-10-24</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">🖼️</span><a href="https://drive.google.com/file/d/1iYzT1FzezxySJViUqoTZL9L2VWZoS74X/view" target="_blank" rel="noopener">تدريب نافس عن طريق المنصة</a><span class="ev67d">2026-10-24</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">🖼️</span><a href="https://drive.google.com/file/d/1EBYeWISLmNiObcU-llAR1AL_GUDQR7db/view" target="_blank" rel="noopener">نافس</a><span class="ev67d">2026-10-24</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1ctRne-xiEBUbN6d6w5M1ofJj6lVdikSv/view" target="_blank" rel="noopener">تدريبات نافس</a><span class="ev67d">2026-10-24</span><span class="ev67p">مرفق</span></li></ul></details><details class="ev67g"><summary><b>نوف محمد</b><span>1 شاهد</span></summary><ul><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1BKz6P1ytuTytL96qNluTDSRyPqQrMGvN/view" target="_blank" rel="noopener">ثاني بنات</a><span class="ev67d">2026-10-04</span><span class="ev67p">مرفق</span></li></ul></details><details class="ev67g"><summary><b>هلا العتيبي</b><span>3 شاهد</span></summary><ul><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1YDyDOO6Jbqd43yeEK593LWJFyM2hExU7/view" target="_blank" rel="noopener">الاختبار التشخيصي لثالث</a><span class="ev67d">2026-10-11</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1u5bBjabhkEevHYyRp3pnSXnwKnvSXCw1/view" target="_blank" rel="noopener">تحليل نتائج الاختبار التشخيصي ثالث </a><span class="ev67d">2026-10-11</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1y1pITBIMP_utWLQ0r1CSbP9jKduaoYjV/view" target="_blank" rel="noopener">تحليل التشخيصي خامس</a><span class="ev67d">2026-10-14</span><span class="ev67p">مرفق</span></li></ul></details><details class="ev67g"><summary><b>هند العتيبي</b><span>3 شاهد</span></summary><ul><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1XY2aJPeshoyJHV7fT6lLyqDdbOxchHY7/view" target="_blank" rel="noopener">الاختبارات التشخيصيه</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">📄</span><a href="https://drive.google.com/file/d/1mkxa8H_x4DdQ6hv-cHbEV3NBCLrFpj6W/view" target="_blank" rel="noopener">.الاختبارت التشخيصيه</a><span class="ev67d">2026-09-28</span><span class="ev67p">مرفق</span></li><li><span class="ev67i">🖼️</span><a href="https://drive.google.com/file/d/1ZZYv-HlwHghNRNMhXs1igeALdxSSfiF_/view" target="_blank" rel="noopener">اختبار الفتره الاولى للصف اول (لغتي)</a><span class="ev67d">2026-10-13</span><span class="ev67p">مرفق</span></li></ul></details></section></template>
+<script>(function(){function put(){if(document.getElementById("ev67"))return true;var t=document.getElementById("ev67-t");var d=document.getElementById("d67");if(!d)return false;d.insertAdjacentElement("afterend",t.content.firstElementChild.cloneNode(true));return true}var n=0;(function go(){if(!put()&&n++<40)setTimeout(go,250)})();})();</script><!--ev67:end-->
+</body></html><style id="lockico67-css">.lk67{display:inline-block;font-size:.8em;margin-inline-start:5px;vertical-align:middle;opacity:.85;cursor:help;text-decoration:none}@media print{.lk67{display:none}}</style>
+<script id="lockico67">(function(){var N=[/ناد[يى]ه عوض الصخيري/,/ناد[يى]ة عوض الصخيري/,/ناد[يى][هة] الصخيري/,/الابتدائية السابعة والستون/,/الإبتدائية السابعة والستون/,/الابتدائية 67/];var T="مقفل — لا يُعدّل إلا من مديرة المدرسة";
+var CNT={p:0,s:0},MAX=2;function g(t){t=t||"";for(var i=0;i<N.length;i++)if(N[i].test(t))return i<3?"p":"s";return ""}function m(t){var k=g(t);return k&&CNT[k]<MAX}
+function ico(){var s=document.createElement("span");s.className="lk67";s.textContent="🔒";s.title=T;s.setAttribute("aria-label",T);return s}
+function run(root){root=root||document.body;if(!root)return;
+ var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:function(n){var p=n.parentElement;if(!p||/^(SCRIPT|STYLE|TEXTAREA|OPTION|TITLE|SVG)$/i.test(p.tagName)||p.closest(".lk67,[contenteditable=true],#printZone,.rep48 .t"))return 2;return m(n.nodeValue)?1:2}}),a=[],n;
+ while(n=w.nextNode())a.push(n);
+ a.forEach(function(t){var p=t.parentElement;if(p.__lk67)return;var nx=t.nextSibling;if(nx&&nx.nodeType===1&&nx.classList&&nx.classList.contains("lk67"))return;var k=g(t.nodeValue);if(CNT[k]>=MAX)return;CNT[k]++;p.__lk67=1;t.parentNode.insertBefore(ico(),t.nextSibling)});
+ var f=root.querySelectorAll?root.querySelectorAll("input[type=text],input:not([type])"):[];
+ for(var i=0;i<f.length;i++){var e=f[i];if(e.__lk67)continue;var k=g(e.value);if(k&&CNT[k]<MAX){CNT[k]++;e.__lk67=1;e.insertAdjacentElement("afterend",ico())}}}
+var q=0;function sch(){if(q)return;q=1;setTimeout(function(){q=0;run()},400)}
+function st(){run();try{new MutationObserver(function(ms){for(var i=0;i<ms.length;i++){var x=ms[i].addedNodes;for(var j=0;j<x.length;j++){if(x[j].nodeType===1&&!(x[j].classList&&x[j].classList.contains("lk67"))){sch();return}}}}).observe(document.body,{childList:true,subtree:true})}catch(e){}}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",st);else st();})();</script>
+
+<script id="s67guard">(function(){var H="0f2fa8a8f4c5aed3136af8e410b1f45bf7ac21db2a573eded66974c5d9a288a4",d=document,de=d.documentElement,L="s67lock";
+var st=d.createElement("style");st.textContent="html.s67lock body,html.s67lock body *{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}html.s67lock .s67hide{display:none!important}@media print{html.s67lock body>*{display:none!important}html.s67lock body:after{content:'الطباعة وحفظ PDF متاحان لمديرة المدرسة فقط';display:block;text-align:center;font:700 22px Tahoma,sans-serif;margin-top:35vh;color:#660033}}#s67key{position:fixed;left:8px;bottom:8px;z-index:2147483646;border:1px solid #DDE5E5;background:#fff;border-radius:50%;width:32px;height:32px;font-size:15px;opacity:.6;cursor:pointer;padding:0}html:not(.s67lock) #s67key{display:none}#s67rl{position:fixed;left:8px;bottom:8px;z-index:2147483646;border:1px solid #DDE5E5;background:#fff;border-radius:50%;width:32px;height:32px;padding:0;font:0/0 Tahoma;opacity:.7;cursor:pointer;overflow:hidden}#s67rl:before{content:'🔒';font:15px/30px sans-serif;display:block;text-align:center}html.s67lock #s67rl{display:none}@media print{#s67rl,#s67key{display:none!important}}#s67dlg{position:fixed;inset:0;background:rgba(27,42,45,.45);z-index:2147483647;display:flex;align-items:center;justify-content:center}#s67dlg>div{background:#fff;border-radius:14px;padding:16px;width:min(320px,90vw);font-family:Tahoma,sans-serif;direction:rtl;text-align:center}#s67dlg input{width:100%;font-size:22px;letter-spacing:6px;text-align:center;direction:ltr;border:1px solid #DDE5E5;border-radius:10px;padding:8px;margin:10px 0;-webkit-user-select:text!important;user-select:text!important}#s67dlg button{border:0;border-radius:10px;padding:8px 16px;margin:2px;cursor:pointer;font:inherit}";
+st.textContent+="#s67wm{position:fixed;inset:0;pointer-events:none;z-index:2147483640;overflow:hidden;display:none}html.s67lock #s67wm{display:block}#s67wm div{position:absolute;white-space:nowrap;text-align:center;line-height:1.7;transform:rotate(-28deg);color:rgba(102,0,51,.11);font:700 20px 'Noto Kufi Arabic',Tahoma,sans-serif}@media print{#s67wm{display:none!important}}";(d.head||de).appendChild(st);
+var own=false;try{own=sessionStorage.getItem("s67own")==="1";var t=+localStorage.getItem("s67ownT")||0;if(!own&&t&&Date.now()-t<2592000000)own=true}catch(e){}
+function locked(){return de.classList.contains(L)}
+function unlock(){de.classList.remove(L);d.querySelectorAll(".s67hide").forEach(function(b){b.classList.remove("s67hide")});d.querySelectorAll("[data-s67ro]").forEach(function(x){var m=x.getAttribute("data-s67ro");if(m==="1")x.readOnly=false;else if(m==="2")x.disabled=false;else x.setAttribute("contenteditable","true");x.removeAttribute("data-s67ro")})}
+if(!own)de.classList.add(L);
+try{if(window.claude&&claude.use){claude.use("user").then(function(u){return u&&u.isOwner?u.isOwner():false}).then(function(o){if(o)unlock()}).catch(function(){})}}catch(e){}
+["copy","cut","contextmenu","dragstart","selectstart"].forEach(function(t){d.addEventListener(t,function(e){if(locked()&&!(e.target&&e.target.closest&&e.target.closest("#s67dlg")))e.preventDefault()},true)});
+d.addEventListener("click",function(e){if(!locked())return;var a=e.target&&e.target.closest&&e.target.closest("a[href],a[download]");if(a&&(a.hasAttribute("download")||/\.(pdf|xlsx?|docx?|pptx?|zip)(\b|#|\?|$)/i.test(a.getAttribute("href")||"")||/^(blob:|data:)/i.test(a.getAttribute("href")||""))){e.preventDefault();e.stopPropagation()}},true);
+d.addEventListener("keydown",function(e){if(!locked())return;var k=(e.key||"").toLowerCase();if(((e.ctrlKey||e.metaKey)&&"cpsxu".indexOf(k)>-1)||k==="f12"){e.preventDefault()}},true);
+var RXP=/طباع|طبع|PDF|بي دي اف|تنزيل|تحميل|تصدير|Excel|إكسل|اكسل|نسخة احتياطية|نسخ احتياطي|استيراد|استرجاع|استعادة|🖨|📦|💾|🗑|➕/i,RX=/حفظ|حذف|مسح|إضافة|اضافة|أضيفي|إدخال|رفع|توقيع|اعتماد|تعديل|➕|💾|🗑/i,q=0;
+function scan(){q=0;if(!locked())return;d.querySelectorAll("button,a,[role=button],label,input[type=button],input[type=submit]").forEach(function(b){if(b.id==="s67key"||b.classList.contains("s67hide")||(b.closest&&b.closest("#s67dlg")))return;var t=(b.textContent||"")+" "+(b.title||"")+" "+(b.value||"")+" "+(b.getAttribute("aria-label")||"");if(RXP.test(t)||(RX.test(t)&&!(b.closest&&b.closest("nav,[role=tablist],.tabs,.nav,.rail,.side,aside,header nav,[data-tab],[data-s],[data-v]"))))b.classList.add("s67hide")});d.querySelectorAll("input:not([type=search]):not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]),textarea").forEach(function(x){if(x.closest&&x.closest("#s67dlg"))return;if(x.hasAttribute&&x.hasAttribute("data-1p-ignore"))return;if(!x.readOnly){x.readOnly=true;x.setAttribute("data-s67ro","1")}});d.querySelectorAll("select").forEach(function(x){if(x.closest&&x.closest("#s67dlg"))return;if(x.disabled||x.hasAttribute("data-s67v"))return;var n=(x.id||"")+" "+(typeof x.className==="string"?x.className:"");var dat=/save|upd|store|persist|commit/i.test(x.getAttribute("onchange")||"")||!!(x.closest&&x.closest("td,form,dialog,[id*=form i],[id*=add i],[class*=form i],[class*=modal i],.fld,.field"));var vw=/(^|[\s_-])(flt|filter|filt)|Filter|search|^(f?st|fst|pf|sf|who|mon|mosel|wksel|wkPick|dvPick|schedSel|gradeSel|fltGrade|sel-month|sel-year|ttClass|ttTeacher|prSec|kfDomain|kfPeriod|kfStatus|kfType|kpiTrendSel|kpiSecs|pMonth|qType|qSt|dSel|dsel|lCat|multi|rl|role_pick|form_pick|cpick|ap-sem|beh-period)(\s|$)/.test(n)||(!dat&&/^(f[A-Z_-]|q[A-Z]|s-grade)|pick|Sel(\s|$)|sel(\s|$)/.test(x.id||""));if(!vw){x.disabled=true;x.setAttribute("data-s67ro","2")}});d.querySelectorAll("input[type=checkbox],input[type=radio],input[type=file]").forEach(function(x){if(x.closest&&x.closest("#s67dlg"))return;if(!x.disabled){x.disabled=true;x.setAttribute("data-s67ro","2")}});d.querySelectorAll("[contenteditable=true],[contenteditable=\"\"]").forEach(function(x){x.setAttribute("contenteditable","false");x.setAttribute("data-s67ro","3")})}
+function later(){if(!q){q=1;(window.requestAnimationFrame||setTimeout)(scan)}}
+var op=window.print;window.print=function(){if(locked())return;return op&&op.apply(window,arguments)};
+var ow=window.open;window.open=function(){if(locked())return null;return ow&&ow.apply(window,arguments)};
+window.addEventListener("beforeprint",scan);
+try{new MutationObserver(later).observe(de,{childList:true,subtree:true})}catch(e){}
+function s67sys(c){var R=location.href.indexOf("/school67/")>-1?location.href.slice(0,location.href.indexOf("/school67/")+10):"https://school67taif.github.io/school67/";var u=function(x){return Uint8Array.from(atob(x),function(ch){return ch.charCodeAt(0)})};return fetch(R+"index.html",{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/<script type="application\/json" id="seed">([\s\S]*?)<\/script>/);var s=JSON.parse(m[1]);return crypto.subtle.importKey("raw",new TextEncoder().encode(c),"PBKDF2",false,["deriveKey"]).then(function(b){return crypto.subtle.deriveKey({name:"PBKDF2",salt:u(s.salt),iterations:s.iter,hash:"SHA-256"},b,{name:"AES-GCM",length:256},false,["decrypt"])}).then(function(k){return crypto.subtle.decrypt({name:"AES-GCM",iv:u(s.owner.iv)},k,u(s.owner.ct))})}).then(function(){return true},function(){return false})}
+function ask(){var w=d.createElement("div");w.id="s67dlg";w.innerHTML='<div><b style="color:#660033">دخول مديرة المدرسة</b><div style="font-size:13px;color:#5D6D70">لفتح الطباعة والنسخ وPDF</div><input type="tel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-1p-ignore inputmode="numeric" maxlength="6" placeholder="••••••" style="-webkit-text-security:disc;text-security:disc"><div id="s67err" style="color:#B03F35;font-size:13px;min-height:18px"></div><button style="background:#007575;color:#fff">دخول</button><button style="background:#F4F7F7">إلغاء</button></div>';d.body.appendChild(w);var i=w.querySelector("input"),bs=w.querySelectorAll("button");i.focus();bs[1].onclick=function(){w.remove()};
+function go(){var c=String(i.value).replace(/[٠-٩]/g,function(x){return "٠١٢٣٤٥٦٧٨٩".indexOf(x)}).replace(/\D/g,"");crypto.subtle.digest("SHA-256",new TextEncoder().encode("s67|"+c)).then(function(b){var h=Array.prototype.map.call(new Uint8Array(b),function(x){return("0"+x.toString(16)).slice(-2)}).join("");var ok=function(){try{sessionStorage.setItem("s67own","1");localStorage.setItem("s67ownT",String(Date.now()))}catch(e){}unlock();w.remove()};if(h===H)ok();else{w.querySelector("#s67err").textContent="جارٍ التحقق…";s67sys(c).then(function(r){if(r)ok();else w.querySelector("#s67err").textContent="الرمز غير صحيح"})}})}
+bs[0].onclick=go;i.onkeydown=function(e){if(e.key==="Enter")go()}}
+function relock(){try{sessionStorage.removeItem("s67own");localStorage.removeItem("s67ownT")}catch(e){}location.reload()}
+function init(){scan();if(!d.getElementById("s67wm")){var w=d.createElement("div");w.id="s67wm";w.setAttribute("aria-hidden","true");var hh="";for(var y=-1;y<14;y++)for(var x=-1;x<7;x++)hh+='<div style="top:'+(y*140)+'px;left:'+(x*300+(y%2)*150)+'px">ناديه عوض الصخيري<br>الابتدائية السابعة والستون</div>';w.innerHTML=hh;d.body.appendChild(w)}if(!d.getElementById("s67rl")){var r=d.createElement("button");r.id="s67rl";r.type="button";r.textContent="🔒 قفل";r.title="إعادة القفل (للأجهزة المشتركة)";r.onclick=relock;d.body.appendChild(r)}if(!d.getElementById("s67key")){var k=d.createElement("button");k.id="s67key";k.type="button";k.textContent="🔑";k.title="دخول المديرة";k.setAttribute("aria-label","دخول المديرة");k.onclick=ask;d.body.appendChild(k)}}
+if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",init);else init();
+})();</script></body></html>
+</body></html>
