@@ -507,6 +507,12 @@ table.f.cal tr.holi td{background:#FFF4E5}
 .sd-chip b{display:block;font-size:20px;color:var(--brand)}.sd-chip span{font-size:12.5px;color:var(--muted)}
 .sd-alert{margin-top:12px;border:1px solid var(--warn);background:var(--warn-bg);border-radius:8px;padding:10px 14px;color:var(--fg)}
 .sd-alert b{color:var(--warn)}.sd-alert ul{margin:6px 0 0;padding-right:18px;line-height:1.9;font-size:13.5px}
+.rel-line{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin-top:8px;font-size:12.5px}.rel-line b{color:var(--brand);font-weight:700}
+.rel-chip{display:inline-block;padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:700;text-decoration:none}.rel-chip:hover{border-color:var(--accent)}
+.rel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.rel-g{border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:6px;padding:10px 12px;background:var(--surface)}
+.rel-g h3{margin:0 0 6px;font-size:14.5px;color:var(--brand)}.rel-g ul{margin:0;padding-right:16px;line-height:1.95;font-size:13.5px}.rel-g a{color:var(--accent);font-weight:600}
+@media print{.rel-line,#related{display:none!important}}
 </style>
 
 <header class="appbar">
@@ -881,7 +887,7 @@ function renderExtraSheet(k,person){
   ['ans','ev','meta','nums','el'].forEach(x=>{if(!rec[x])rec[x]={}});
   const pane=el('div',{class:'panel'});
   pane.appendChild(el('div',{class:'panel-h'},
-    el('div',null,el('div',{class:'eyebrow',text:f.title}),el('h2',{text:person.id==='school'?state.school.school:person.name}),person.assign&&f.subject==='teacher'?el('div',{class:'assign-line'},el('b',{text:'الإسناد ('+AR(person.periods||0)+' حصة): '}),person.assign):null,person.id!=='school'?staffInfoEl(person):null),
+    el('div',null,el('div',{class:'eyebrow',text:f.title}),el('h2',{text:person.id==='school'?state.school.school:person.name}),person.assign&&f.subject==='teacher'?el('div',{class:'assign-line'},el('b',{text:'الإسناد ('+AR(person.periods||0)+' حصة): '}),person.assign):null,person.id!=='school'?staffInfoEl(person):null,relatedLine(k)),
     el('div',{class:'toolbar'},el('span',{class:'save-state',id:'save-state','aria-live':'polite',text:state.saveState}),
       fillTopBtn(k,person),el('button',{type:'button',class:'btn',id:'btn-dl',onclick:()=>downloadExtra(k,person),text:'تنزيل التقرير'}),blankBtn(k,person),editableForm(k)?editItemsBtn(k):null)));
   const b=el('div',{class:'panel-b',style:'display:flex;flex-direction:column;gap:16px'});
@@ -1180,6 +1186,7 @@ function renderHome(){
   view.appendChild(monthlyPanel());
   view.appendChild(sigPanel());
   view.appendChild(staffDataPanel());
+  view.appendChild(relatedPanel());
   const sch=el('div',{class:'panel'},
     el('div',{class:'panel-h'},el('h2',{text:'بيانات المدرسة'}),el('button',{type:'button',class:'btn ghost',id:'btn-edit-school',onclick:()=>{state.editSchool=!state.editSchool;render()},text:state.editSchool?'إلغاء':'تعديل البيانات'})));
   if(state.editSchool){
@@ -1248,7 +1255,7 @@ function renderSheet(role,staff){
   const f=FORMS[role];const rec=getRec(role,staff);const p=progress(role,rec);
   const pane=el('div',{class:'panel'});
   pane.appendChild(el('div',{class:'panel-h'},
-    el('div',null,el('div',{class:'eyebrow',text:f.title}),el('h2',{text:staff.name+(staff.spec?' · '+staff.spec:'')}),workshopsOf(staff.name)!=null?el('div',{class:'ws-pill',text:'الورش المؤكد حضورها: '+AR(workshopsOf(staff.name))}):null,staff.assign?el('div',{class:'assign-line'},el('b',{text:'الإسناد'+(staff.periods?' ('+AR(staff.periods)+' حصة)':'')+': '}),staff.assign):null,staffInfoEl(staff)),
+    el('div',null,el('div',{class:'eyebrow',text:f.title}),el('h2',{text:staff.name+(staff.spec?' · '+staff.spec:'')}),workshopsOf(staff.name)!=null?el('div',{class:'ws-pill',text:'الورش المؤكد حضورها: '+AR(workshopsOf(staff.name))}):null,staff.assign?el('div',{class:'assign-line'},el('b',{text:'الإسناد'+(staff.periods?' ('+AR(staff.periods)+' حصة)':'')+': '}),staff.assign):null,staffInfoEl(staff),relatedLine(role)),
     el('div',{class:'toolbar'},
       el('span',{class:'save-state',id:'save-state','aria-live':'polite',text:state.saveState}),
       fillTopBtn(role,staff),el('button',{type:'button',class:'btn',id:'btn-dl',onclick:()=>downloadReport(role,staff),text:'تنزيل التقرير'}),blankBtn(role,staff),editItemsBtn(role),
@@ -1645,6 +1652,45 @@ async function downloadStaffData(){
   const dl=await (window.claude&&claude.use?claude.use('downloads'):Promise.resolve(window.__S67DL));if(!dl){alertMsg('التنزيل غير متاح في هذا العرض');return}
   try{await dl.save({filename:'البيانات-المهنية-للمنسوبات-1448.html',data:new Blob([html],{type:'text/html'})});alertMsg('تم تجهيز تقرير البيانات')}catch(e){if(!e||e.code!=='declined')alertMsg('تعذّر التنزيل')}
 }
+// ---------- related records and files on the school site ----------
+const SITE67='https://school67taif.github.io/school67/f/';
+const RLINK=n=>SITE67+encodeURIComponent(n)+'.html';
+const RELATED_GROUPS=[
+ ['الانضباط والدوام',['منصة الانضباط وقواعد السلوك والمواظبة','لوحة مؤشرات الانضباط','متابعة الدوام','سجل استئذان المنسوبات','منصة متابعة الغياب بعذر وبدون عذر','سجل السلوك الوظيفي','مشروع قِمَم للانضباط المدرسي 1448هـ','سجل المناوبة','جدول الانتظار للمعلمات']],
+ ['الإشراف الفني والنمو المهني',['منصة الزيارة الفنية','اجتماع الأداء الوظيفي مع المعلمات','سجل النمو المهني 1448هـ','سجل تصميم التدريس','استمارة التأمل الذاتي للمعلمة في مجال التطوير المستمر','منصة بطاقات الشكر والتقدير','سجل التحفيز والتكريم']],
+ ['التعليم والتعلم',['سجل التحصيل الدراسي','ملف التقويم والاختبارات','سجل منصة مدرستي والتعلم عن بعد','ملف التعليم عن بعد 1448هـ','سجل الجدول المدرسي','سجل الكتب الدراسية','سجل البرامج والأنشطة الإثرائية']],
+ ['الطالبات والخدمات',['سجل النشاط الطلابي','ملف الموجهة الصحية الشامل','ملف توثيق شواهد مؤشرات التوجيه الطلابي','ملف الأمن والسلامة والصيانة والنظافة · الابتدائية 67','سجل فحص مياه الشرب','سجل العهد والمستودع','ملف الاستعداد والتهيئة · الابتدائية 67']],
+ ['الإدارة والتوثيق',['الخطة التشغيلية ١٤٤٨هـ','سجل التكليفات والقرارات الإدارية واللجان والفرق','سجل اطلاع الموظفات على التعاميم','منصة إجراءات منسوبات المدرسة 1448هـ','صلاحيات مديرة المدرسة','ملف الوثائق والشواهد 1448هـ','دليل الوثائق المطلوبة وفق التقويم الذاتي','داشبورد سجلات الابتدائية 67']]];
+const RELATED_BY_FORM={
+ teacher:['منصة الزيارة الفنية','سجل تصميم التدريس','سجل التحصيل الدراسي','سجل النمو المهني 1448هـ'],
+ vice:['متابعة الدوام','سجل استئذان المنسوبات','سجل المناوبة','جدول الانتظار للمعلمات'],
+ admin:['سجل اطلاع الموظفات على التعاميم','سجل التكليفات والقرارات الإدارية واللجان والفرق','سجل العهد والمستودع'],
+ health:['ملف الموجهة الصحية الشامل','سجل فحص مياه الشرب'],
+ activity:['سجل النشاط الطلابي','سجل البرامج والأنشطة الإثرائية'],
+ counselor:['ملف توثيق شواهد مؤشرات التوجيه الطلابي','منصة الانضباط وقواعد السلوك والمواظبة'],
+ cleaning:['ملف الأمن والسلامة والصيانة والنظافة · الابتدائية 67'],cleaneval:['ملف الأمن والسلامة والصيانة والنظافة · الابتدائية 67'],
+ guard:['ملف الأمن والسلامة والصيانة والنظافة · الابتدائية 67','سجل المناوبة'],
+ discipline:['لوحة مؤشرات الانضباط','متابعة الدوام','سجل استئذان المنسوبات','منصة متابعة الغياب بعذر وبدون عذر','منصة الانضباط وقواعد السلوك والمواظبة'],
+ commitment:['سجل السلوك الوظيفي','متابعة الدوام','سجل استئذان المنسوبات'],
+ cover:['جدول الانتظار للمعلمات','سجل الجدول المدرسي','سجل استئذان المنسوبات'],
+ curriculum:['سجل تصميم التدريس','سجل الكتب الدراسية','ملف التقويم والاختبارات'],
+ readiness:['ملف الوثائق والشواهد 1448هـ','دليل الوثائق المطلوبة وفق التقويم الذاتي','ملف الاستعداد والتهيئة · الابتدائية 67'],
+ canteen:['ملف الموجهة الصحية الشامل','ملف الأمن والسلامة والصيانة والنظافة · الابتدائية 67'],
+ madrasati:['سجل منصة مدرستي والتعلم عن بعد','ملف التعليم عن بعد 1448هـ'],
+ prep:['سجل تصميم التدريس','سجل منصة مدرستي والتعلم عن بعد'],
+ hwprep:['سجل تصميم التدريس','سجل التحصيل الدراسي'],
+ support:['منصة الزيارة الفنية','سجل النمو المهني 1448هـ'],
+ visits:['منصة الزيارة الفنية'],
+ actsupport:['سجل النشاط الطلابي','منصة الزيارة الفنية'],
+ counsupport:['ملف توثيق شواهد مؤشرات التوجيه الطلابي','منصة الزيارة الفنية']};
+function relatedLine(k){const L=RELATED_BY_FORM[k];if(!L||!L.length)return null;
+  return el('div',{class:'rel-line'},el('b',{text:'سجلات مرتبطة في موقع المدرسة: '}),...L.map(n=>el('a',{href:RLINK(n),target:'_blank',rel:'noopener',class:'rel-chip',text:n.replace(/ · الابتدائية 67$/,'')})))}
+function relatedPanel(){
+  const pane=el('div',{class:'panel',id:'related'});
+  pane.appendChild(el('div',{class:'panel-h'},el('h2',{text:'السجلات والملفات المرتبطة'}),el('span',{class:'muted',text:'من موقع المدرسة — تُفتح في تبويب جديد'})));
+  const b=el('div',{class:'panel-b rel-grid'});
+  RELATED_GROUPS.forEach(([t,L])=>b.appendChild(el('div',{class:'rel-g'},el('h3',{text:t}),el('ul',null,...L.map(n=>el('li',null,el('a',{href:RLINK(n),target:'_blank',rel:'noopener',text:n.replace(/ · الابتدائية 67$/,'')})))))));
+  pane.appendChild(b);return pane}
 // ---------- data ----------
 function snap(){try{if(!snap.c)snap.c=JSON.parse(document.getElementById('data-snapshot').textContent||'{}');return snap.c}catch(e){return {}}}
 function loadSnap(){const S=snap();state.staff=(S.staff||[]).map(x=>({...x}));state.sigs=(S.sigs||[]).map(x=>({...x}));}
