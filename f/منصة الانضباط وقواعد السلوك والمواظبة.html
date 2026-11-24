@@ -1095,7 +1095,7 @@ const LKEY="school67-discipline-v1";
 function localDB(){
   let store={};try{store=JSON.parse(localStorage.getItem(LKEY)||"{}")||{};}catch(e){store={};}
   const subs=[];
-  const persist=()=>{try{localStorage.setItem(LKEY,JSON.stringify(store));}catch(e){toast("تعذّر الحفظ على هذا الجهاز: مساحة المتصفح ممتلئة أو محظورة.");}};
+  const persist=()=>{try{localStorage.setItem(LKEY,JSON.stringify(store));}catch(e){if(performance.now()>8000)toast("تعذّر الحفظ على هذا الجهاز: مساحة المتصفح ممتلئة أو محظورة.");}};
   const notify=()=>subs.forEach(f=>{try{f();}catch(e){}});
   const docRef=(c,i)=>({
     set:async d=>{(store[c]=store[c]||{})[i]=JSON.parse(JSON.stringify(d));persist();notify();},
