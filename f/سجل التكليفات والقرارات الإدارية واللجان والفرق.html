@@ -724,6 +724,42 @@ function addRemote0528(st){
   }
   st.settings.rem0528V=1;
 }
+/* محضرا 1448/05/08هـ (عن بعد) من «سجل اللجان والفرق» الموقّع: اللجنة الإدارية ولجنة التوجيه والإرشاد */
+const MEET0508=[
+ {c:'اللجنة الإدارية للمدرسة',target:'أعضاء اللجنة',
+  agenda:['استعراض نتائج التصويت بشأن تنفيذ مبادرة (من حينا يبدأ المستقبل)','تحليل آراء أعضاء اللجنة ومقترحاتهم حول آلية التنفيذ','مناقشة مدى ملاءمة تنفيذ المبادرة في ظل الظروف والإمكانات المتاحة','دراسة مقترح تنفيذ المبادرة بصورة مرحلية ومحدودة','تحديد آلية التنفيذ والمتابعة والتقييم'],
+  recs:[['اعتماد تنفيذ المبادرة وفق مراحل محددة تتناسب مع إمكانات المدرسة وظروفها.','مديرة المدرسة','بداية العام الدراسي','إدارة التعليم','منفذة',''],
+   ['البدء بمرحلة أولى محدودة؛ لقياس مدى فاعلية المبادرة وقابليتها للتطبيق.','فريق المبادرة','الفصل الدراسي الأول','المدرسة','لم تنفذ','الحاجة إلى تهيئة متطلبات التنفيذ ومواءمتها مع ظروف المدرسة وإمكاناتها — الإجراء التصحيحي: البدء بتطبيق تجريبي محدود وفق الإمكانات المتاحة، مع تحديد مؤشرات لقياس الفاعلية.'],
+   ['إعداد خطة تنفيذية تتضمن المهام والمسؤوليات والجدول الزمني.','فريق المبادرة بالتنسيق مع مديرة المدرسة','قبل بدء التنفيذ','المدرسة','لم تنفذ','الحاجة إلى استكمال دراسة متطلبات المبادرة وتحديد الإمكانات المتاحة — الإجراء التصحيحي: إعداد خطة تنفيذية مرحلية وتحديد المسؤوليات والمدة الزمنية لكل مرحلة.'],
+   ['توثيق نتائج المرحلة الأولى ورصد التحديات وفرص التحسين.','فريق المبادرة','نهاية المرحلة الأولى','المدرسة','لم تنفذ','عدم البدء بالتنفيذ الفعلي للمرحلة الأولى — الإجراء التصحيحي: اعتماد نموذج موحد لتوثيق النتائج والملاحظات والتحديات فور بدء التنفيذ.'],
+   ['تقييم التجربة والاستفادة من نتائجها عند التوسع في التنفيذ خلال العام القادم.','مديرة المدرسة مع فريق المبادرة','نهاية العام الدراسي','إدارة التعليم','لم تنفذ','ارتباط التقييم بنتائج المرحلة الأولى التي لم تُنفذ بعد — الإجراء التصحيحي: تحديد موعد للتقييم بعد انتهاء المرحلة التجريبية، والاستفادة من النتائج في إعداد خطة التوسع.']],
+  unmet:'',
+  att:[['ناديه الصخيري','مديرة المدرسة','رئيسة'],['ثرياء القثامي','وكيلة المدرسة','عضوة'],['هند العتيبي','الموجهة الطلابية','عضوة'],['عيشه الحارثي','رائدة النشاط','عضوة'],['أمل الهيفاني','معلمة','عضوة'],['رفعه العتيبي','معلمة','عضوة'],['غزيل العتيبي','معلمة','عضوة'],['فاطمه الحارثي','معلمة','عضوة'],['ثريا الزهراني','إدارية','مقررة اللجنة']]},
+ {c:'لجنة التوجيه والإرشاد',target:'أعضاء اللجنة',
+  agenda:['مناقشة حالة طالب بالصف الأول بسبب تجاوزه أسبوعين من الغياب.','استعراض إجراءات متابعة الغياب التي تم اتخاذها، بما في ذلك التواصل مع الأسرة واستدعاء ولي الأمر وإرسال الإنذارات.','مناقشة عدم استجابة ولي الأمر للإجراءات السابقة واستمرار غياب الطالب.','استعراض إحالة حالة الطالب إلى الموجهة الطلابية لاستكمال الإجراءات النظامية اللازمة.','تحديد الإجراءات اللاحقة لتعزيز متابعة الحالة والحد من استمرار الغياب.'],
+  recs:[['استكمال الإجراءات النظامية المتعلقة بغياب الطالب وفق الأنظمة والتعليمات المعتمدة.','الموجهة الطلابية','فوري ومستمر حتى استكمال الإجراءات','إدارة المدرسة','منفذة',''],
+   ['توثيق جميع إجراءات التواصل مع الأسرة والإنذارات ومحاولات استدعاء ولي الأمر في سجل متابعة الغياب.','مسؤولة الغياب','فوري مع التحديث المستمر','الوكيلة','منفذة',''],
+   ['مواصلة متابعة حالة الطالب والتنسيق مع الموجهة الطلابية بشأن المستجدات والإجراءات المتخذة.','الوكيلة ومسؤولة الغياب','أسبوعيًا وحتى معالجة الحالة','إدارة المدرسة','منفذة',''],
+   ['تعزيز التواصل مع الأسرة والتأكيد على أهمية انتظام الطالب في الدراسة والالتزام بالحضور.','الموجهة الطلابية','مستمر حتى انتظام الطالب','الوكيلة','منفذة',''],
+   ['متابعة عودة الطالب وانتظامه في الدراسة، ورفع ما يستجد من ملاحظات إلى إدارة المدرسة لاتخاذ اللازم.','مسؤولة الغياب ورائدة النشاط','يوميًا عند عودة الطالب ولمدة المتابعة المعتمدة','مديرة المدرسة والوكيلة','منفذة','']],
+  unmet:'تم تنفيذ جميع التوصيات الواردة في المحضر وفق الإجراءات والأنظمة المعتمدة. لا توجد توصيات لم تُنفذ أو معوقات حالت دون التنفيذ.',
+  att:[['ثرياء القثامي','وكيلة المدرسة','رئيسة'],['عيشه الحارثي','رائدة النشاط','عضوة'],['عزه الزهراني','معلمة','عضوة'],['نجلاء الصخيري','معلمة','عضوة'],['هند العتيبي','الموجهة الطلابية','مقررة اللجنة']]}];
+function addMeet0508(st){
+  if(st.settings.meet0508V===1) return;
+  const rows=[...STAFF.T,...STAFF.A].map(r=>r[0]);
+  MEET0508.forEach(R=>{
+    const c=st.committees.find(x=>x.title===R.c); if(!c) return;
+    if(!c.meetings.some(m=>/1448\/05\/08/.test(m.date))){
+      const m=newMeeting(c,{date:'1448/05/08هـ', day:'الإثنين', sem:1, kind:'الشهري'});
+      Object.assign(m,{start:'5:57 م',end:'9:15 م',place:'عن بعد',target:R.target,agenda:R.agenda.slice(),unmet:R.unmet,guests:'',opin:[],
+        recs:R.recs.map(x=>({id:uid(),text:x[0],owner:x[1],duration:x[2],follow:x[3],status:x[4],reason:x[5]})),
+        att:R.att.map(x=>({name:rows.find(r=>samePerson(r,x[0]))||(samePerson(x[0],S_principal())?S_principal():x[0]),job:x[1],role:x[2],st:'حاضرة',sig:samePerson(x[0],S_principal())?SIG_NADIA:''})), apprSig:SIG_NADIA});
+      c.meetings.push(m); renumberMeetings(c);
+    }
+    if(c.plan && Array.isArray(c.plan.dates)) c.plan.dates=c.plan.dates.map(row=>row.map(d=>/1448\/05\/10/.test(d)?'الإثنين 1448/05/08هـ':d));
+  });
+  st.settings.meet0508V=1;
+}
 /* جدول المناوبة — من سجل المناوبة للفصل الدراسي الأول 1448هـ */
 function applyDuty1448(st){
   if(st.settings.dutyV===1) return;
@@ -1791,7 +1827,7 @@ try{
 try{ applyExtraDesc(S); } catch(e){}
   try{ applySourcedFills(S); }catch(e){}
   try{ applyNextAgendas(S); }catch(e){}
-  try{ if(S.settings.stampV!==2){ S.settings.stamp=STAMP; S.settings.stampV=2; } applyKnownSigs(S); applyTeacherData(S); applyFullNames(S); applyTeacherData(S); S.committees.forEach(c=>{ if(c.kind!=='takleef') fillMeetingContent(c); }); try{ applyRealMeetings(S); }catch(e){ console.error(e); } try{ addBehaviorMeeting(S); }catch(e){} try{ addFoundingMeeting(S); }catch(e){ console.error(e); } try{ addRemote0528(S); }catch(e){ console.error(e); } try{ applyDuty1448(S); }catch(e){ console.error(e); } try{ applyNoLabSped(S); }catch(e){ console.error(e); } try{ applyGuardName(S); }catch(e){ console.error(e); } try{ syncPlanDates(S); }catch(e){ console.error(e); } try{ closeRecsUpTo0602(S); }catch(e){ console.error(e); } applyKnownSigs(S); autoSignPast(S); save(); }catch(e){}
+  try{ if(S.settings.stampV!==2){ S.settings.stamp=STAMP; S.settings.stampV=2; } applyKnownSigs(S); applyTeacherData(S); applyFullNames(S); applyTeacherData(S); S.committees.forEach(c=>{ if(c.kind!=='takleef') fillMeetingContent(c); }); try{ applyRealMeetings(S); }catch(e){ console.error(e); } try{ addBehaviorMeeting(S); }catch(e){} try{ addFoundingMeeting(S); }catch(e){ console.error(e); } try{ addRemote0528(S); }catch(e){ console.error(e); } try{ applyDuty1448(S); }catch(e){ console.error(e); } try{ applyNoLabSped(S); }catch(e){ console.error(e); } try{ applyGuardName(S); }catch(e){ console.error(e); } try{ syncPlanDates(S); }catch(e){ console.error(e); } try{ closeRecsUpTo0602(S); }catch(e){ console.error(e); } try{ addMeet0508(S); }catch(e){ console.error(e); } applyKnownSigs(S); autoSignPast(S); save(); }catch(e){}
 try{ applyFix67(S); save(); }catch(e){ console.error(e); }
 
 function applyFix67(st){
