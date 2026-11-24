@@ -179,6 +179,14 @@ footer{
   section{break-inside:avoid}
   footer,thead tr{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+.decree{background:#FFF6FA;border:1px solid #F0D4E2;border-right:5px solid #660033;border-radius:12px;padding:13px 16px;margin-bottom:14px;font-size:14px;line-height:2;color:#2A1A22}
+.decree b{color:#660033}
+.sub-head{font-family:"Noto Kufi Arabic",Tahoma,sans-serif;font-weight:700;font-size:15px;color:#007575;border-right:4px solid #009999;padding-right:10px;margin-bottom:10px}
+.att{border:1px solid #DDE5E5;border-radius:14px;padding:14px;margin-top:12px;background:#FCFDFD}
+.att-head{font-family:"Noto Kufi Arabic",Tahoma,sans-serif;font-weight:700;font-size:14.5px;color:#660033;margin-bottom:10px}
+.att-head b{color:#007575}
+@media print{.att,.keep{break-inside:avoid;page-break-inside:avoid}}
 </style><style>
 .card p{font-size:14.5px}
 .card a{text-decoration:none}
@@ -230,6 +238,10 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else sca
         <div class="info-item"><div class="lbl">المرحلة</div><div class="val">المرحلة الابتدائية — بنات</div></div>
         <div class="info-item"><div class="lbl">عدد اجتماعات العام</div><div class="val">أربعة اجتماعات (اثنان كل فصل)</div></div>
         <div class="info-item"><div class="lbl">مكان الانعقاد</div><div class="val">قاعة المدرسة / عن بُعد عند الحاجة</div></div>
+        <div class="info-item"><div class="lbl">مستوى الانعقاد</div><div class="val">دوري خلال العام الدراسي (ويُعقد رسمي أو طارئ عند الحاجة)</div></div>
+        <div class="info-item"><div class="lbl">المستهدفات</div><div class="val">أمهات الطالبات وأولياء أمورهن</div></div>
+        <div class="info-item"><div class="lbl">المشاركات</div><div class="val">معلمات المدرسة ومنسوباتها</div></div>
+        <div class="info-item"><div class="lbl">مجال المجلس</div><div class="val">نفسي تربوي</div></div>
       </div>
       <div class="chips">
         <div class="chip"><span class="num">9</span><span class="txt">أعضاء<br>المجلس</span></div>
@@ -253,6 +265,19 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else sca
         <li>الاستفادة من خبرات الأمهات ومهاراتهن في برامج المدرسة وأنشطتها ومبادراتها.</li>
         <li>اكتشاف المشكلات التعليمية والسلوكية مبكرًا ومعالجتها بالتعاون مع الأسرة.</li>
         <li>استقبال مقترحات أولياء الأمور وملاحظاتهم وتوظيفها في الخطة التشغيلية وخطط التحسين.</li>
+      </ul>
+      <div class="sub-head" style="margin-top:16px">الأهداف العامة لمجالس أولياء الأمور — وفق النموذج المعتمد</div>
+      <ul class="out-list">
+        <li>أن يكون المجلس حلقة الوصل بين المدرسة والأسرة، وحلقة التواصل بين أولياء الأمور وإدارة المدرسة.</li>
+        <li>تشخيص مكامن الخلل ومعالجتها أولًا بأول حتى تصل الطالبة إلى أهدافها المنشودة.</li>
+        <li>توثيق التواصل بين البيت والمدرسة وتطوير العلاقات الإنسانية والتكاملية بينهما.</li>
+        <li>التداول والتباحث فيما يتعلق بالطالبة بشكل مستمر بين أسرتها والمدرسة من أجل تصحيح الأخطاء وتداركها.</li>
+        <li>المشاركة في بناء البرامج التربوية في المدرسة وتطويرها، ودعم المدرسة من خلال المشاركات المجتمعية.</li>
+        <li>تعميق الوعي الوطني والعلمي والتربوي والثقافي والصحي بما يحسّن البيئة المحلية ويجعل المدرسة مركز إشعاع في مجتمعها.</li>
+        <li>تبصير أولياء الأمور بمستويات الطالبات للتعاون في رفعها وتعزيزها، والتعرف على آرائهم ومقترحاتهم في العملية التعليمية.</li>
+        <li>العملية التربوية والتعليمية مثلث يتكوّن من (الطالبة — المعلمة — المنهج المدرسي)، وهي بحاجة إلى أن تكون مربعًا بإضافة عنصر مهم وهو الأسرة.</li>
+        <li>الإسهام في إحكام وضبط السلوك الاجتماعي للطالبات داخل المدرسة وخارجها، وبخاصة ما يتصل بالعلاقة بين الطالبة والمعلمة وأصول التعامل بينهما والاهتمام بالنظافة والمظهر.</li>
+        <li>تعزيز غرس المبادئ السامية والقيم الإسلامية الأصيلة في نفوس الطالبات، والاستشهاد بالنماذج الإسلامية والتاريخية المعاصرة ذات السلوك الإنساني الراقي وتشجيعهن على الاقتداء بها.</li>
       </ul>
     </div>
   </section>
@@ -283,6 +308,11 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else sca
   <section>
     <div class="sec-head"><h2>رابعاً: قرار تشكيل المجلس للعام 1448هـ</h2></div>
     <div class="card">
+      <div class="decree">
+        بناءً على الصلاحيات الممنوحة لنا بقرار وزير التعليم رقم <b>37617168</b> وتاريخ <b>1437/4/1هـ</b> بشأن منح مديري ومديرات المدارس صلاحيات،
+        وحسب ما جاء في الصلاحية رقم <b>(1)</b>: «اعتماد تشكيل مجالس أو لجنة لمدة عام دراسي أو أقل»،
+        فقد تقرر اعتماد تشكيل مجلس الأمهات والمعلمات بالمدرسة للعام الدراسي <b>1448هـ</b> على النحو الآتي:
+      </div>
       <div class="tbl-wrap">
         <table>
           <thead><tr><th style="width:44px">م</th><th>الاسم</th><th>الصفة</th><th>العضوية</th></tr></thead>
@@ -342,9 +372,23 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else sca
     </div>
   </section>
 
+  <!-- خطة تنفيذية -->
+  <section>
+    <div class="sec-head"><h2>سابعاً: الخطة التنفيذية للمجلس</h2></div>
+    <div class="card">
+      <p style="margin-bottom:12px">تهدف الخطة التنفيذية إلى تعزيز العلاقة بين المدرسة والبيت وإيجاد فرص التكامل والتعاون المشترك بما يعود بالنفع على الطالبات، وتبصير أولياء الأمور بالأنظمة واللوائح المنظمة للعمل المدرسي، ومناقشة الاحتياجات والعقبات التي تواجه الطالبات، وتقبّل المقترحات لتحسين الخدمات المقدمة في المدرسة.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:40px">م</th><th>الإجراءات</th><th>الأسلوب التنفيذي — المشاركة</th><th>الدور</th><th>المستهدفات</th><th>التاريخ</th><th>الأثر</th></tr></thead>
+          <tbody><tr><td>1</td><td>إلقاء كلمة افتتاح المجلس</td><td><ul style="margin:0;padding-right:16px"><li>الترحيب بأولياء الأمور</li><li>توضيح أبرز محاور النقاش</li></ul></td><td>مديرة المدرسة</td><td>أمهات الطالبات</td><td>&nbsp;</td><td rowspan="6" style="vertical-align:middle;text-align:center;font-weight:600;color:#660033;background:#FFF6FA">إدراك وتفهّم<br><span style="font-size:22px;font-family:'Noto Kufi Arabic',Tahoma,sans-serif;color:#009999">80%</span><br>من أولياء الأمور لأهمية التواصل مع المدرسة ودعمها والتعاون معها</td></tr><tr><td>2</td><td>عرض الأنظمة واللوائح المنظمة للعملية التعليمية</td><td><ul style="margin:0;padding-right:16px"><li>مناقشة المحاور</li><li>التعريف بالأنظمة واللوائح المنظمة للعمل المدرسي</li></ul></td><td>وكيلة المدرسة</td><td>أمهات الطالبات</td><td>&nbsp;</td></tr><tr><td>3</td><td>عرض دور البيت وأهمية الإرشاد الطلابي</td><td><ul style="margin:0;padding-right:16px"><li>إبراز أهمية دور البيت</li><li>كيفية تلبية احتياجات الطالبات</li><li>التعريف بدور الإرشاد الطلابي في المدرسة</li></ul></td><td>الموجهة الطلابية</td><td>أمهات الطالبات</td><td>&nbsp;</td></tr><tr><td>4</td><td>تنظيم المكان وتهيئته للاجتماع</td><td><ul style="margin:0;padding-right:16px"><li>تهيئة مكان انعقاد المجلس</li><li>توزيع خطابات الدعوة على أولياء الأمور</li><li>إبلاغ المعلمات وإعداد المستندات والأوراق الخاصة بالطالبات</li><li>تجهيز أماكن المعلمات لمباشرة أولياء الأمور بعد الاجتماع</li></ul></td><td>عضوات المجلس</td><td>أمهات الطالبات</td><td>&nbsp;</td></tr><tr><td>5</td><td>استقبال المرئيات والمقترحات وتوثيقها</td><td><ul style="margin:0;padding-right:16px"><li>تقبّل التقييمات والآراء والمقترحات من أولياء الأمور لتحسين الخدمات المقدمة في المدرسة</li></ul></td><td>مقررة المجلس</td><td>أمهات الطالبات</td><td>&nbsp;</td></tr><tr><td>6</td><td>تنفيذ ورش عمل نوعية لأولياء الأمور</td><td><ul style="margin:0;padding-right:16px"><li>تنفيذ ورش في الجوانب التي تراها عضوات المجلس ذات أهمية كبيرة</li></ul></td><td>المجلس مجتمعًا</td><td>أمهات الطالبات</td><td>&nbsp;</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
   <!-- 7 -->
   <section>
-    <div class="sec-head"><h2>سابعاً: المحاور المعتمدة للنقاش</h2></div>
+    <div class="sec-head"><h2>ثامناً: المحاور المعتمدة للنقاش</h2></div>
     <div class="card">
       <ul class="out-list">
         <li>الانضباط المدرسي ورفع وعي أولياء الأمور بأهميته.</li>
@@ -361,7 +405,7 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else sca
 
   <!-- 8 -->
   <section>
-    <div class="sec-head"><h2>ثامناً: لقاءات المجلس المنفذة خلال 1448هـ</h2></div>
+    <div class="sec-head"><h2>تاسعاً: لقاءات المجلس المنفذة خلال 1448هـ</h2></div>
     <div class="card">
       <div class="tbl-wrap">
         <table>
@@ -379,7 +423,7 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else sca
 
   <!-- 9 -->
   <section>
-    <div class="sec-head"><h2>تاسعاً: نموذج خطاب الدعوة لحضور المجلس</h2></div>
+    <div class="sec-head"><h2>عاشراً: نموذج خطاب الدعوة لحضور المجلس</h2></div>
     <div class="card">
       <p style="text-align:center;font-size:15.5px;line-height:2.1">
         انطلاقًا من اهتمام المدرسة بمشاركة مجلس الأمهات والمعلمات في العملية التعليمية ورفع المستوى التحصيلي لزهور المستقبل،<br>
@@ -408,7 +452,7 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else sca
 
   <!-- 10 -->
   <section>
-    <div class="sec-head"><h2>عاشراً: نموذج برنامج الاجتماع</h2></div>
+    <div class="sec-head"><h2>الحادي عشر: نموذج برنامج الاجتماع</h2></div>
     <div class="card">
       <div class="tbl-wrap">
         <table>
@@ -427,41 +471,155 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else sca
     </div>
   </section>
 
-  <!-- 11 -->
+    <!-- ضبط الممرات -->
   <section>
-    <div class="sec-head"><h2>الحادي عشر: بيان حضور الاجتماع</h2></div>
+    <div class="sec-head"><h2>الثاني عشر: خطة ضبط النظام في ممرات المدرسة يوم انعقاد المجلس</h2></div>
     <div class="card">
+      <p style="margin-bottom:12px">تُعتمد هذه الخطة قبل يوم انعقاد المجلس لتنظيم دخول أولياء الأمور وحركتهم داخل المدرسة، وضمان سير العملية التعليمية دون تعطيل، وتوجيه كل ولية أمر إلى مكان معلمة ابنتها.</p>
       <div class="tbl-wrap">
         <table>
-          <thead><tr><th style="width:44px">م</th><th>اسم الحاضرة</th><th>صفتها</th><th>اسم الطالبة وصفها</th><th>رقم التواصل</th><th>التوقيع</th></tr></thead>
-          <tbody>
-            <tr><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>3</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>4</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>5</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>6</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>7</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>9</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>10</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-          </tbody>
+          <thead><tr><th style="width:40px">م</th><th>اسم الإدارية المكلَّفة</th><th>موقعها لضبط النظام</th><th>ملاحظات</th><th>التوقيع</th></tr></thead>
+          <tbody><tr><td>1</td><td>&nbsp;</td><td>ممر صف الأول الابتدائي</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>2</td><td>&nbsp;</td><td>ممر صف الأول الابتدائي</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>3</td><td>&nbsp;</td><td>ممر صف الثاني الابتدائي</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>4</td><td>&nbsp;</td><td>ممر صف الثاني الابتدائي</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>5</td><td>&nbsp;</td><td>ممر صف الثالث الابتدائي</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>6</td><td>&nbsp;</td><td>ممر صف الثالث الابتدائي</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>7</td><td>&nbsp;</td><td>ممر صف الرابع الابتدائي</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>8</td><td>&nbsp;</td><td>ممر صف الرابع الابتدائي</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>9</td><td>&nbsp;</td><td>ممر صف الخامس الابتدائي</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>10</td><td>&nbsp;</td><td>ممر صف الخامس الابتدائي</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>11</td><td>&nbsp;</td><td>ممر صف السادس الابتدائي</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>12</td><td>&nbsp;</td><td>ممر صف السادس الابتدائي</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>13</td><td>&nbsp;</td><td>خدمة مستفيد — لفترة مؤقتة</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody>
         </table>
       </div>
-      <p style="margin-top:10px;font-size:13px;color:#5D6D70">يُرفق بيان الحضور بعد تعبئته مع محضر الاجتماع ضمن شواهد المجلس.</p>
+      <ul class="rec-list" style="margin-top:12px">
+        <li>تبدأ المهمة قبل موعد الاجتماع بثلاثين دقيقة وتستمر حتى انصراف أولياء الأمور.</li>
+        <li>تُوجَّه ولية الأمر إلى مكان المعلمة المعنية، ولا يُسمح بالدخول إلى الفصول أثناء الحصص.</li>
+        <li>تُرفع الملاحظات الميدانية إلى رئيسة المجلس لمعالجتها في الاجتماع القادم.</li>
+      </ul>
+    </div>
+  </section>
+
+<!-- 11 -->
+  <section>
+    <div class="sec-head"><h2>الثالث عشر: بيان حضور أولياء الأمور لكل صف</h2></div>
+    <div class="card">
+      <p style="margin-bottom:12px">يُعبَّأ بيان حضور مستقل لكل صف دراسي، وتُرصد فيه أعداد الحاضرات والمعتذرات والعدد الكلي، ثم يُرفق مع محضر الاجتماع ضمن شواهد المجلس.</p>
+      <div class="att keep">
+        <div class="att-head">بيان الحضور — الصف <b>الأول الابتدائي</b> / شعبة ..........</div>
+        <div class="info-grid">
+          <div class="info-item"><div class="lbl">الفصل الدراسي</div><div class="val">☐ الأول &nbsp;&nbsp; ☐ الثاني</div></div>
+          <div class="info-item"><div class="lbl">اليوم والتاريخ</div><div class="val">........... / ....... / 1448هـ</div></div>
+          <div class="info-item"><div class="lbl">عدد الحضور</div><div class="val">..........</div></div>
+          <div class="info-item"><div class="lbl">المعتذرات</div><div class="val">..........</div></div>
+          <div class="info-item"><div class="lbl">العدد الكلي</div><div class="val">..........</div></div>
+        </div>
+        <div class="tbl-wrap" style="margin-top:10px">
+          <table>
+            <thead><tr><th style="width:44px">م</th><th>اسم ولية الأمر</th><th>صلة القرابة</th><th>رقم الجوال</th><th>التوقيع</th></tr></thead>
+            <tbody><tr><td>1</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>2</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>3</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>4</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>5</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>6</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>7</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>8</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="att keep">
+        <div class="att-head">بيان الحضور — الصف <b>الثاني الابتدائي</b> / شعبة ..........</div>
+        <div class="info-grid">
+          <div class="info-item"><div class="lbl">الفصل الدراسي</div><div class="val">☐ الأول &nbsp;&nbsp; ☐ الثاني</div></div>
+          <div class="info-item"><div class="lbl">اليوم والتاريخ</div><div class="val">........... / ....... / 1448هـ</div></div>
+          <div class="info-item"><div class="lbl">عدد الحضور</div><div class="val">..........</div></div>
+          <div class="info-item"><div class="lbl">المعتذرات</div><div class="val">..........</div></div>
+          <div class="info-item"><div class="lbl">العدد الكلي</div><div class="val">..........</div></div>
+        </div>
+        <div class="tbl-wrap" style="margin-top:10px">
+          <table>
+            <thead><tr><th style="width:44px">م</th><th>اسم ولية الأمر</th><th>صلة القرابة</th><th>رقم الجوال</th><th>التوقيع</th></tr></thead>
+            <tbody><tr><td>1</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>2</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>3</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>4</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>5</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>6</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>7</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>8</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="att keep">
+        <div class="att-head">بيان الحضور — الصف <b>الثالث الابتدائي</b> / شعبة ..........</div>
+        <div class="info-grid">
+          <div class="info-item"><div class="lbl">الفصل الدراسي</div><div class="val">☐ الأول &nbsp;&nbsp; ☐ الثاني</div></div>
+          <div class="info-item"><div class="lbl">اليوم والتاريخ</div><div class="val">........... / ....... / 1448هـ</div></div>
+          <div class="info-item"><div class="lbl">عدد الحضور</div><div class="val">..........</div></div>
+          <div class="info-item"><div class="lbl">المعتذرات</div><div class="val">..........</div></div>
+          <div class="info-item"><div class="lbl">العدد الكلي</div><div class="val">..........</div></div>
+        </div>
+        <div class="tbl-wrap" style="margin-top:10px">
+          <table>
+            <thead><tr><th style="width:44px">م</th><th>اسم ولية الأمر</th><th>صلة القرابة</th><th>رقم الجوال</th><th>التوقيع</th></tr></thead>
+            <tbody><tr><td>1</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>2</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>3</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>4</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>5</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>6</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>7</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>8</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="att keep">
+        <div class="att-head">بيان الحضور — الصف <b>الرابع الابتدائي</b> / شعبة ..........</div>
+        <div class="info-grid">
+          <div class="info-item"><div class="lbl">الفصل الدراسي</div><div class="val">☐ الأول &nbsp;&nbsp; ☐ الثاني</div></div>
+          <div class="info-item"><div class="lbl">اليوم والتاريخ</div><div class="val">........... / ....... / 1448هـ</div></div>
+          <div class="info-item"><div class="lbl">عدد الحضور</div><div class="val">..........</div></div>
+          <div class="info-item"><div class="lbl">المعتذرات</div><div class="val">..........</div></div>
+          <div class="info-item"><div class="lbl">العدد الكلي</div><div class="val">..........</div></div>
+        </div>
+        <div class="tbl-wrap" style="margin-top:10px">
+          <table>
+            <thead><tr><th style="width:44px">م</th><th>اسم ولية الأمر</th><th>صلة القرابة</th><th>رقم الجوال</th><th>التوقيع</th></tr></thead>
+            <tbody><tr><td>1</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>2</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>3</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>4</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>5</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>6</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>7</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>8</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="att keep">
+        <div class="att-head">بيان الحضور — الصف <b>الخامس الابتدائي</b> / شعبة ..........</div>
+        <div class="info-grid">
+          <div class="info-item"><div class="lbl">الفصل الدراسي</div><div class="val">☐ الأول &nbsp;&nbsp; ☐ الثاني</div></div>
+          <div class="info-item"><div class="lbl">اليوم والتاريخ</div><div class="val">........... / ....... / 1448هـ</div></div>
+          <div class="info-item"><div class="lbl">عدد الحضور</div><div class="val">..........</div></div>
+          <div class="info-item"><div class="lbl">المعتذرات</div><div class="val">..........</div></div>
+          <div class="info-item"><div class="lbl">العدد الكلي</div><div class="val">..........</div></div>
+        </div>
+        <div class="tbl-wrap" style="margin-top:10px">
+          <table>
+            <thead><tr><th style="width:44px">م</th><th>اسم ولية الأمر</th><th>صلة القرابة</th><th>رقم الجوال</th><th>التوقيع</th></tr></thead>
+            <tbody><tr><td>1</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>2</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>3</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>4</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>5</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>6</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>7</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>8</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="att keep">
+        <div class="att-head">بيان الحضور — الصف <b>السادس الابتدائي</b> / شعبة ..........</div>
+        <div class="info-grid">
+          <div class="info-item"><div class="lbl">الفصل الدراسي</div><div class="val">☐ الأول &nbsp;&nbsp; ☐ الثاني</div></div>
+          <div class="info-item"><div class="lbl">اليوم والتاريخ</div><div class="val">........... / ....... / 1448هـ</div></div>
+          <div class="info-item"><div class="lbl">عدد الحضور</div><div class="val">..........</div></div>
+          <div class="info-item"><div class="lbl">المعتذرات</div><div class="val">..........</div></div>
+          <div class="info-item"><div class="lbl">العدد الكلي</div><div class="val">..........</div></div>
+        </div>
+        <div class="tbl-wrap" style="margin-top:10px">
+          <table>
+            <thead><tr><th style="width:44px">م</th><th>اسم ولية الأمر</th><th>صلة القرابة</th><th>رقم الجوال</th><th>التوقيع</th></tr></thead>
+            <tbody><tr><td>1</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>2</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>3</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>4</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>5</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>6</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>7</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>8</td><td>&nbsp;</td><td>☐ والدتها &nbsp; ☐ أخرى: .............</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <p style="margin-top:12px;font-size:13px;color:#5D6D70">تُحفظ البيانات بعد تعبئتها في ملف شواهد المجلس، ولا تُنشر بيانات التواصل خارج الاستخدام الرسمي للمدرسة.</p>
     </div>
   </section>
 
   <!-- 12 -->
   <section>
-    <div class="sec-head"><h2>الثاني عشر: نموذج محضر الاجتماع</h2></div>
+    <div class="sec-head"><h2>الرابع عشر: نموذج محضر الاجتماع</h2></div>
     <div class="card">
       <div class="info-grid">
         <div class="info-item"><div class="lbl">رقم الاجتماع</div><div class="val">..................</div></div>
         <div class="info-item"><div class="lbl">اليوم والتاريخ</div><div class="val">....... ....... / ....... / 1448هـ</div></div>
         <div class="info-item"><div class="lbl">وقت البدء والانتهاء</div><div class="val">من ......... إلى .........</div></div>
         <div class="info-item"><div class="lbl">عدد الحاضرات</div><div class="val">..................</div></div>
+        <div class="info-item"><div class="lbl">مستوى الانعقاد</div><div class="val">☐ دوري &nbsp;&nbsp; ☐ رسمي &nbsp;&nbsp; ☐ طارئ</div></div>
+        <div class="info-item"><div class="lbl">وقت الاجتماع</div><div class="val">من ......... إلى ......... صباحًا</div></div>
       </div>
+      <p style="margin-top:14px">الحمد لله والصلاة والسلام على نبينا محمد صلى الله عليه وسلم، وبعد: فقد عُقد اجتماع مجلس الأمهات والمعلمات هذا اليوم في الفصل الدراسي ................ للعام الدراسي 1448هـ، وذلك لمناقشة المحاور التالية:</p>
+      <ul class="rec-list" style="margin-top:10px">
+        <li>توثيق العلاقة بين المدرسة والأسرة سعيًا لتحقيق التكامل والتعاون في تربية الطالبات تربية تتمشى مع تعاليم الدين الإسلامي.</li>
+        <li>التعرف على وجهات نظر أولياء أمور الطالبات ومرئياتهم بكل ما يتعلق بشؤون الطالبات التعليمية والاجتماعية والنفسية والصحية.</li>
+        <li>تعريف أولياء الأمور بالأنظمة المعمول بها في المدرسة وضرورة الالتزام بها.</li>
+        <li>تدعيم رعاية أولياء الأمور والمعلمات لسلوك الطالبات وتحصيلهن وثقافتهن ونشاطهن، ومقاومة المؤثرات الضارة وانتشار العادات السيئة.</li>
+        <li>تحقيق التوافق الاجتماعي والنفسي للطالبات بتوفير جو من الثقة والأمان بين المدرسة والأسرة.</li>
+        <li>تدعيم الرقابة الهادفة على سلوك الطالبة بين المدرسة والأسرة.</li>
+        <li>دراسة حاجات الطالبات وحاجات المدرسة وحاجات المجتمع المحلي التعليمية والتربوية والاجتماعية والعمل على تلبيتها.</li>
+        <li>تنمية التوعية الهادفة في المنزل بما يتفق مع توجهات المدرسة، والاهتمام بالطالبات اللاتي يحتجن إلى عناية مركزة.</li>
+        <li>تقوية ارتباط المدرسة بالمجتمع والنهوض بالبيئة المحيطة وتحقيق دور المدرسة كمركز إشعاع لبيئتها.</li>
+        <li>الاستعانة بالكفاءات العلمية والأدبية في المجتمع المحلي عن طريق التعاون وتبادل الأفكار بما يسهم في خدمة المدرسة.</li>
+      </ul>
       <div class="tbl-wrap" style="margin-top:14px">
         <table>
           <thead><tr><th style="width:44px">م</th><th>الموضوع المطروح</th><th>ملخص المناقشة</th><th>القرار</th></tr></thead>
@@ -482,9 +640,29 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else sca
     </div>
   </section>
 
+  <!-- كشف التوقيع -->
+  <section>
+    <div class="sec-head"><h2>الخامس عشر: كشف التوقيع على المحضر والتوصيات</h2></div>
+    <div class="card">
+      <div class="info-grid">
+        <div class="info-item"><div class="lbl">العام الدراسي</div><div class="val">1448هـ</div></div>
+        <div class="info-item"><div class="lbl">الفصل الدراسي</div><div class="val">☐ الأول &nbsp;&nbsp; ☐ الثاني &nbsp;&nbsp; ☐ الثالث</div></div>
+        <div class="info-item"><div class="lbl">رقم الاجتماع</div><div class="val">..................</div></div>
+        <div class="info-item"><div class="lbl">التاريخ</div><div class="val">........... / ....... / 1448هـ</div></div>
+      </div>
+      <div class="tbl-wrap" style="margin-top:12px">
+        <table>
+          <thead><tr><th style="width:40px">م</th><th>اسم الموظفة</th><th>الوظيفة</th><th>التوقيع</th></tr></thead>
+          <tbody><tr><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>3</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>4</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>5</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>6</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>7</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>9</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>10</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>11</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>12</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody>
+        </table>
+      </div>
+      <p style="margin-top:10px;font-size:13px;color:#5D6D70">يُوقَّع الكشف بعد تلاوة المحضر والتوصيات على الحاضرات، ويُحفظ مع المحضر في ملف شواهد المجلس.</p>
+    </div>
+  </section>
+
   <!-- 13 -->
   <section>
-    <div class="sec-head"><h2>الثالث عشر: التوصيات ومتابعة تنفيذها</h2></div>
+    <div class="sec-head"><h2>السادس عشر: التوصيات ومتابعة تنفيذها</h2></div>
     <div class="card">
       <div class="tbl-wrap">
         <table>
@@ -498,6 +676,21 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else sca
           </tbody>
         </table>
       </div>
+      <div class="sub-head" style="margin-top:16px">التوصيات المعتمدة التي جرى الإقرار والموافقة عليها</div>
+      <ul class="out-list">
+        <li>توضيح الأنظمة المدرسية لأولياء الأمور وأهمية التزام الطالبات بها.</li>
+        <li>مناقشة الآثار السلبية المترتبة على التأخر الصباحي وتكرار الغياب.</li>
+        <li>تبادل الرأي والمشورة في كل ما يتصل بالبرامج الإرشادية لتدارس مدى كفايتها لإشباع حاجات الطالبات وتعزيزها.</li>
+        <li>مناقشة كيفية متابعة ولية الأمر لابنتها دراسيًا، مع التأكيد على متابعة الواجبات المنزلية.</li>
+        <li>توضيح أهمية الزيارات الفردية للمدرسة لمناقشة مستوى الطالبة الدراسي أو أي مشكلة تتعلق بها.</li>
+        <li>تكريم الطالبات المتفوقات.</li>
+        <li>إعداد النشرات التوعوية الهادفة وبيان المعلمات وموادهن لتوزيعها على أولياء الأمور.</li>
+        <li>منح ولية الأمر صورة حقيقية عن مستوى ابنتها.</li>
+        <li>الاستعداد الدائم لزيارة أي ولية أمر والترحيب بها؛ فهي شريكة في العملية التعليمية لا منافسة.</li>
+        <li>توصية أولياء الأمور بحث الطالبات على تحسين مستواهن.</li>
+        <li>تذكير أولياء الأمور بطريقة الاستذكار الجيد.</li>
+        <li>وعلى ذلك جرى التوقيع من جميع الحاضرات.</li>
+      </ul>
       <ul class="rec-list" style="margin-top:12px">
         <li>تُراجَع التوصيات في مطلع كل اجتماع، ويُرصد ما نُفِّذ وما تأخّر وسببه.</li>
         <li>يُرفق لكل توصية منفَّذة شاهد واحد على الأقل (صورة، تقرير، أو رابط).</li>
@@ -506,9 +699,38 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",scan);else sca
     </div>
   </section>
 
+  <!-- النشرة -->
+  <section>
+    <div class="sec-head"><h2>السابع عشر: نشرة مجلس الأمهات والمعلمات</h2></div>
+    <div class="card">
+      <p style="margin-bottom:12px">تُوزَّع هذه النشرة على أمهات الطالبات مع خطاب الدعوة، وتُنشر في قنوات التواصل المعتمدة بالمدرسة.</p>
+      <div class="info-grid">
+        <div class="info-item"><div class="lbl">ما مجلس الأمهات والمعلمات؟</div><div class="val">مجلس تشاركي يضم إدارة المدرسة ومعلماتها وممثلات عن أمهات الطالبات، يُعقد دوريًا لمناقشة ما يخدم الطالبة تعليميًا وسلوكيًا وتربويًا.</div></div>
+        <div class="info-item"><div class="lbl">متى يُعقد؟</div><div class="val">دوريًا خلال العام الدراسي، ويُعقد اجتماع رسمي أو طارئ عند الحاجة.</div></div>
+        <div class="info-item"><div class="lbl">من المستهدفات؟</div><div class="val">أمهات الطالبات وأولياء أمورهن، بمشاركة معلمات المدرسة.</div></div>
+        <div class="info-item"><div class="lbl">مجال المجلس</div><div class="val">نفسي تربوي.</div></div>
+      </div>
+      <div class="sub-head" style="margin-top:16px">ماذا تكسب ولية الأمر من حضورها؟</div>
+      <ul class="out-list">
+        <li>صورة حقيقية عن مستوى ابنتها الدراسي والسلوكي، ولقاء مباشر بمعلماتها.</li>
+        <li>معرفة الأنظمة واللوائح المنظمة للعمل المدرسي وما يخص الطالبات.</li>
+        <li>مناقشة الاحتياجات والعقبات التي تواجه ابنتها والعمل على تذليلها.</li>
+        <li>إيصال رأيها ومقترحاتها لتحسين الخدمات المقدمة في المدرسة.</li>
+        <li>حضور ورش عمل نوعية في الجوانب التربوية التي تهم الأسرة.</li>
+      </ul>
+      <div class="sub-head" style="margin-top:16px">كيف تسهم ولية الأمر في نجاح المجلس؟</div>
+      <ul class="rec-list">
+        <li>الحضور في الموعد المحدد والاعتذار مسبقًا عند التعذر.</li>
+        <li>تدوين ملاحظاتها ومقترحاتها قبل الاجتماع لعرضها بوضوح.</li>
+        <li>متابعة تنفيذ التوصيات التي تخص الأسرة في المنزل.</li>
+        <li>التواصل مع المدرسة عبر القنوات المعتمدة في أي وقت دون انتظار موعد المجلس.</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- 14 -->
   <section>
-    <div class="sec-head"><h2>الرابع عشر: الشواهد والملفات المرتبطة</h2></div>
+    <div class="sec-head"><h2>الثامن عشر: الشواهد والملفات المرتبطة</h2></div>
     <div class="card">
       <ul class="out-list">
         <li><a href="./ملف التواصل مع أولياء الأمور · الابتدائية 67.html" style="color:#007575;font-weight:700">ملف التواصل مع أولياء الأمور</a> — سجل التواصل، المجالس واللقاءات، الاستمارات، ومؤشرات الأداء.</li>
