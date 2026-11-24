@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>سجل مجلس الأمهات والمعلمات — الابتدائية السابعة والستون</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;600;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:hidden}
+body{
+  direction:rtl;font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;
+  background:#f4f7f7;color:#1B2A2D;font-size:15px;line-height:1.75;
+}
+
+/* ══ ترويسة ══ */
+.letterhead{display:block;width:100%;max-width:1100px;margin:0 auto 0;padding:0 12px}
+.letterhead img{width:100%;height:auto;display:block}
+
+/* ══ شريط العنوان ══ */
+.titlebar-wrap{background:#fff;padding:0 16px 0}
+.titlebar{
+  max-width:1100px;margin:0 auto;
+  background:#660033;border-radius:12px;
+  outline:2px solid #660033;outline-offset:3px;
+  padding:14px 24px;text-align:center;
+  margin-bottom:4px;
+}
+.titlebar h1{
+  font-family:"Noto Kufi Arabic",Tahoma,sans-serif;
+  font-size:clamp(16px,3vw,22px);font-weight:700;color:#fff;
+  text-wrap:balance;line-height:1.4;
+}
+
+/* ══ شريط اسم المدرسة ══ */
+.school-strip{
+  max-width:1100px;margin:6px auto 0;
+  display:flex;align-items:center;gap:10px;
+  padding:0 4px;
+}
+.school-strip hr{flex:1;border:none;border-top:1px solid #DDE5E5}
+.school-strip span{
+  font-family:"Noto Kufi Arabic",Tahoma,sans-serif;
+  font-weight:700;font-size:14px;color:#1B2A2D;white-space:nowrap;
+}
+
+/* ══ شريط المعلومات ══ */
+.meta-strip{
+  max-width:1100px;margin:6px auto 16px;
+  display:flex;flex-wrap:wrap;gap:6px 20px;
+  padding:0 4px;font-size:13px;color:#5D6D70;
+}
+.meta-strip b{color:#1B2A2D}
+
+/* ══ المحتوى ══ */
+main{max-width:1100px;margin:0 auto;padding:0 16px 40px}
+
+/* ══ أزرار طباعة (للمديرة فقط) ══ */
+.print-bar{
+  display:none;justify-content:flex-end;gap:10px;margin-bottom:16px;
+}
+.print-bar.visible{display:flex}
+.print-bar button{
+  font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;
+  background:#007575;color:#fff;border:none;cursor:pointer;
+  padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;
+  display:flex;align-items:center;gap:6px;
+}
+.print-bar button:hover{background:#005f5f}
+@media print{.print-bar{display:none!important}}
+
+/* ══ قسم ══ */
+section{margin-bottom:22px}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sec-head::before{
+  content:"";width:5px;height:24px;border-radius:3px;
+  background:#009999;flex-shrink:0;
+}
+.sec-head h2{
+  font-family:"Noto Kufi Arabic",Tahoma,sans-serif;
+  font-size:15.5px;font-weight:700;color:#660033;
+}
+
+/* ══ بطاقة ══ */
+.card{
+  background:#fff;border:1px solid #DDE5E5;border-radius:14px;
+  padding:18px 20px;
+}
+.card+.card{margin-top:12px}
+
+/* ══ شبكة بيانات ══ */
+.info-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;
+}
+.info-item .lbl{font-size:12px;color:#5D6D70;margin-bottom:2px}
+.info-item .val{font-weight:600;font-size:14px}
+
+/* ══ إحصائيات ══ */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.chip{
+  display:flex;align-items:center;gap:10px;
+  background:#DCF1F1;border:1px solid #DDE5E5;
+  border-radius:10px;padding:10px 16px;
+}
+.chip .num{
+  font-family:"Noto Kufi Arabic",Tahoma,sans-serif;
+  font-size:24px;font-weight:700;color:#007575;line-height:1;
+}
+.chip .txt{font-size:12px;color:#5D6D70}
+
+/* ══ حقل الحاضرات ══ */
+.attend-wrap{margin-top:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.attend-wrap label{font-size:13px;color:#5D6D70}
+.attend-wrap input{
+  padding:7px 12px;border:1px solid #DDE5E5;border-radius:8px;
+  font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;font-size:14px;
+  width:160px;direction:rtl;background:#fff;color:#1B2A2D;
+}
+.attend-wrap input:focus{outline:2px solid #009999;border-color:#009999}
+
+/* ══ قوائم ══ */
+.out-list,.rec-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.out-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 14px;background:#DCF1F1;
+  border-radius:10px;border-inline-start:4px solid #009999;
+  font-size:14px;
+}
+.out-list li::before{content:"✓";color:#007575;font-weight:700;flex-shrink:0;margin-top:1px}
+.rec-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 14px;background:#fdf5e4;
+  border-radius:10px;border-inline-start:4px solid #A8832B;
+  font-size:14px;
+}
+.rec-list li::before{content:"←";color:#A8832B;font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* ══ جدول ══ */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+thead tr{background:#009999;color:#fff}
+thead th{padding:10px 12px;font-weight:600;text-align:right;white-space:nowrap}
+thead th:not(:last-child){border-left:1px solid rgba(255,255,255,.25)}
+tbody tr:nth-child(even){background:#f4f7f7}
+tbody td{padding:9px 12px;border-bottom:1px solid #DDE5E5;vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+
+/* ══ توقيعات ══ */
+.sig-row{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:24px;
+  margin-top:10px;
+}
+.sig-box{text-align:center}
+.sig-box .role{font-size:12px;color:#5D6D70;margin-bottom:4px}
+.sig-box .name{font-weight:700;font-size:14px;color:#1B2A2D}
+.sig-box .line{
+  margin-top:36px;border-top:1.5px dashed #DDE5E5;
+  padding-top:6px;font-size:12px;color:#5D6D70;
+}
+
+/* ══ ذيل ══ */
+footer{
+  background:linear-gradient(90deg,#3d7eb9,#2891b1,#13a4a8,#0ba98d,#07a86c);
+  color:rgba(255,255,255,.9);text-align:center;
+  padding:12px 20px;font-size:12.5px;margin-top:32px;
+}
+
+/* ══ شاشات صغيرة ══ */
+@media(max-width:600px){
+  .info-grid{grid-template-columns:1fr 1fr}
+  .chips{flex-direction:column}
+  .chip{width:100%}
+}
+@media print{
+  body{background:#fff}
+  .card{box-shadow:none;border:1px solid #ccc}
+  section{break-inside:avoid}
+  footer,thead tr{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style><style>
+.card p{font-size:14.5px}
+.card a{text-decoration:none}
+.out-list li a{display:inline}
+@media print{section{break-inside:auto}table{font-size:12px}}
+</style>
+</head>
+<body>
+
+<!-- ترويسة رسمية -->
+<div class="letterhead"><img src="../f/img/letterhead.png" alt="وزارة التعليم — الابتدائية السابعة والستون"></div>
+
+<div class="titlebar-wrap">
+  <div class="titlebar">
+    <h1>سجل مجلس الأمهات والمعلمات — العام الدراسي 1448هـ</h1>
+  </div>
+  <div class="school-strip">
+    <hr><span>الابتدائية السابعة والستون بالطائف</span><hr>
+  </div>
+  <div class="meta-strip">
+    <span>رئيسة المجلس: <b>ناديه عوض الصخيري</b> (مديرة المدرسة)</span>
+    <span>نائبة الرئيسة: <b>ثرياء القثامي</b> (وكيلة المدرسة)</span>
+    <span>مقررة المجلس: <b>هند العتيبي</b> (الموجهة الطلابية)</span>
+    <span>العام الدراسي: <b>1448هـ</b></span>
+  </div>
+</div>
+
+<main>
+
+  <div class="print-bar" id="printBar">
+    <button onclick="window.print()">🖨️ طباعة السجل</button>
+  </div>
+
+  <!-- 1 -->
+  <section>
+    <div class="sec-head"><h2>أولاً: التعريف بالمجلس وبياناته</h2></div>
+    <div class="card">
+      <p style="margin-bottom:12px">مجلس الأمهات والمعلمات مجلسٌ تشاركيّ يضم إدارة المدرسة ومعلماتها وممثلات عن أمهات الطالبات، يجتمع دوريًا لمناقشة ما يخدم الطالبة تعليميًا وسلوكيًا وتربويًا، ويُعدّ القناة الرسمية التي تُبنى عليها الشراكة بين الأسرة والمدرسة، وتُوثَّق قراراته وتوصياته ويُتابَع تنفيذها.</p>
+      <div class="info-grid">
+        <div class="info-item"><div class="lbl">اسم المجلس</div><div class="val">مجلس الأمهات والمعلمات</div></div>
+        <div class="info-item"><div class="lbl">المدرسة</div><div class="val">الابتدائية السابعة والستون بالطائف</div></div>
+        <div class="info-item"><div class="lbl">الجهة التابعة</div><div class="val">الإدارة العامة للتعليم بمحافظة الطائف</div></div>
+        <div class="info-item"><div class="lbl">المرحلة</div><div class="val">المرحلة الابتدائية — بنات</div></div>
+        <div class="info-item"><div class="lbl">عدد اجتماعات العام</div><div class="val">أربعة اجتماعات (اثنان كل فصل)</div></div>
+        <div class="info-item"><div class="lbl">مكان الانعقاد</div><div class="val">قاعة المدرسة / عن بُعد عند الحاجة</div></div>
+      </div>
+      <div class="chips">
+        <div class="chip"><span class="num">9</span><span class="txt">أعضاء<br>المجلس</span></div>
+        <div class="chip"><span class="num">4</span><span class="txt">اجتماعات<br>مخططة</span></div>
+        <div class="chip"><span class="num">4</span><span class="txt">لقاءات<br>منفذة</span></div>
+        <div class="chip"><span class="num">8</span><span class="txt">محاور<br>معتمدة</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section>
+    <div class="sec-head"><h2>ثانياً: أهداف المجلس</h2></div>
+    <div class="card">
+      <ul class="out-list">
+        <li>توثيق علاقة الأسرة بالمدرسة وبناء شراكة قائمة على الاحترام المتبادل والمسؤولية المشتركة.</li>
+        <li>توضيح المهام والأدوار والبرامج والخدمات التي تقدمها المدرسة للطالبة ولأسرتها.</li>
+        <li>تحقيق التوافق النفسي والاجتماعي والتربوي والمهني للطالبات وتنمية دافعيتهن نحو التعلم.</li>
+        <li>رفع وعي الأمهات بالانضباط المدرسي وقواعد السلوك والمواظبة وآثارها على التحصيل.</li>
+        <li>مناقشة مستويات التحصيل الدراسي ونتائج الاختبارات الوطنية «نافس» وخطط التحسين.</li>
+        <li>الاستفادة من خبرات الأمهات ومهاراتهن في برامج المدرسة وأنشطتها ومبادراتها.</li>
+        <li>اكتشاف المشكلات التعليمية والسلوكية مبكرًا ومعالجتها بالتعاون مع الأسرة.</li>
+        <li>استقبال مقترحات أولياء الأمور وملاحظاتهم وتوظيفها في الخطة التشغيلية وخطط التحسين.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section>
+    <div class="sec-head"><h2>ثالثاً: مهام المجلس واختصاصاته</h2></div>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:44px">#</th><th>المهمة</th><th>الأثر المتوقع</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>إقرار جدول اجتماعات المجلس ومحاوره في بداية العام.</td><td>انتظام العمل ووضوح المسار</td></tr>
+            <tr><td>2</td><td>مناقشة التحصيل الدراسي للطالبات ونتائج الاختبارات مع الأمهات.</td><td>رفع مستوى التحصيل</td></tr>
+            <tr><td>3</td><td>متابعة الانضباط المدرسي والمواظبة والحد من الغياب والتأخر.</td><td>انتظام الحضور</td></tr>
+            <tr><td>4</td><td>التعريف بالاختبارات الوطنية وبرامج التهيئة لها.</td><td>جاهزية الطالبات</td></tr>
+            <tr><td>5</td><td>تفعيل قنوات التواصل المعتمدة بين الأسرة والمدرسة وتنويعها.</td><td>تواصل منتظم وموثّق</td></tr>
+            <tr><td>6</td><td>حصر خبرات الأمهات وإشراكهن في الفعاليات والمبادرات.</td><td>شراكة فاعلة</td></tr>
+            <tr><td>7</td><td>دراسة مقترحات الأمهات ورفع ما يمكن تنفيذه لخطة المدرسة.</td><td>قرارات مبنية على رأي المستفيد</td></tr>
+            <tr><td>8</td><td>متابعة تنفيذ توصيات كل اجتماع ورصد نسبة الإنجاز.</td><td>توصيات تُنفَّذ لا تُحفَظ</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section>
+    <div class="sec-head"><h2>رابعاً: قرار تشكيل المجلس للعام 1448هـ</h2></div>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:44px">م</th><th>الاسم</th><th>الصفة</th><th>العضوية</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>ناديه عوض الصخيري</td><td>مديرة المدرسة</td><td>رئيسة المجلس</td></tr>
+            <tr><td>2</td><td>ثرياء القثامي</td><td>وكيلة المدرسة</td><td>نائبة الرئيسة</td></tr>
+            <tr><td>3</td><td>هند العتيبي</td><td>الموجهة الطلابية</td><td>مقررة المجلس</td></tr>
+            <tr><td>4</td><td>صالحه طيب علي السهيمي</td><td>منسقة الشراكة المجتمعية</td><td>عضوة</td></tr>
+            <tr><td>5</td><td>عيشه الحارثي</td><td>رائدة النشاط</td><td>عضوة</td></tr>
+            <tr><td>6</td><td>فاطمه مبارك عوض الحارثي</td><td>الموجهة الصحية</td><td>عضوة</td></tr>
+            <tr><td>7</td><td>&nbsp;</td><td>ممثلة أمهات الصفوف الأولية</td><td>عضوة</td></tr>
+            <tr><td>8</td><td>&nbsp;</td><td>ممثلة أمهات الصفوف العليا</td><td>عضوة</td></tr>
+            <tr><td>9</td><td>&nbsp;</td><td>ممثلة أمهات طالبات الدمج</td><td>عضوة</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:10px;font-size:13px;color:#5D6D70">تُستكمل أسماء ممثلات الأمهات بعد ترشيحهن في الاجتماع الأول، ويُعتمد التشكيل من مديرة المدرسة.</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section>
+    <div class="sec-head"><h2>خامساً: مهام الأعضاء</h2></div>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>العضوية</th><th>المهام</th></tr></thead>
+          <tbody>
+            <tr><td>رئيسة المجلس</td><td>الدعوة للاجتماع، وإدارته، واعتماد المحضر والتوصيات، ومتابعة تنفيذها، وتذليل الصعوبات.</td></tr>
+            <tr><td>نائبة الرئيسة</td><td>تنوب عن الرئيسة عند غيابها، وتتابع التجهيزات والترتيبات التنظيمية للاجتماع.</td></tr>
+            <tr><td>مقررة المجلس</td><td>إعداد جدول الأعمال، وتدوين المحضر، وحصر الحضور، وتوثيق التوصيات وحفظ الشواهد.</td></tr>
+            <tr><td>منسقة الشراكة المجتمعية</td><td>حصر خبرات الأمهات، والتنسيق لمشاركتهن في البرامج والفعاليات.</td></tr>
+            <tr><td>رائدة النشاط</td><td>عرض خطة الأنشطة والمسابقات وما يناسب مشاركة الأسرة فيها.</td></tr>
+            <tr><td>الموجهة الصحية</td><td>عرض البرامج الصحية والتوعوية وما يخص صحة الطالبة وسلامتها.</td></tr>
+            <tr><td>ممثلات الأمهات</td><td>نقل آراء الأمهات ومقترحاتهن، ونقل قرارات المجلس إليهن، والمشاركة في تنفيذ المبادرات.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section>
+    <div class="sec-head"><h2>سادساً: خطة اجتماعات المجلس 1448هـ</h2></div>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:44px">م</th><th>الاجتماع</th><th>الموعد المقترح</th><th>أبرز المحاور</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>الاجتماع الأول</td><td>الفصل الأول — بعد الأسبوع الرابع</td><td>التعريف بالمجلس وتشكيله، الانضباط المدرسي، قواعد السلوك والمواظبة، التواصل مع المدرسة.</td></tr>
+            <tr><td>2</td><td>الاجتماع الثاني</td><td>الفصل الأول — قبل الاختبارات</td><td>التحصيل الدراسي، التهيئة للاختبارات، المتابعة المنزلية، الاختبارات الوطنية «نافس».</td></tr>
+            <tr><td>3</td><td>الاجتماع الثالث</td><td>الفصل الثاني — بداية الفصل</td><td>نتائج الفصل الأول، خطط التحسين، البرامج الإثرائية والعلاجية، مشاركة الأمهات في الأنشطة.</td></tr>
+            <tr><td>4</td><td>الاجتماع الرابع</td><td>الفصل الثاني — نهاية العام</td><td>الحصاد والتكريم، تقييم أثر الشراكة، مقترحات العام القادم، متابعة تنفيذ التوصيات.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section>
+    <div class="sec-head"><h2>سابعاً: المحاور المعتمدة للنقاش</h2></div>
+    <div class="card">
+      <ul class="out-list">
+        <li>الانضباط المدرسي ورفع وعي أولياء الأمور بأهميته.</li>
+        <li>التأكيد على تنفيذ ما ورد في قواعد السلوك والمواظبة.</li>
+        <li>التعريف بالاختبارات الوطنية «نافس» حسب الاختبار المطبق في المدرسة.</li>
+        <li>تقديم برنامج التهيئة للاختبارات نهاية العام الدراسي.</li>
+        <li>مناقشة التحصيل الدراسي للطالبات مع أولياء الأمور.</li>
+        <li>التأكيد على تنوع وسائل التواصل بين الأسرة والمدرسة بما يسهم في رفع الوعي.</li>
+        <li>نشر الرسائل التوعوية عبر قنوات التواصل الرسمية المعتمدة.</li>
+        <li>تعبئة تقرير المجلس وتوثيق شواهده.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section>
+    <div class="sec-head"><h2>ثامناً: لقاءات المجلس المنفذة خلال 1448هـ</h2></div>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:44px">م</th><th>اللقاء</th><th>التاريخ</th><th>المنظِّمة</th><th>أبرز ما نوقش</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>اجتماع أولياء الأمور «كلكم راعٍ» — المرحلة الابتدائية</td><td>منتصف ربيع الأول 1448هـ</td><td>المديرة · وكيلة المدرسة · الموجهة الطلابية</td><td>تعزيز الشراكة، توحيد التوقعات، سنوات التأسيس، روتين منزلي داعم للتعلم، الحوار البنّاء، القيم والسلوك، التعامل مع التحديات.</td></tr>
+            <tr><td>2</td><td>احتفال اليوم الوطني 96 — مشاركة الأمهات في تجهيز الأركان والضيافة</td><td>ربيع الأول 1448هـ</td><td>صالحه السهيمي</td><td>مشاركة مجتمعية فعلية للأمهات في فعالية المدرسة.</td></tr>
+            <tr><td>3</td><td>ورشة «خطة المدرسة وتفاعلها مع الأسرة»</td><td>السبت 29 / 4 / 1448هـ</td><td>ناديه عوض الصخيري</td><td>عرض خطة المدرسة وطرق تفاعل الأسرة معها.</td></tr>
+            <tr><td>4</td><td>لقاء الأمهات — نواتج التعلم والتحصيل الدراسي</td><td>18 / 5 / 1448هـ</td><td>هند العتيبي</td><td>نواتج التعلم، مستوى التحصيل، الحضور والانتظام، المتابعة المنزلية، قنوات التواصل.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section>
+    <div class="sec-head"><h2>تاسعاً: نموذج خطاب الدعوة لحضور المجلس</h2></div>
+    <div class="card">
+      <p style="text-align:center;font-size:15.5px;line-height:2.1">
+        انطلاقًا من اهتمام المدرسة بمشاركة مجلس الأمهات والمعلمات في العملية التعليمية ورفع المستوى التحصيلي لزهور المستقبل،<br>
+        يسر <b>الابتدائية السابعة والستون بالطائف</b> دعوتكنّ لحضور اجتماع مجلس الأمهات والمعلمات
+      </p>
+      <div class="info-grid" style="margin-top:14px">
+        <div class="info-item"><div class="lbl">اليوم</div><div class="val">..................</div></div>
+        <div class="info-item"><div class="lbl">الموافق</div><div class="val">....... / ....... / 1448هـ</div></div>
+        <div class="info-item"><div class="lbl">الوقت</div><div class="val">من الساعة ......... إلى الساعة .........</div></div>
+        <div class="info-item"><div class="lbl">مكان الانعقاد</div><div class="val">قاعة المدرسة</div></div>
+      </div>
+      <p style="margin-top:14px"><b style="color:#660033">الهدف العام:</b> مناقشة كافة الجوانب التي من شأنها رفع مستوى الطالبات والوصول إلى أعلى المستويات التي تطمح لها المدرسة، ولنضع أيدينا بأيدي بعض نبحث عن الاعوجاج فنقوّمه.</p>
+      <p style="margin-top:10px"><b style="color:#660033">المخرجات:</b></p>
+      <ul class="out-list">
+        <li>زهور نضرة يفوح شذاها في كل بيت وفي كل مدرسة.</li>
+        <li>جيل صالح من الفتيات الصالحات نخرجه من هنا متعاونين وإياكنّ اليوم، لنجد منهنّ غدًا الأم الرؤوم والزوجة الصالحة والمربية الفاضلة.</li>
+      </ul>
+      <p style="margin-top:12px"><b style="color:#A8832B">ملاحظات هامة:</b></p>
+      <ul class="rec-list">
+        <li>يمنع تصوير الطالبات والمعلمات والهيئة الإدارية والتعليمية داخل المدرسة والمرافق والتجهيزات.</li>
+        <li>يمنع اصطحاب الأطفال والعاملات والخادمات المنزليات.</li>
+        <li>التقيد بالزي الرسمي المحتشم داخل حرم المدرسة، وعدم ارتداء الضيق أو القصير أو الممزق أو المكشوف.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section>
+    <div class="sec-head"><h2>عاشراً: نموذج برنامج الاجتماع</h2></div>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:120px">الوقت</th><th>الفقرة</th><th>المسؤولة</th></tr></thead>
+          <tbody>
+            <tr><td>10 دقائق</td><td>الاستقبال والتسجيل في بيان الحضور</td><td>مقررة المجلس</td></tr>
+            <tr><td>5 دقائق</td><td>الافتتاح بآيات من الذكر الحكيم وكلمة الترحيب</td><td>رئيسة المجلس</td></tr>
+            <tr><td>15 دقيقة</td><td>عرض تقرير المدرسة: المستوى التحصيلي والانضباط</td><td>وكيلة المدرسة</td></tr>
+            <tr><td>15 دقيقة</td><td>المحور التربوي / التوعوي للاجتماع</td><td>الموجهة الطلابية</td></tr>
+            <tr><td>20 دقيقة</td><td>الحوار المفتوح واستقبال مقترحات الأمهات</td><td>جميع الأعضاء</td></tr>
+            <tr><td>10 دقائق</td><td>تلاوة التوصيات واعتمادها وتحديد المسؤوليات</td><td>مقررة المجلس</td></tr>
+            <tr><td>5 دقائق</td><td>الختام والشكر وتحديد موعد الاجتماع القادم</td><td>رئيسة المجلس</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section>
+    <div class="sec-head"><h2>الحادي عشر: بيان حضور الاجتماع</h2></div>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:44px">م</th><th>اسم الحاضرة</th><th>صفتها</th><th>اسم الطالبة وصفها</th><th>رقم التواصل</th><th>التوقيع</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>3</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>4</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>5</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>6</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>7</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>9</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>10</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:10px;font-size:13px;color:#5D6D70">يُرفق بيان الحضور بعد تعبئته مع محضر الاجتماع ضمن شواهد المجلس.</p>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section>
+    <div class="sec-head"><h2>الثاني عشر: نموذج محضر الاجتماع</h2></div>
+    <div class="card">
+      <div class="info-grid">
+        <div class="info-item"><div class="lbl">رقم الاجتماع</div><div class="val">..................</div></div>
+        <div class="info-item"><div class="lbl">اليوم والتاريخ</div><div class="val">....... ....... / ....... / 1448هـ</div></div>
+        <div class="info-item"><div class="lbl">وقت البدء والانتهاء</div><div class="val">من ......... إلى .........</div></div>
+        <div class="info-item"><div class="lbl">عدد الحاضرات</div><div class="val">..................</div></div>
+      </div>
+      <div class="tbl-wrap" style="margin-top:14px">
+        <table>
+          <thead><tr><th style="width:44px">م</th><th>الموضوع المطروح</th><th>ملخص المناقشة</th><th>القرار</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>3</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>4</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>5</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sig-row">
+        <div class="sig-box"><div class="role">مقررة المجلس</div><div class="name">هند العتيبي</div><div class="line">التوقيع</div></div>
+        <div class="sig-box"><div class="role">نائبة الرئيسة</div><div class="name">ثرياء القثامي</div><div class="line">التوقيع</div></div>
+        <div class="sig-box"><div class="role">رئيسة المجلس</div><div class="name">ناديه عوض الصخيري</div><div class="line">التوقيع</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section>
+    <div class="sec-head"><h2>الثالث عشر: التوصيات ومتابعة تنفيذها</h2></div>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:44px">م</th><th>التوصية</th><th>المسؤولة عن التنفيذ</th><th>تاريخ التنفيذ</th><th>حالة التنفيذ</th><th>الشاهد</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>3</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>4</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>5</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="rec-list" style="margin-top:12px">
+        <li>تُراجَع التوصيات في مطلع كل اجتماع، ويُرصد ما نُفِّذ وما تأخّر وسببه.</li>
+        <li>يُرفق لكل توصية منفَّذة شاهد واحد على الأقل (صورة، تقرير، أو رابط).</li>
+        <li>تُرفع التوصيات التي تحتاج دعمًا خارجيًا إلى إدارة التعليم عبر القنوات الرسمية.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section>
+    <div class="sec-head"><h2>الرابع عشر: الشواهد والملفات المرتبطة</h2></div>
+    <div class="card">
+      <ul class="out-list">
+        <li><a href="./ملف التواصل مع أولياء الأمور · الابتدائية 67.html" style="color:#007575;font-weight:700">ملف التواصل مع أولياء الأمور</a> — سجل التواصل، المجالس واللقاءات، الاستمارات، ومؤشرات الأداء.</li>
+        <li><a href="./تقرير لقاء الأمهات.html" style="color:#007575;font-weight:700">تقرير لقاء الأمهات — نواتج التعلم والتحصيل الدراسي</a>.</li>
+        <li>تُحفظ صور الاجتماعات وبيانات الحضور والمحاضر المعتمدة في ملف شواهد المجلس.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>الابتدائية السابعة والستون بالطائف — الإدارة العامة للتعليم بمحافظة الطائف — سجل مجلس الأمهات والمعلمات 1448هـ</footer>
+
+</body>
+</html>
