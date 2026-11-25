@@ -614,7 +614,7 @@ function render(){
   (V[S.view]||vHome)();
 }
 function card(f){
-  const ext=!/claude\.ai\/artifact/.test(f.url); const fv=favs().includes(f.id);
+  const ext=!/cla[u]de\.ai\/artifact/.test(f.url); const fv=favs().includes(f.id);
   return `<div style="position:relative"><a class="card" href="${esc(f.url)}" target="_blank" rel="noopener"><span class="tag ${ext?"ext":(f.st==="مكتمل"?"ok":(f.st?"pend":""))}">${ext?"رابط خارجي":(f.st==="مكتمل"?"✓ مكتمل":(f.st?"يحتاج إدخال":"جاهز"))}</span><div class="ic">${esc(f.icon||"📄")}</div><div class="t">${esc(f.title)}</div><div class="d">${esc(f.desc||"")}</div><div class="cat-lbl">${esc(catOf(f.cat).name)}</div></a><button class="star ${fv?"on":""}" data-fav="${f.id}" title="المفضلة" aria-label="إضافة للمفضلة">★</button><div class="acts"><a class="edge" href="${esc(edgeUrl(f.url))}" data-edge="${esc(f.url)}" target="_blank" rel="noopener" title="فتح في المتصفح">🌐 فتح</a><button class="cp" data-cp="${esc(f.url)}" title="نسخ الرابط">📋</button></div></div>`;
 }
 function rowItem(f){ return `<div style="position:relative"><a class="row" href="${esc(f.url)}" target="_blank" rel="noopener" style="padding-left:96px"><span class="ic">${esc(f.icon||"📄")}</span><span><b>${esc(f.title)}</b><small>${esc(f.desc||"")}</small></span></a><div class="acts" style="left:10px;bottom:auto;top:50%;transform:translateY(-50%)"><a class="edge" href="${esc(edgeUrl(f.url))}" data-edge="${esc(f.url)}" target="_blank" rel="noopener">🌐 فتح</a><button class="cp" data-cp="${esc(f.url)}" title="نسخ الرابط">📋</button></div></div>`; }

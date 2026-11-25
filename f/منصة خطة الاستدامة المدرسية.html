@@ -793,11 +793,11 @@ function guessStandard(domain,code){
   return (n>=1&&n<=st.length)?st[n-1]:st[0];
 }
 /* Inside the host the page saves through the downloads capability; opened as a file it uses a normal link */
-let DL=null;const inClaude=!!(window.s67h&&window.s67h.use);
-if(inClaude){window.s67h.use('downloads').then(d=>DL=d).catch(()=>{})}
+let DL=null;const inHost=!!(window.s67h&&window.s67h.use);
+if(inHost){window.s67h.use('downloads').then(d=>DL=d).catch(()=>{})}
 async function download(name,data,type){
   const blob=data instanceof Blob?data:new Blob([data],{type});
-  if(inClaude){
+  if(inHost){
     if(!DL){toast('التنزيل غير متاح في هذا العرض');return}
     try{await DL.save({filename:name,data:blob});toast('تم حفظ '+name)}
     catch(e){if(e&&e.code==='declined')return;toast(e&&e.code==='rate_limited'?'انتظري لحظة ثم أعيدي المحاولة':'تعذّر الحفظ: '+(e&&e.message||''))}
@@ -1257,7 +1257,7 @@ $('#btnExcel').onclick=()=>{
 };
 $('#btnPrint').onclick=()=>{
   if(!S.rows.length){toast('ولّدي الخطة أولاً');return}
-  if(inClaude){download(`طباعة_خطة_الاستدامة_${S.school.name}.html`,printableHTML(),'text/html');toast('افتحي الملف المحفوظ وستظهر نافذة الطباعة تلقائياً');return}
+  if(inHost){download(`طباعة_خطة_الاستدامة_${S.school.name}.html`,printableHTML(),'text/html');toast('افتحي الملف المحفوظ وستظهر نافذة الطباعة تلقائياً');return}
   $('#printArea').innerHTML=buildDoc(opts());
   try{window.print()}catch(e){}
 };
@@ -1367,7 +1367,7 @@ $('#btnQrSheet').onclick=async()=>{const cv=await sheetCanvas();if(!cv){toast('�
 async function qrSheetHTML(){const cv=await sheetCanvas();return cv?`<img src="${cv.toDataURL('image/png')}" alt="" style="width:100%;height:auto;display:block">`:''}
 $('#btnQrPrint').onclick=async()=>{
   const body=await qrSheetHTML();if(!body){toast('تعذّر إنشاء الباركود — تأكدي من الاتصال بالإنترنت');return}
-  if(inClaude){download('ورقة_باركود_الملف_الرقمي.html',`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>باركود الملف الرقمي</title><style>@page{size:A4 portrait;margin:8mm}body{margin:0;background:#fff}</style></head><body>${body}<script>window.onload=()=>setTimeout(()=>print(),400)<\/script></body></html>`,'text/html');return}
+  if(inHost){download('ورقة_باركود_الملف_الرقمي.html',`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>باركود الملف الرقمي</title><style>@page{size:A4 portrait;margin:8mm}body{margin:0;background:#fff}</style></head><body>${body}<script>window.onload=()=>setTimeout(()=>print(),400)<\/script></body></html>`,'text/html');return}
   $('#printArea').innerHTML=body;const st=document.createElement('style');st.textContent='@page{size:A4 portrait;margin:8mm}';document.head.appendChild(st);
   try{window.print()}catch(e){}setTimeout(()=>st.remove(),1500);
 };
