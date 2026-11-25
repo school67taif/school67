@@ -210,7 +210,7 @@ body:after{width:64vmax;height:64vmax;bottom:-24vmax;left:-24vmax;background:rad
 @keyframes s67c{to{transform:translate(-30vw,-34vh) scale(.8)}}
 @keyframes s67d{to{transform:translate(46vw,50vh) scale(1.2)}}
 #s67sky{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
-#s67pic{position:fixed;inset:-6%;z-index:-2;pointer-events:none;background-size:cover;background-position:38% 50%;animation:s67kb 40s ease-in-out infinite alternate;will-change:transform}
+#s67pic{position:fixed;inset:0;z-index:-2;pointer-events:none;background-size:cover;background-position:38% 50%;}
 @keyframes s67kb{from{transform:scale(1) translate(0,0)}to{transform:scale(1.14) translate(-2.5%,-1.5%)}}
 @media(prefers-reduced-motion:reduce){#s67pic{animation:none}}
 @media(prefers-reduced-motion:reduce){body:before,body:after,.wrap:before,.wrap:after,.titlebar:after,.hero:after{animation:none}}
@@ -307,11 +307,11 @@ function start(){if(D.getElementById("s67sky"))return;var c=D.createElement("can
   if(!RM)W.requestAnimationFrame(frame)}
  D.addEventListener("visibilitychange",function(){if(D.hidden){run=false}else if(!run){run=true;last=performance.now();if(!RM)W.requestAnimationFrame(frame)}});
  frame(performance.now())}
-function vid(){if(RM||D.getElementById("s67vid"))return;var v=D.createElement("video");v.id="s67vid";v.muted=true;v.loop=true;v.autoplay=true;v.playsInline=true;v.setAttribute("muted","");v.setAttribute("playsinline","");v.setAttribute("aria-hidden","true");v.preload="auto";v.style.cssText="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;pointer-events:none;opacity:0;transition:opacity .8s";
+function vid(){if(RM||D.getElementById("s67vid"))return;var v=D.createElement("video");v.id="s67vid";v.muted=true;v.loop=true;v.autoplay=true;v.playsInline=true;v.setAttribute("muted","");v.setAttribute("playsinline","");v.setAttribute("aria-hidden","true");v.preload="auto";v.poster="bg/"+S+".jpg";v.style.cssText="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;pointer-events:none;opacity:1";
  v.addEventListener("playing",function(){v.style.opacity="1";var c=D.getElementById("s67sky");if(c)c.style.display="none";var q=D.getElementById("s67pic");if(q)q.style.animation="none"});v.addEventListener("error",function(){if(v.parentNode)v.parentNode.removeChild(v)});
  var VS={autumn:"https://assets.mixkit.co/videos/34045/34045-720.mp4"};v.src=VS[S]||("bg/"+S+".mp4");D.body.appendChild(v);var p=v.play();if(p&&p.catch)p.catch(function(){})}
 function pic(){var im=new Image();im.onload=function(){if(D.getElementById("s67pic"))return;var d=D.createElement("div");d.id="s67pic";d.setAttribute("aria-hidden","true");d.style.backgroundImage="url(bg/"+S+".jpg)";D.body.appendChild(d);de.classList.add("s67-pic")};im.src="bg/"+S+".jpg"}
-function go(){start();pic();vid()}
+function go(){pic();vid()}
 if(D.body)go();else D.addEventListener("DOMContentLoaded",go)})();
 </script></head>
 <body>
