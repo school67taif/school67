@@ -100,7 +100,7 @@ td{border:1px solid var(--ln);padding:6px;text-align:center}td.n{text-align:righ
 function own(){try{if(sessionStorage.getItem("s67own")==="1")return true;var t=+localStorage.getItem("s67ownT")||0;return !!(t&&Date.now()-t<2592000000)}catch(e){return false}}
 var L={doc:function(q){return{get:async function(){var v=null;try{v=localStorage.getItem(P+q)}catch(e){}return v?{id:q.split('/').pop(),data:function(){return JSON.parse(v)}}:null},set:async function(o){if(!own())return;try{localStorage.setItem(P+q,JSON.stringify(o))}catch(e){}}}},
 collection:function(c){return{get:async function(){var a=[];try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k.indexOf(P+c+'/')===0){(function(k){var v=localStorage.getItem(k);a.push({id:k.split('/').pop(),data:function(){return JSON.parse(v)}})})(k)}}}catch(e){}return a}}}};
-window.claude={use:async function(k){if(k=='user')return{isOwner:async function(){return own()}};if(k=='db')return L;return{save:async function(o){if(!own())return;var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([o.data],{type:'text/plain;charset=utf-8'}));a.download=o.filename;a.click()}}}}})();
+window.S67X={use:async function(k){if(k=='user')return{isOwner:async function(){return own()}};if(k=='db')return L;return{save:async function(o){if(!own())return;var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([o.data],{type:'text/plain;charset=utf-8'}));a.download=o.filename;a.click()}}}}})();
 </script>
 <script>
 const $=i=>document.getElementById(i),n=v=>+v||0;
@@ -148,19 +148,19 @@ $('xl').onclick=()=>{document.querySelector('[data-t=m]').click();$('fx').scroll
 $('add').onclick=()=>{const v=$('nn').value.trim();if(!v)return;S.staff.push({id:'p'+Date.now()+Math.floor(Math.random()*99),name:v,job:$('nj').value.trim(),phone:$('np').value.trim()});$('nn').value=$('nj').value=$('np').value='';cfg();staffUI();daily()};
 $('im').onclick=()=>{const f=$('fx').files[0];if(!f)return toast('اختاري الملف أولًا');const r=new FileReader();r.onload=async e=>{const wb=XLSX.read(e.target.result,{type:'array'}),rw=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''});if(!rw.length)return;const h=rw[0].map(String);let ci=h.findIndex(x=>/اسم المعلم|^الاسم$/.test(x.trim()));let st=1;if(ci<0){ci=0;st=0}const pi=h.findIndex(x=>/جوال|هاتف/.test(x)),ji=h.findIndex(x=>/وظيفة|التخصص/.test(x));
 const l=rw.slice(st).filter(q=>String(q[ci]).trim()).map((q,i)=>({id:'p'+Date.now()+i,name:String(q[ci]).trim(),job:ji>=0?String(q[ji]):'',phone:pi>=0?String(q[pi]):''}));if(l.length&&await ask(`استبدال القائمة بـ ${l.length} اسمًا؟`)){S.staff=l;cfg();staffUI();daily()}};r.readAsArrayBuffer(f)};
-$('dl').onclick=async()=>{const D=await claude.use('downloads');let c='\ufeffاسم المعلم,الوظيفة,الجوال\n';sorted().forEach(p=>c+=`"${p.name}","${p.job||''}","${p.phone||''}"\n`);try{await D.save({filename:'قائمة المعلمين ومنسوبي المدرسة.csv',data:c})}catch(e){}};
+$('dl').onclick=async()=>{const D=await S67X.use('downloads');let c='\ufeffاسم المعلم,الوظيفة,الجوال\n';sorted().forEach(p=>c+=`"${p.name}","${p.job||''}","${p.phone||''}"\n`);try{await D.save({filename:'قائمة المعلمين ومنسوبي المدرسة.csv',data:c})}catch(e){}};
 $('cc').onchange=()=>{S.set.calc=$('cc').checked;cfg();daily()};$('cs').onchange=()=>{S.set.start=$('cs').value||'07:00';cfg();daily()};$('cd').onchange=()=>{S.set.dur=Math.max(1,n($('cd').value));cfg();daily()};
 $('aa').onclick=()=>{const x=$('ax').value.trim();if(!x)return;S.set.alerts.push({t:$('at').value,x});$('ax').value='';cfg();setUI();alerts()};
-$('bk').onclick=async()=>{const D=await claude.use('downloads');try{await D.save({filename:'نسخة احتياطية - حضور الطابور.json',data:JSON.stringify({S,days})})}catch(e){}};
+$('bk').onclick=async()=>{const D=await S67X.use('downloads');try{await D.save({filename:'نسخة احتياطية - حضور الطابور.json',data:JSON.stringify({S,days})})}catch(e){}};
 $('br').onclick=()=>{const f=$('bf').files[0];if(!f)return;const r=new FileReader();r.onload=async e=>{try{const o=JSON.parse(e.target.result);if(!await ask('استبدال البيانات الحالية بالنسخة؟'))return;S=o.S;days=o.days||{};await cfg();for(const k in days)await db.doc('days/'+k).set(days[k]);setUI();staffUI();daily()}catch(x){toast('ملف غير صالح')}};r.readAsText(f)};
 $('svs').onclick=async()=>{await cfg();$('ss').textContent='تم حفظ الإعدادات ✓'};
 $('wp').onclick=async()=>{if(!await ask('سيتم مسح جميع الأسماء والسجلات والإعدادات. هل أنتِ متأكدة؟'))return;if(!await ask('تأكيد أخير: لا يمكن التراجع.'))return;for(const k in days){try{await db.doc('days/'+k).set({})}catch(e){}}days={};S={staff:[],set:{start:'07:00',dur:15,calc:true,days:[0,1,2,3,4],alerts:[]}};await cfg();setUI();staffUI();daily();alerts()};
 setInterval(()=>$('clk').textContent=new Date().toLocaleTimeString('ar-SA',{hour:'numeric',minute:'2-digit',second:'2-digit'}),1000);
 document.addEventListener('copy',e=>{if(!own)e.preventDefault()});
 (async()=>{
- try{const u=await claude.use('user');own=u?!!(await u.isOwner()):false}catch(e){own=false}
+ try{const u=await S67X.use('user');own=u?!!(await u.isOwner()):false}catch(e){own=false}
  if(!own){document.body.classList.add('ro');$('wm').style.display='flex';document.addEventListener('contextmenu',function(e){e.preventDefault()})}
- try{db=await claude.use('db');if(db){const c=await db.doc('config/main').get();const v=c&&(c.data?c.data():c);if(v&&v.set){S=v;if(!S.staff.length)S.staff=SEED.map((q,i)=>({id:'s'+i,name:q[0],job:q[1],phone:''}))}else S.staff=SEED.map((q,i)=>({id:'s'+i,name:q[0],job:q[1],phone:''}));const s=await db.collection('days').get();s.forEach(d=>days[d.id]=d.data())}}catch(e){}
+ try{db=await S67X.use('db');if(db){const c=await db.doc('config/main').get();const v=c&&(c.data?c.data():c);if(v&&v.set){S=v;if(!S.staff.length)S.staff=SEED.map((q,i)=>({id:'s'+i,name:q[0],job:q[1],phone:''}))}else S.staff=SEED.map((q,i)=>({id:'s'+i,name:q[0],job:q[1],phone:''}));const s=await db.collection('days').get();s.forEach(d=>days[d.id]=d.data())}}catch(e){}
  const t=fmt(new Date());$('f').value=$('to').value=t;setUI();staffUI();daily();alerts();
 })();
 </script></body></html>
