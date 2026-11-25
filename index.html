@@ -210,8 +210,11 @@ body:after{width:64vmax;height:64vmax;bottom:-24vmax;left:-24vmax;background:rad
 @keyframes s67c{to{transform:translate(-30vw,-34vh) scale(.8)}}
 @keyframes s67d{to{transform:translate(46vw,50vh) scale(1.2)}}
 #s67sky{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+#s67pic{position:fixed;inset:-6%;z-index:-2;pointer-events:none;background-size:cover;background-position:38% 50%;animation:s67kb 40s ease-in-out infinite alternate;will-change:transform}
+@keyframes s67kb{from{transform:scale(1) translate(0,0)}to{transform:scale(1.14) translate(-2.5%,-1.5%)}}
+@media(prefers-reduced-motion:reduce){#s67pic{animation:none}}
 @media(prefers-reduced-motion:reduce){body:before,body:after,.wrap:before,.wrap:after,.titlebar:after,.hero:after{animation:none}}
-@media print{body:before,body:after,.wrap:before,.wrap:after,#s67sky,#s67vid{display:none!important}html{background:#fff}}
+@media print{body:before,body:after,.wrap:before,.wrap:after,#s67sky,#s67vid,#s67pic{display:none!important}html{background:#fff}}
 /* لؤلؤي تركوازي ناعم */
 :root{--line:#E3ECEC}
 
@@ -290,9 +293,9 @@ function start(){if(D.getElementById("s67sky"))return;var c=D.createElement("can
  function init(){P=[];CL=[];var n=Math.round(Math.min(70,Math.max(26,w*h/16000)));if(S==="summer")n=6;if(S==="winter")n=Math.round(n*1.5);for(var i=0;i<n;i++)P.push(mk(true));
   var nc=S==="summer"?Math.max(6,Math.round(w/190)):S==="winter"?Math.max(6,Math.round(w/170)):Math.max(3,Math.round(w/330)),band=S==="winter"?[.0,.2]:S==="summer"?[.03,.5]:[.04,.32];for(var j=0;j<nc;j++)CL.push(mkCloud(true,band));CL.band=band}
  init();var last=performance.now(),run=true,flash=0,nextFlash=R(5,11),bolt=null,T=0;
- function frame(now){if(!run)return;var dt=Math.min(.05,(now-last)/1000);last=now;T+=dt;x.clearRect(0,0,w,h);x.drawImage(bg,0,0,w,h);
-  if(S==="autumn"||S==="summer"||S==="spring"){var sx=w*TH.sun[0],sy=h*TH.sun[1];x.save();x.translate(sx,sy);x.rotate(T*.05);for(var k=0;k<10;k++){x.rotate(.6283);var rg=x.createLinearGradient(0,0,0,Math.max(w,h)*.9);rg.addColorStop(0,"rgba("+TH.sun[2]+","+(.16+.06*Math.sin(T*.7+k))+")");rg.addColorStop(1,"rgba("+TH.sun[2]+",0)");x.fillStyle=rg;x.beginPath();x.moveTo(0,0);x.lineTo(-Math.max(w,h)*.07,Math.max(w,h)*.9);x.lineTo(Math.max(w,h)*.07,Math.max(w,h)*.9);x.fill()}x.restore()}
-  for(var i=0;i<CL.length;i++){var o=CL[i];o.x+=o.v*dt;if(o.x-o.s>w)CL[i]=mkCloud(false,CL.band);cloud(o)}
+ function frame(now){if(!run)return;var dt=Math.min(.05,(now-last)/1000);last=now;T+=dt;x.clearRect(0,0,w,h);var PIC=de.classList.contains("s67-pic");if(!PIC)x.drawImage(bg,0,0,w,h);
+  if(!PIC&&(S==="autumn"||S==="summer"||S==="spring")){var sx=w*TH.sun[0],sy=h*TH.sun[1];x.save();x.translate(sx,sy);x.rotate(T*.05);for(var k=0;k<10;k++){x.rotate(.6283);var rg=x.createLinearGradient(0,0,0,Math.max(w,h)*.9);rg.addColorStop(0,"rgba("+TH.sun[2]+","+(.16+.06*Math.sin(T*.7+k))+")");rg.addColorStop(1,"rgba("+TH.sun[2]+",0)");x.fillStyle=rg;x.beginPath();x.moveTo(0,0);x.lineTo(-Math.max(w,h)*.07,Math.max(w,h)*.9);x.lineTo(Math.max(w,h)*.07,Math.max(w,h)*.9);x.fill()}x.restore()}
+  for(var i=0;i<(PIC?0:CL.length);i++){var o=CL[i];o.x+=o.v*dt;if(o.x-o.s>w)CL[i]=mkCloud(false,CL.band);cloud(o)}
   for(var j=0;j<P.length;j++){var p=P[j];
    if(p.bird){p.x+=p.vx*dt;p.ph+=dt*7;var f=Math.sin(p.ph)*p.s*.6;x.strokeStyle="rgba(40,60,80,"+p.a+")";x.lineWidth=1.6;x.beginPath();x.moveTo(p.x-p.s,p.y-f);x.quadraticCurveTo(p.x-p.s*.4,p.y-p.s*.5,p.x,p.y);x.quadraticCurveTo(p.x+p.s*.4,p.y-p.s*.5,p.x+p.s,p.y-f);x.stroke();if(p.x>w+40)P[j]=mk(false);continue}
    if(p.rain){p.y+=p.vy*dt;p.x-=p.vy*.14*dt;x.strokeStyle="rgba(225,235,250,"+p.a+")";x.lineWidth=1.2;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(p.x+p.l*.14,p.y-p.l);x.stroke()}
@@ -305,9 +308,10 @@ function start(){if(D.getElementById("s67sky"))return;var c=D.createElement("can
  D.addEventListener("visibilitychange",function(){if(D.hidden){run=false}else if(!run){run=true;last=performance.now();if(!RM)W.requestAnimationFrame(frame)}});
  frame(performance.now())}
 function vid(){if(RM||D.getElementById("s67vid"))return;var v=D.createElement("video");v.id="s67vid";v.muted=true;v.loop=true;v.autoplay=true;v.playsInline=true;v.setAttribute("muted","");v.setAttribute("playsinline","");v.setAttribute("aria-hidden","true");v.preload="auto";v.style.cssText="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;pointer-events:none;opacity:0;transition:opacity .8s";
- v.addEventListener("playing",function(){v.style.opacity="1";var c=D.getElementById("s67sky");if(c)c.style.display="none"});v.addEventListener("error",function(){if(v.parentNode)v.parentNode.removeChild(v)});
- v.src="bg/"+S+".mp4";D.body.appendChild(v);var p=v.play();if(p&&p.catch)p.catch(function(){})}
-function go(){start();vid()}
+ v.addEventListener("playing",function(){v.style.opacity="1";var c=D.getElementById("s67sky");if(c)c.style.display="none";var q=D.getElementById("s67pic");if(q)q.style.animation="none"});v.addEventListener("error",function(){if(v.parentNode)v.parentNode.removeChild(v)});
+ var VS={autumn:"https://assets.mixkit.co/videos/34045/34045-720.mp4"};v.src=VS[S]||("bg/"+S+".mp4");D.body.appendChild(v);var p=v.play();if(p&&p.catch)p.catch(function(){})}
+function pic(){var im=new Image();im.onload=function(){if(D.getElementById("s67pic"))return;var d=D.createElement("div");d.id="s67pic";d.setAttribute("aria-hidden","true");d.style.backgroundImage="url(bg/"+S+".jpg)";D.body.appendChild(d);de.classList.add("s67-pic")};im.src="bg/"+S+".jpg"}
+function go(){start();pic();vid()}
 if(D.body)go();else D.addEventListener("DOMContentLoaded",go)})();
 </script></head>
 <body>
