@@ -357,11 +357,11 @@ let S = {mode:null, me:null, cfg:null, files:[], cats:[], view:"home", cat:"all"
 const CAT_ORDER = ()=>S.cats.map(c=>c.id);
 
 (async()=>{
-  if(!window.claude||!claude.use) return;
-  try{ usr = await claude.use("user"); isOwnerAcct = usr? !!(await usr.isOwner()) : false; }catch(e){}
-  try{ dl = await claude.use("downloads"); }catch(e){}
+  if(!window.s67h||!s67h.use) return;
+  try{ usr = await s67h.use("user"); isOwnerAcct = usr? !!(await usr.isOwner()) : false; }catch(e){}
+  try{ dl = await s67h.use("downloads"); }catch(e){}
   try{
-    db = await claude.use("db");
+    db = await s67h.use("db");
     if(db){
       const timer = setTimeout(()=>{},10000);
       const snap = await db.doc("system/store").get();

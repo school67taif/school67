@@ -165,7 +165,7 @@ var ASS={upload:function(b,o){if(!OWN)return deny();return new Promise(function(
 delete:function(id){if(!OWN)return deny();delete AS[id];return iset(KA,J(AS)).catch(function(){})},url:function(id){return Promise.resolve(AS[id]||"")},get:function(id){return Promise.resolve(AS[id]?{id:id,url:AS[id]}:null)}};
 var ART={publish:function(html){if(!OWN)return deny();dl(fname(),new Blob([html],{type:"text/html;charset=utf-8"}));return Promise.resolve({version:String(Date.now())})}};
 var hasSeed=Object.keys(SDB).length>0;
-if(!W.claude&&!NODB&&(OWN||hasSeed)){var M={db:(OWN||hasSeed)?DB:null,user:U,downloads:OWN?DLS:null,assets:OWN?ASS:null,artifact:OWN?ART:null};
+if(!W.s67h&&!NODB&&(OWN||hasSeed)){var M={db:(OWN||hasSeed)?DB:null,user:U,downloads:OWN?DLS:null,assets:OWN?ASS:null,artifact:OWN?ART:null};
 W.claude={use:function(n){return READY.then(function(){return Object.prototype.hasOwnProperty.call(M,n)?M[n]:null})}}}
 /* updated copy */
 function snapshot(){var ls={};Object.keys(TK).forEach(function(k){var v=g(k);if(v!==null)ls[k]=v});Object.keys(SLS).forEach(function(k){if(!(k in ls)&&g(k)===null)ls[k]=SLS[k]});S0();var as={},txt=JSON.stringify(store)+JSON.stringify(ls);Object.keys(AS).forEach(function(id){if(txt.indexOf(id)>-1)as[id]=AS[id]});return{t:Date.now(),db:store,ls:ls,as:as}}
@@ -1446,7 +1446,7 @@ document.querySelectorAll('.card').forEach(function(card) {
   function start(){sweep(document);mo.observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:["value","contenteditable"]})}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
   setInterval(function(){sweep(document)},1500);
-  (async function(){try{if(window.claude&&window.claude.use){var u=await window.claude.use("user");if(u&&u.isOwner&&await u.isOwner()){owner=true;unlockAll()}}else if(location.protocol==="file:"){owner=true;unlockAll()}}catch(e){}})();
+  (async function(){try{if(window.s67h&&window.s67h.use){var u=await window.s67h.use("user");if(u&&u.isOwner&&await u.isOwner()){owner=true;unlockAll()}}else if(location.protocol==="file:"){owner=true;unlockAll()}}catch(e){}})();
   function unlockAll(){mo.disconnect();var n=document.querySelectorAll("input,textarea,[contenteditable]");for(var i=0;i<n.length;i++){var el=n[i];if(el.__l67===undefined)continue;
     if("readOnly" in el&&!el.hasAttribute("data-vo"))el.readOnly=false;if(el.getAttribute("contenteditable")==="false"&&el.title.indexOf("مقفل")===0)el.setAttribute("contenteditable","true");el.title="";el.style.cursor="";delete el.__l67}}
 })();
@@ -1501,7 +1501,7 @@ var own=false;try{own=sessionStorage.getItem("s67own")==="1";var t=+localStorage
 function locked(){return de.classList.contains(L)}
 function unlock(){de.classList.remove(L);d.querySelectorAll(".s67hide").forEach(function(b){b.classList.remove("s67hide")});d.querySelectorAll("[data-s67ro]").forEach(function(x){var m=x.getAttribute("data-s67ro");if(m==="1")x.readOnly=false;else if(m==="2")x.disabled=false;else x.setAttribute("contenteditable","true");x.removeAttribute("data-s67ro")})}
 if(!own)de.classList.add(L);
-try{if(window.claude&&claude.use){claude.use("user").then(function(u){return u&&u.isOwner?u.isOwner():false}).then(function(o){if(o)unlock()}).catch(function(){})}}catch(e){}
+try{if(window.s67h&&s67h.use){s67h.use("user").then(function(u){return u&&u.isOwner?u.isOwner():false}).then(function(o){if(o)unlock()}).catch(function(){})}}catch(e){}
 ["copy","cut","contextmenu","dragstart","selectstart"].forEach(function(t){d.addEventListener(t,function(e){if(locked()&&!(e.target&&e.target.closest&&e.target.closest("#s67dlg")))e.preventDefault()},true)});
 d.addEventListener("click",function(e){if(!locked())return;var a=e.target&&e.target.closest&&e.target.closest("a[href],a[download]");if(a&&(a.hasAttribute("download")||/\.(pdf|xlsx?|docx?|pptx?|zip)(\b|#|\?|$)/i.test(a.getAttribute("href")||"")||/^(blob:|data:)/i.test(a.getAttribute("href")||""))){e.preventDefault();e.stopPropagation()}},true);
 d.addEventListener("keydown",function(e){if(!locked())return;var k=(e.key||"").toLowerCase();if(((e.ctrlKey||e.metaKey)&&"cpsxu".indexOf(k)>-1)||k==="f12"){e.preventDefault()}},true);

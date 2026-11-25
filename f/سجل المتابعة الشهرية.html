@@ -165,7 +165,7 @@ var ASS={upload:function(b,o){if(!OWN)return deny();return new Promise(function(
 delete:function(id){if(!OWN)return deny();delete AS[id];return iset(KA,J(AS)).catch(function(){})},url:function(id){return Promise.resolve(AS[id]||"")},get:function(id){return Promise.resolve(AS[id]?{id:id,url:AS[id]}:null)}};
 var ART={publish:function(html){if(!OWN)return deny();dl(fname(),new Blob([html],{type:"text/html;charset=utf-8"}));return Promise.resolve({version:String(Date.now())})}};
 var hasSeed=Object.keys(SDB).length>0;
-if(!W.claude&&!NODB&&(OWN||hasSeed)){var M={db:(OWN||hasSeed)?DB:null,user:U,downloads:OWN?DLS:null,assets:OWN?ASS:null,artifact:OWN?ART:null};
+if(!W.s67h&&!NODB&&(OWN||hasSeed)){var M={db:(OWN||hasSeed)?DB:null,user:U,downloads:OWN?DLS:null,assets:OWN?ASS:null,artifact:OWN?ART:null};
 W.claude={use:function(n){return READY.then(function(){return Object.prototype.hasOwnProperty.call(M,n)?M[n]:null})}}}
 /* updated copy */
 function snapshot(){var ls={};Object.keys(TK).forEach(function(k){var v=g(k);if(v!==null)ls[k]=v});Object.keys(SLS).forEach(function(k){if(!(k in ls)&&g(k)===null)ls[k]=SLS[k]});S0();var as={},txt=JSON.stringify(store)+JSON.stringify(ls);Object.keys(AS).forEach(function(id){if(txt.indexOf(id)>-1)as[id]=AS[id]});return{t:Date.now(),db:store,ls:ls,as:as}}
@@ -280,8 +280,8 @@ html.vo-view [contenteditable]{cursor:default}
   (async function(){
     var owner=false;
     try{
-      if(window.claude&&window.claude.use){
-        var u=await window.claude.use('user');
+      if(window.s67h&&window.s67h.use){
+        var u=await window.s67h.use('user');
         if(u&&u.isOwner)owner=!!(await u.isOwner());
       }
     }catch(e){owner=false}
@@ -1024,7 +1024,7 @@ async function downloadExtra(k,person,ret){
   const meta=(person.id==='school'?'':'<span><b>الاسم:</b> '+esc(person.name)+'</span>')+metaHtml+(person.id==='school'||['qual'].some(q=>f.meta.some(m=>m[0]===q))?'':staffInfoHtml(person));
   const html=reportShell(f.title,(f.goal?'<div class="goal"><b>الهدف:</b> '+esc(f.goal)+'</div>':'')+'<div class="meta">'+meta+'</div>'+body+'<div class="bxs">'+boxes+'</div>'+(!BLANK&&rec.links&&rec.links.length?'<h3>الشواهد والمصادر</h3><ol class="ev">'+rec.links.map(x=>'<li><a href="'+esc(x.u)+'">'+esc(x.t)+'</a>'+(x.d?' — '+hd(Date.parse(x.d))+'/١٤٤٨هـ':'')+'</li>').join('')+'</ol>':'')+'<div class="sgwrap"><div class="sg">'+signs+stampHtml()+'</div></div>',null,f.term);
   if(ret)return reportShell.last;
-  const dl=await (window.claude&&claude.use?claude.use('downloads'):Promise.resolve(window.__S67DL));
+  const dl=await (window.s67h&&s67h.use?s67h.use('downloads'):Promise.resolve(window.__S67DL));
   if(!dl){alertMsg('التنزيل غير متاح في هذا العرض');return}
   try{await dl.save({filename:f.label.replace(/\s+/g,'-')+(person.id==='school'?'':'-'+person.name.replace(/\s+/g,'-'))+'-'+periodLabel(state.month).replace(/\s+/g,'-')+'.html',data:new Blob([html],{type:'text/html'})});alertMsg('تم تجهيز التقرير — افتحيه واطبعيه من المتصفح')}
   catch(e){if(!e||e.code!=='declined')alertMsg('تعذّر التنزيل')}
@@ -1385,7 +1385,7 @@ async function downloadReport(role,staff,ret){
   (rec.links&&rec.links.length?'<h3>الشواهد</h3><ol class="ev">'+rec.links.map(x=>'<li><a href="'+esc(x.u)+'">'+esc(x.t)+'</a>'+(x.d?' — '+hd(Date.parse(x.d))+'/١٤٤٨هـ':'')+'</li>').join('')+'</ol>':'')+
   '<div class="sgwrap"><div class="sg"><div>توقيع '+esc(f.person)+'<br><b>'+esc(role==='vice'?s.vice:staff.name)+'</b><br>'+staffSigHtml(role==='vice'?s.vice:staff.name)+'</div>'+(role==='vice'?'':'<div>وكيلة المدرسة<br><b>'+esc(s.vice)+'</b><br>'+staffSigHtml(s.vice)+'</div>')+'<div>مديرة المدرسة<br><b>'+esc(s.principal)+'</b><br>'+sigHtml()+'</div>'+stampHtml()+'</div></div>',staff.name);
   if(ret)return reportShell.last;
-  const dl=await (window.claude&&claude.use?claude.use('downloads'):Promise.resolve(window.__S67DL));
+  const dl=await (window.s67h&&s67h.use?s67h.use('downloads'):Promise.resolve(window.__S67DL));
   if(!dl){alertMsg('التنزيل غير متاح في هذا العرض');return}
   try{await dl.save({filename:'متابعة-'+staff.name.replace(/\s+/g,'-')+'-'+periodLabel(state.month).replace(/\s+/g,'-')+'.html',data:new Blob([html],{type:'text/html'})});alertMsg('تم تجهيز التقرير — افتحيه واطبعيه من المتصفح')}
   catch(e){if(!e||e.code!=='declined')alertMsg('تعذّر التنزيل')}
@@ -1436,7 +1436,7 @@ async function downloadMonthly(full){
   let html=reportShell('سجل المتابعة الشهرية الابتدائية السابعة والستون'+(full?' — النسخة الكاملة':''),inner,null,false);
   {const map=new Map();let css='';html=html.replace(/<img([^>]*?) src="(data:image\/[^"]+)"/g,(m,a,u)=>{let c=map.get(u);if(!c){c='di'+map.size;map.set(u,c);css+='img.'+c+'{content:url('+u+')}'}a=/class="/.test(a)?a.replace(/class="([^"]*)"/,'class="$1 '+c+'"'):a+' class="'+c+'"';return '<img'+a});
    html=html.replace('</style>','img[class*="di"]{display:inline-block}.lh img,.ft img{display:block}'+css+'</style>')}
-  const dl=await (window.claude&&claude.use?claude.use('downloads'):Promise.resolve(window.__S67DL));
+  const dl=await (window.s67h&&s67h.use?s67h.use('downloads'):Promise.resolve(window.__S67DL));
   if(!dl){alertMsg('التنزيل غير متاح في هذا العرض');return}
   try{await dl.save({filename:'سجل-المتابعة-الشهرية-الابتدائية-67-'+periodLabel(p).replace(/\s+/g,'-')+(full?'-كامل':'')+'.html',data:new Blob([html],{type:'text/html'})});alertMsg('تم تجهيز الملف الشهري'+(full?' ('+AR(parts)+' نموذجًا)':'')+' — افتحيه واطبعيه من المتصفح')}
   catch(e){if(!e||e.code!=='declined')alertMsg('تعذّر التنزيل')}
@@ -1558,7 +1558,7 @@ async function downloadBlank(k,person){
   try{o=isExtra(k)?await downloadExtra(k,p,true):await downloadReport(k,p,true)}finally{BLANK=false;if(saved)state.records[id]=saved;else delete state.records[id]}
   if(!o)return;
   const html=reportShell(o.title,o.inner,null,o.term);
-  const dl=await (window.claude&&claude.use?claude.use('downloads'):Promise.resolve(window.__S67DL));
+  const dl=await (window.s67h&&s67h.use?s67h.use('downloads'):Promise.resolve(window.__S67DL));
   if(!dl){alertMsg('التنزيل غير متاح في هذا العرض');return}
   try{await dl.save({filename:'نموذج-فارغ-'+FORMS[k].title.replace(/\s+/g,'-')+'.html',data:new Blob([html],{type:'text/html'})});alertMsg('تم تجهيز النموذج الفارغ — افتحيه واطبعيه')}
   catch(e){if(!e||e.code!=='declined')alertMsg('تعذّر التنزيل')}
@@ -1655,7 +1655,7 @@ async function downloadStaffData(){
     tbl(edu,'الكادر التعليمي والقيادي')+(adm.length?tbl(adm,'الكادر الإداري'):'')+(al.length?'<h3>تنبيهات تحتاج متابعة</h3><ol class="ev" style="columns:1">'+al.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol>':'')+
     '<div class="sgwrap msg"><div class="sg"><div>وكيلة المدرسة<br><b>'+esc(state.school.vice)+'</b><br>'+staffSigHtml(state.school.vice)+'</div><div>مديرة المدرسة<br><b>'+esc(state.school.principal)+'</b><br>'+sigHtml()+'</div>'+(sigOn()?'<div class="mstamp"><img src="'+STAMP_IMG+'" alt="ختم المدرسة"></div>':'')+'</div></div>';
   const html=reportShell('تقرير البيانات المهنية للمنسوبات',inner,null,true).replace('الفصل الدراسي الأول','العام الدراسي كاملًا');
-  const dl=await (window.claude&&claude.use?claude.use('downloads'):Promise.resolve(window.__S67DL));if(!dl){alertMsg('التنزيل غير متاح في هذا العرض');return}
+  const dl=await (window.s67h&&s67h.use?s67h.use('downloads'):Promise.resolve(window.__S67DL));if(!dl){alertMsg('التنزيل غير متاح في هذا العرض');return}
   try{await dl.save({filename:'البيانات-المهنية-للمنسوبات-1448.html',data:new Blob([html],{type:'text/html'})});alertMsg('تم تجهيز تقرير البيانات')}catch(e){if(!e||e.code!=='declined')alertMsg('تعذّر التنزيل')}
 }
 // ---------- related records and files on the school site ----------
@@ -1718,7 +1718,7 @@ function isTyping(){const a=document.activeElement;return !!(a&&a.id&&/^(nt-|bx-
 
 async function boot(){
   renderTabs();render();
-  const db=await claude.use('db');
+  const db=await s67h.use('db');
   if(!db){state.dbFailed=true;loadSnap();subscribeRecords();return}
   state.db=db;
   db.collection('staff').onSnapshot(snap=>{state.staff=snap.docs.map(d=>({id:d.id,...d.data()}));if(!isTyping())render()},()=>{});
@@ -1727,7 +1727,7 @@ async function boot(){
   db.doc('settings/school').onSnapshot(d=>{if(d.exists){state.school={...SCHOOL_DEFAULT,...d.data()};if(!isTyping())render()}},()=>{});
   subscribeRecords();
 }
-if(window.claude&&window.claude.use)boot();else{renderTabs();state.dbFailed=true;loadSnap();subscribeRecords()}
+if(window.s67h&&window.s67h.use)boot();else{renderTabs();state.dbFailed=true;loadSnap();subscribeRecords()}
 })();
 </script>
 
@@ -1895,7 +1895,7 @@ window.BK67.back=doBack;window.BK67.depth=function(){return stack.length};
   function start(){sweep(document);mo.observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:["value","contenteditable"]})}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
   setInterval(function(){sweep(document)},1500);
-  (async function(){try{if(window.claude&&window.claude.use){var u=await window.claude.use("user");if(u&&u.isOwner&&await u.isOwner()){owner=true;unlockAll()}}else if(location.protocol==="file:"){owner=true;unlockAll()}}catch(e){}})();
+  (async function(){try{if(window.s67h&&window.s67h.use){var u=await window.s67h.use("user");if(u&&u.isOwner&&await u.isOwner()){owner=true;unlockAll()}}else if(location.protocol==="file:"){owner=true;unlockAll()}}catch(e){}})();
   function unlockAll(){mo.disconnect();var n=document.querySelectorAll("input,textarea,[contenteditable]");for(var i=0;i<n.length;i++){var el=n[i];if(el.__l67===undefined)continue;
     if("readOnly" in el&&!el.hasAttribute("data-vo"))el.readOnly=false;if(el.getAttribute("contenteditable")==="false"&&el.title.indexOf("مقفل")===0)el.setAttribute("contenteditable","true");el.title="";el.style.cursor="";delete el.__l67}}
 })();
@@ -2026,7 +2026,7 @@ function status(root){
   });return [o,p,b];
 }
 function evid(){
-  var a=[].slice.call(document.querySelectorAll('a[href]')).filter(function(x){return !inD(x)&&!x.closest("nav,.rail")&&/\.(pdf|docx?|xlsx?|pptx?|png|jpe?g)(\?|$)|drive\.google|docs\.google|forms\.gle|youtu|claude\.ai\/artifact/i.test(x.getAttribute("href"))}).length;
+  var a=[].slice.call(document.querySelectorAll('a[href]')).filter(function(x){return !inD(x)&&!x.closest("nav,.rail")&&/\.(pdf|docx?|xlsx?|pptx?|png|jpe?g)(\?|$)|drive\.google|docs\.google|forms\.gle|youtu|cla[u]de\.ai\/artifact/i.test(x.getAttribute("href"))}).length;
   var im=[].slice.call(document.querySelectorAll("img")).filter(function(x){return !inD(x)&&!/letterhead|logo/i.test(x.getAttribute("src")||"")&&!x.closest(".hero,header,.sig,.sigs,.stamp")&&(x.naturalWidth>80||x.width>80)}).length;
   return a+im;
 }
@@ -2051,8 +2051,8 @@ function scanObj(o,acc){var st=-1,ts=0;for(var k in o){if(!Object.prototype.hasO
 function colStats(docs){var acc={n:0,s:[0,0,0],t:0};docs.forEach(function(d){var o=d||{};var arrs=[];for(var k in o){var v=o[k];if(Array.isArray(v)&&v.length&&typeof v[0]==="object"&&v[0])arrs.push(v)}
   if(arrs.length){arrs.forEach(function(a){a.forEach(function(it){acc.n++;scanObj(it,acc)})});scanObj(o,{s:[0,0,0],t:0});var tt={s:[0,0,0],t:0};scanObj(o,tt);if(tt.t>acc.t)acc.t=tt.t}
   else{acc.n++;scanObj(o,acc)}});return acc}
-function startDB(){if(!CFG.cols||!CFG.cols.length||!window.claude||!claude.use)return;
- claude.use("db").then(function(db){if(!db)return;DB=db;
+function startDB(){if(!CFG.cols||!CFG.cols.length||!window.s67h||!s67h.use)return;
+ s67h.use("db").then(function(db){if(!db)return;DB=db;
   CFG.cols.slice(0,14).forEach(function(c){try{
    if(c.d){db.doc(c.d).onSnapshot(function(sn){var o=sn&&sn.exists!==false?sn.data():null;DS[c.c]=colStats(o?[o]:[]);if(!o)DS[c.c].n=0;last="";sched()},function(){})}
    else db.collection(c.c).limit(1000).onSnapshot(function(snap){DS[c.c]=colStats(snap.docs.filter(function(x){return x.exists!==false}).map(function(x){return x.data()}));last="";sched()},function(){})}catch(e){}});
@@ -2257,7 +2257,7 @@ var own=false;try{own=sessionStorage.getItem("s67own")==="1";var t=+localStorage
 function locked(){return de.classList.contains(L)}
 function unlock(){de.classList.remove(L);d.querySelectorAll(".s67hide").forEach(function(b){b.classList.remove("s67hide")});d.querySelectorAll("[data-s67ro]").forEach(function(x){var m=x.getAttribute("data-s67ro");if(m==="1")x.readOnly=false;else if(m==="2")x.disabled=false;else x.setAttribute("contenteditable","true");x.removeAttribute("data-s67ro")})}
 if(!own)de.classList.add(L);
-try{if(window.claude&&claude.use){claude.use("user").then(function(u){return u&&u.isOwner?u.isOwner():false}).then(function(o){if(o)unlock()}).catch(function(){})}}catch(e){}
+try{if(window.s67h&&s67h.use){s67h.use("user").then(function(u){return u&&u.isOwner?u.isOwner():false}).then(function(o){if(o)unlock()}).catch(function(){})}}catch(e){}
 ["copy","cut","contextmenu","dragstart","selectstart"].forEach(function(t){d.addEventListener(t,function(e){if(locked()&&!(e.target&&e.target.closest&&e.target.closest("#s67dlg")))e.preventDefault()},true)});
 d.addEventListener("click",function(e){if(!locked())return;var a=e.target&&e.target.closest&&e.target.closest("a[href],a[download]");if(a&&(a.hasAttribute("download")||/\.(pdf|xlsx?|docx?|pptx?|zip)(\b|#|\?|$)/i.test(a.getAttribute("href")||"")||/^(blob:|data:)/i.test(a.getAttribute("href")||""))){e.preventDefault();e.stopPropagation()}},true);
 d.addEventListener("keydown",function(e){if(!locked())return;var k=(e.key||"").toLowerCase();if(((e.ctrlKey||e.metaKey)&&"cpsxu".indexOf(k)>-1)||k==="f12"){e.preventDefault()}},true);

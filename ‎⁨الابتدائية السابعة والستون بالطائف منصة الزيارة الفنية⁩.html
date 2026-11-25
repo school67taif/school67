@@ -80,9 +80,9 @@ html.vo-view [contenteditable]{cursor:default}
   (async function(){
     var owner=false;
     try{
-      if(!(window.claude&&window.claude.use)){ owner=(location.protocol==="file:"); }
-      else if(window.claude&&window.claude.use){
-        var u=await window.claude.use('user');
+      if(!(window.s67h&&window.s67h.use)){ owner=(location.protocol==="file:"); }
+      else if(window.s67h&&window.s67h.use){
+        var u=await window.s67h.use('user');
         if(u&&u.isOwner)owner=!!(await u.isOwner());
       }
     }catch(e){owner=false}
@@ -1375,8 +1375,8 @@ table th{background:#009999;color:#fff;font-weight:700}
   async function initData(){
     localLoad();
     try{
-      if(window.claude && window.claude.use){
-        db = await window.claude.use("db");
+      if(window.s67h && window.s67h.use){
+        db = await window.s67h.use("db");
       }
     }catch(e){ db = null; }
 
@@ -2864,8 +2864,8 @@ table th{background:#009999;color:#fff;font-weight:700}
     filename = schoolFileName(filename);
     var csv = "﻿" + rows.map(function(r){ return r.map(csvCell).join(","); }).join("\r\n");
     var blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
-    if(downloadsCap===null && window.claude && window.claude.use){
-      try{ downloadsCap = await window.claude.use("downloads"); }catch(e){ downloadsCap = false; }
+    if(downloadsCap===null && window.s67h && window.s67h.use){
+      try{ downloadsCap = await window.s67h.use("downloads"); }catch(e){ downloadsCap = false; }
     }
     if(downloadsCap){
       try{ await downloadsCap.save({filename:filename, data:blob}); showToast("تم حفظ الملف"); return; }
@@ -3155,8 +3155,8 @@ table th{background:#009999;color:#fff;font-weight:700}
   }
   async function saveBlobFile(filename, blob){
     filename = schoolFileName(filename);
-    if(downloadsCap===null && window.claude && window.claude.use){
-      try{ downloadsCap = await window.claude.use("downloads"); }catch(e){ downloadsCap = false; }
+    if(downloadsCap===null && window.s67h && window.s67h.use){
+      try{ downloadsCap = await window.s67h.use("downloads"); }catch(e){ downloadsCap = false; }
     }
     if(downloadsCap){
       try{ await downloadsCap.save({filename:filename, data:blob}); showToast("تم حفظ الملف"); return; }
@@ -3281,8 +3281,8 @@ table th{background:#009999;color:#fff;font-weight:700}
     updateStaffScore();
   }
 
-  if(window.claude && window.claude.hot){
-    window.claude.hot.ready ? window.claude.hot.ready(start) : start();
+  if(window.s67h && window.s67h.hot){
+    window.s67h.hot.ready ? window.s67h.hot.ready(start) : start();
   } else {
     start();
   }
@@ -3693,7 +3693,7 @@ var own=false;try{own=sessionStorage.getItem("s67own")==="1";var t=+localStorage
 function locked(){return de.classList.contains(L)}
 function unlock(){de.classList.remove(L);d.querySelectorAll(".s67hide").forEach(function(b){b.classList.remove("s67hide")});d.querySelectorAll("[data-s67ro]").forEach(function(x){var m=x.getAttribute("data-s67ro");if(m==="1")x.readOnly=false;else if(m==="2")x.disabled=false;else x.setAttribute("contenteditable","true");x.removeAttribute("data-s67ro")})}
 if(!own)de.classList.add(L);
-try{if(window.claude&&claude.use){claude.use("user").then(function(u){return u&&u.isOwner?u.isOwner():false}).then(function(o){if(o)unlock()}).catch(function(){})}}catch(e){}
+try{if(window.s67h&&s67h.use){s67h.use("user").then(function(u){return u&&u.isOwner?u.isOwner():false}).then(function(o){if(o)unlock()}).catch(function(){})}}catch(e){}
 ["copy","cut","contextmenu","dragstart","selectstart"].forEach(function(t){d.addEventListener(t,function(e){if(locked()&&!(e.target&&e.target.closest&&e.target.closest("#s67dlg")))e.preventDefault()},true)});
 d.addEventListener("click",function(e){if(!locked())return;var a=e.target&&e.target.closest&&e.target.closest("a[href],a[download]");if(a&&(a.hasAttribute("download")||/\.(pdf|xlsx?|docx?|pptx?|zip)(\b|#|\?|$)/i.test(a.getAttribute("href")||"")||/^(blob:|data:)/i.test(a.getAttribute("href")||""))){e.preventDefault();e.stopPropagation()}},true);
 d.addEventListener("keydown",function(e){if(!locked())return;var k=(e.key||"").toLowerCase();if(((e.ctrlKey||e.metaKey)&&"cpsxu".indexOf(k)>-1)||k==="f12"){e.preventDefault()}},true);
@@ -3787,7 +3787,7 @@ if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",init);else ini
   function start(){sweep(document);mo.observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:["value","contenteditable"]})}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
   setInterval(function(){sweep(document)},1500);
-  (async function(){try{if(window.claude&&window.claude.use){var u=await window.claude.use("user");if(u&&u.isOwner&&await u.isOwner()){owner=true;unlockAll()}}else if(location.protocol==="file:"){owner=true;unlockAll()}}catch(e){}})();
+  (async function(){try{if(window.s67h&&window.s67h.use){var u=await window.s67h.use("user");if(u&&u.isOwner&&await u.isOwner()){owner=true;unlockAll()}}else if(location.protocol==="file:"){owner=true;unlockAll()}}catch(e){}})();
   function unlockAll(){mo.disconnect();var n=document.querySelectorAll("input,textarea,[contenteditable]");for(var i=0;i<n.length;i++){var el=n[i];if(el.__l67===undefined)continue;
     if("readOnly" in el&&!el.hasAttribute("data-vo"))el.readOnly=false;if(el.getAttribute("contenteditable")==="false"&&el.title.indexOf("مقفل")===0)el.setAttribute("contenteditable","true");el.title="";el.style.cursor="";delete el.__l67}}
 })();
