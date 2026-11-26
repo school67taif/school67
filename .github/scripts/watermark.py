@@ -12,7 +12,7 @@ def patch_guard(g):
 canon=None
 import os
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)),"..",".."))
-files=[f for f in glob.glob("**/*.html",recursive=True)]
+files=[f for f in glob.glob("**/*.html",recursive=True) if not f.startswith("tajriba/")]
 n=0
 for f in files:
     s=open(f,encoding="utf8").read()
@@ -35,7 +35,7 @@ except Exception:
 added = 0
 if GUARD and "s67wm" in GUARD:
     for f in glob.glob("**/*.html", recursive=True):
-        if f in SKIP or f.startswith("dl/النظام المتكامل") or f.startswith(".github"):
+        if f in SKIP or f.startswith("dl/النظام المتكامل") or f.startswith(".github") or f.startswith("tajriba/"):
             continue
         s = open(f, encoding="utf8", errors="ignore").read()
         if "s67guard" in s or len(s) < 4000 or 'http-equiv="refresh"' in s or "location.replace(" in s[:3000]:
@@ -49,7 +49,7 @@ print("guard added", added)
 FRESH = '<script id="s67fresh">(function(){try{var u=location.href.split("#")[0];if(!/^https?:/.test(u)||sessionStorage.getItem("s67f:"+u))return;sessionStorage.setItem("s67f:"+u,"1");Promise.all([fetch(u,{method:"HEAD",cache:"force-cache"}),fetch(u,{method:"HEAD",cache:"reload"})]).then(function(r){var a=r[0].headers.get("etag")||r[0].headers.get("last-modified"),b=r[1].headers.get("etag")||r[1].headers.get("last-modified");if(a&&b&&a!==b)location.reload()}).catch(function(){})}catch(e){}})();</script>'
 nf = 0
 for f in glob.glob("**/*.html", recursive=True):
-    if f.startswith(".github"):
+    if f.startswith(".github") or f.startswith("tajriba/"):
         continue
     s = open(f, encoding="utf8", errors="ignore").read()
     if "s67fresh" in s or "s67guard" not in s:
