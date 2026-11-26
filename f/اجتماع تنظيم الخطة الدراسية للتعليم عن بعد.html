@@ -701,7 +701,7 @@ if(m&&m.offsetWidth>0){var kv,k=[].slice.call(m.querySelectorAll("button,a")).fi
 if(last){var p=last.parentNode,li=p.tagName==="LI";b=mk(last.tagName.toLowerCase(),String(last.className||"").replace(/\b(active|on|sel|current|cur|s67\w*)\b/g,"").trim());if(cur)cur.remove();if(li){var l=d.createElement("li");l.appendChild(b);p.parentNode.appendChild(l)}else p.appendChild(b);return}}
 if(!cur){b=mk("button","s67arcf");b.textContent="🗄️";b.title="الأرشيف";b.setAttribute("aria-label","الأرشيف");if(!d.getElementById("s67key"))b.style.left="8px";d.body.appendChild(b)}}
 function init(){add();d.addEventListener("click",function(){setTimeout(add,500)},true);try{var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(add,300)}).observe(d.body,{childList:true,subtree:true})}catch(e){}[1200,3000,6000].forEach(function(n){setTimeout(add,n)})}
-if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",function(){setTimeout(init,900)});else setTimeout(init,900)})();</script></body>
+if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",function(){setTimeout(init,900)});else setTimeout(init,900)})();</script><script src="/school67/s67bg.js" defer></script></body>
 </html>
 <script id="kpi67">(function(){var D=document,de=D.documentElement;
 var CFG={};try{var c=D.getElementById("kpi67-cfg");if(c)CFG=JSON.parse(c.textContent)||{}}catch(e){}

@@ -56,4 +56,4 @@ bs[0].onclick=go;i.onkeydown=function(e){if(e.key==="Enter")go()}}
 function relock(){try{sessionStorage.removeItem("s67own");localStorage.removeItem("s67ownT")}catch(e){}location.reload()}
 function init(){scan();if(!d.getElementById("s67wm")){var w=d.createElement("div");w.id="s67wm";w.setAttribute("aria-hidden","true");var hh="";for(var y=-1;y<14;y++)for(var x=-1;x<7;x++)hh+='<div style="top:'+(y*140)+'px;left:'+(x*300+(y%2)*150)+'px">ناديه عوض الصخيري<br>الابتدائية السابعة والستون</div>';w.innerHTML=hh;d.body.appendChild(w)}if(!d.getElementById("s67rl")){var r=d.createElement("button");r.id="s67rl";r.type="button";r.textContent="🔒 قفل";r.title="إعادة القفل (للأجهزة المشتركة)";r.onclick=relock;d.body.appendChild(r)}if(!d.getElementById("s67key")){var k=d.createElement("button");k.id="s67key";k.type="button";k.textContent="🔑";k.title="دخول المديرة";k.setAttribute("aria-label","دخول المديرة");k.onclick=ask;d.body.appendChild(k)}}
 if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",init);else init();
-})();</script></body></html>
+})();</script><script src="/school67/s67bg.js" defer></script></body></html>
