@@ -1838,7 +1838,7 @@ try{ applyExtraDesc(S); } catch(e){}
   try{ applySourcedFills(S); }catch(e){}
   try{ applyNextAgendas(S); }catch(e){}
   try{ if(S.settings.stampV!==2){ S.settings.stamp=STAMP; S.settings.stampV=2; } applyKnownSigs(S); applyTeacherData(S); applyFullNames(S); applyTeacherData(S); S.committees.forEach(c=>{ if(c.kind!=='takleef') fillMeetingContent(c); }); try{ applyRealMeetings(S); }catch(e){ console.error(e); } try{ addBehaviorMeeting(S); }catch(e){} try{ addFoundingMeeting(S); }catch(e){ console.error(e); } try{ addRemote0528(S); }catch(e){ console.error(e); } try{ applyDuty1448(S); }catch(e){ console.error(e); } try{ applyNoLabSped(S); }catch(e){ console.error(e); } try{ applyGuardName(S); }catch(e){ console.error(e); } try{ syncPlanDates(S); }catch(e){ console.error(e); } try{ closeRecsUpTo0602(S); }catch(e){ console.error(e); } try{ addMeet0508(S); }catch(e){ console.error(e); } try{ closeRecsUpTo0617(S); }catch(e){ console.error(e); } applyKnownSigs(S); autoSignPast(S); save(); }catch(e){}
-try{ applyFix67(S); save(); }catch(e){ console.error(e); }
+try{ applyFix67(S); }catch(e){ console.error(e); }
 
 function applyFix67(st){
   if(st.settings.fix67V===1) return;
